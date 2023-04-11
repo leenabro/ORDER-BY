@@ -88,7 +88,7 @@
 	            <div class="swiper-wrapper">
 	              <div class="swiper-slide">
 	                <div class="month-sale-images">
-	                <a href="">
+	                <a href="payment/reservation">
 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
 	                  <img class="sale-image" style="width:350px;height:250px;" src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png"></a>
 	                  <div class="add-information"><br>

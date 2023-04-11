@@ -2055,7 +2055,7 @@ ul.actions.special {
 .wrapper .title:before {
   content: "";
   position: absolute;
-  bottom: -38px;
+  bottom: -31px;
   left: -35px;
   width: 35px;
   height: 38px;
@@ -2069,7 +2069,7 @@ ul.actions.special {
   transform: scaleX(-1);
   content: "";
   position: absolute;
-  bottom: -38px;
+  bottom: -31px;
   right: -35px;
   width: 35px;
   height: 38px;
