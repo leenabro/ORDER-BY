@@ -1,11 +1,14 @@
 package com.ta.orderby.member.controller;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,36 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired
 	private MemberService service;
+	
+	
+
+//	
+//	// 관리자 전용 페이지 요청
+//	@GetMapping("/admin/view")
+//	public String admin() {
+//		log.info("/admin/view 페이지 요청");
+//		
+//		return "admin/view";
+//	}
+//	
+//	// 회원 전용 페이지 요청
+//	@GetMapping("/member/view")
+//	public String member() {
+//		log.info("/member/view 페이지 요청");
+//		
+//		return "member/view";
+//	}
+//
+//	// 엑세스 에러 페이지 요청
+//	@GetMapping("/accessError")
+//	public String accessError() {
+//		log.info("/accessError 페이지 요청");
+//		
+//		return "common/accessError";
+//	}
+	
+	
+	
 	
 	// 로그인 페이지로 이동
 	@GetMapping("/login")
@@ -51,6 +84,33 @@ public class MemberController {
 		
 		return modelAndView;
 	}
+	
+	
+	// 회원가입 페이지로 이동
+		@GetMapping("/enroll")
+		public String enroll() {
+			log.info("회원가입 페이지 입장!");
+			
+			return "member/enroll";
+		}
+		
+
+// ------------------------------ 회원가입 ------------------------------ //
+		
+	//아이디 중복체크
+		@RequestMapping(value = "/enroll", method = {RequestMethod.POST})
+		@ResponseBody
+		public int checkId(@Param("mId") String id) {
+			
+			log.info("checkId() 입장!");
+			
+			int result = service.checkId(id);
+			
+			log.info("결과값 = " + result);
+			
+			return result;
+			
+		}
 	
 //	/*
 //	 * 로그인 처리

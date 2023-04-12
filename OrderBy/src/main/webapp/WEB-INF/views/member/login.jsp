@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
@@ -41,18 +43,20 @@
 						<section class="login-wrap">
 				
 							<div class="login-id-wrap">
-								<input id="input-id" name="memId" placeholder="아이디" type="text"></input>
+								<input id="input-id" name="mId" placeholder="아이디" type="text"></input>
 							</div>
 							<div class="login-pw-wrap">
-								<input id="input-pw" name="memPwd" placeholder="비밀번호" type="password"></input>
+								<input id="input-pw" name="mPassword" placeholder="비밀번호" type="password"></input>
 							</div>
 							<div class="login-btn-wrap">
+							
+								<security:csrfInput/>
 								<button id="login-btn" type="submit">로그인</button>
 							</div>
 							<div class="under-login">
 								<span class="stay-check">
 									<input id="stay-checkbox" type="checkbox"></input>
-									<label for="stay-checkbox" id="stay-text">로그인 상태 유지</label>
+									<label for="stay-checkbox" id="stay-text" name="remember-me">로그인 상태 유지</label>
 								</span>
 								<span id="ip-check">
 									<a href="https://nid.naver.com/login/ext/help_ip3.html" target="_blank" title="네이버 IP 보안">IP 보안</a>

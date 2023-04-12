@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -30,7 +31,7 @@
 		<title>Order By</title>
 	</head>
 	<body class="homepage is-preload">
-	
+
 	
 	
 	
@@ -66,7 +67,18 @@
             </li>
             <li><a href="no-sidebar.html">회사소개</a></li>
           </ul>
-          <a href="${ path }/member/login" class="button style4 small">Login</a>
+			<security:authorize access="isAnonymous()">
+	        	<a href="${ path }/member/login" class="button style4 small">Login</a>
+			</security:authorize>
+			
+			<security:authorize access="isAuthenticated()">
+				<p><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
+			</security:authorize>
+			
+			<form action="${ path }/member/logout" method="POST">
+				<input type="submit" value="로그아웃">
+				<security:csrfInput/>
+			</form>
         </nav>
       </section>
 	

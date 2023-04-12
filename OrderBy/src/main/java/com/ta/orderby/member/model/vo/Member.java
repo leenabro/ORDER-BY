@@ -1,6 +1,12 @@
 package com.ta.orderby.member.model.vo;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member implements UserDetails {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9164206131055194574L;
+
 	private int mNo; // 회원 번호 SEQ (PK)
 
 	private String mId; // 회원 아이디
@@ -32,7 +43,7 @@ public class Member {
 	
 	private int mPoint; // 회원 보유 포인트 default 0
 	
-	private String mRole; // 회원등급 (브론즈, 실버, 골드, 다이아, 마스터(관리자)) default 브론즈
+	private String mRole; // 회원등급 (브론즈B, 실버S, 골드G, 다이아D, 마스터M(관리자)) default B
 	
 	private Date mEnrollDate; // 가입일자 default sysdate
 
@@ -42,10 +53,64 @@ public class Member {
 	
 	private int mCnum; // 인증번호 default 0
 
+	private int mPcount; // 회원 결제횟수 default 0
+
 	
 	public Member(String mId, String mPassword) {
 		this.mId = mId;
 		this.mPassword = mPassword;
+	}
+
+
+	@Override
+	public String getUsername() {
+		
+		return this.mId;
+	}
+	
+	@Override
+	public String getPassword() {
+		
+		return this.mPassword;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+		
+		// 이 메소드를 통해서 권한목록을 가져올거다! 가장 만만한 arrayList배열로.. 인덱스..꺼내옴....
+		authorities.add(new SimpleGrantedAuthority(this.mRole));
+		
+		return authorities;
+	}	
+
+	@Override
+	// 계정이 만료되지 않았는가?
+	public boolean isAccountNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	// 계정이 잠기지 않았는가?
+	public boolean isAccountNonLocked() {
+		
+		return true;
+	}
+
+	@Override
+	// 패스워드가 만료되지 않았는가?
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	// 계정이	활성화 되었는가?
+	public boolean isEnabled() {
+		
+		// 계정 스테이터스값이 Y이면 계정 살아있음!
+		return this.mStatus.equals("Y");
 	}
 }
 
