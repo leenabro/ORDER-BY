@@ -1,6 +1,7 @@
 @charset "UTF-8";
-/* 예약 / 확인 css */
-#reserveTitle {
+
+/* 할인 / 결제 css */
+#disTitle {
     text-align: center;
     font-size: large;
     color: black;
@@ -58,7 +59,7 @@
 	color: black;
 }
 
-
+/* section css */
 .shortContainer {
 	position: relative;
 	margin: auto;
@@ -151,7 +152,7 @@
 	background-color: rgb(129, 129, 129);
 }
 
-/* 예약 상세 내역 및 예약자 정보 */
+/* 할인 내역 및 포인트 사용 */
 #sectionScript {
     margin-left: 20px;
     width: 730px;
@@ -185,11 +186,6 @@
 .scriptRow>span {
 	display: flex;
 	flex-basis: 170px;
-}
-
-#rentalDate {
-    text-align: center;
-    font-size: 3.0em;
 }
 
 /* 버튼 CSS */
@@ -287,4 +283,5 @@
 	clear: both;
 	content:'';
 }
+
 

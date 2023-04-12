@@ -38,6 +38,12 @@ public class HomeController {
 		return "payment/reservation";
 	}
 	
+	@GetMapping("payment/discount")
+	public String discount() {
+		
+		return "payment/discount";
+	}
+	
 	
 	
 }

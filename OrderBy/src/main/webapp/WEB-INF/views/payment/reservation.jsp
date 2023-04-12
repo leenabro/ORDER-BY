@@ -16,117 +16,155 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
 	<body class="homepage is-preload">
-	    <section class="wrapper style1">
-	    <div class="title">
-			<strong id="reserveTitle">예약 / 약관</strong>
-	    </div>
-	    <div>
-	    	<ul>
-	    		<li class="car-icon">
-			        <img id="carIcon1" src="${ path }/resources/images/payment/caricon_01.png">
-	    		</li>
-	    		<li class="car-icon">
-			        <img id="carIcon2" src="${ path }/resources/images/payment/caricon_01.png">
-	    		</li>
-	    		<li class="car-icon">
-			        <img id="carIcon3" src="${ path }/resources/images/payment/caricon_01.png">
-	    		</li>
-	    	</ul>
-	        <br>
-	        <div id="navBar"></div>
-	        <span id="step1">예약 / 약관</span>
-	        <span id="step2">할인 / 결제</span>
-	        <span id="step3">완료</span>
-	    </div>
-	    <br>
-	        <div id="sectionImg" class="res-section-div">
-	            <div id="carName">
-	                <p style="padding-top: 8px; margin: 0;">롤스로이스 보트테일</p>
-	            </div>
-	            <div id="carImg">
-	                <img src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png">
-	            </div>
-	            
-	            <ul id="carSpec">
-	                <li>
-	                    <p class="car-spec-title">대여 정보</p>
-	                    <span>강남 지점</span> <br>
-	                    <span>2023년 3월 29일 (수) 15:00</span>
-	                    <hr style="width: 90%;">
-	                </li>
-	                <li>
-	                    <p class="car-spec-title">반납 정보</p>
-	                    <span>강남 지점</span> <br>
-	                    <span>2023년 3월 30일 (목) 15:00</span>
-	                    <hr style="width: 90%;">
-	                </li>
-	                <li>
-	                    <p class="car-spec-title">차량 대여 요금</p>
-	                    <p class="car-spec-price">4,350,000 원</p>
-	                    <hr style="width: 90%;">
-	                </li>
-	                <li>
-	                    <p class="car-spec-title">할인 요금</p>
-	                    <p class="car-spec-price">- 0 원</p>
-	                    <hr style="width: 90%;">
-	                </li>
-	                <li>
-	                    <p class="car-spec-title">총 금액</p>
-	                    <p class="car-spec-price"><strong>4,350,000 원</strong></p>
-               		</li>
-	            </ul>
-	        </div>
+	    <section id="reservationSection" class="wrapper style3">
+		    <div class="title">
+				<strong id="reserveTitle">예약 / 약관</strong>
+		    </div>
+		    <div>
+		    	<div id="carIcon">
+			    	<ul>
+			    		<li class="car-icon">
+					        <img id="carIcon1" src="${ path }/resources/images/payment/caricon_01.png"><br>
+					        <p id="step1" class="step">예약 / 약관</p>
+			    		</li>
+			    		<li class="car-icon">
+					        <img id="carIcon2" src="${ path }/resources/images/payment/caricon_01.png"><br>
+					        <p id="step2" class="step">할인 / 결제</p>
+			    		</li>
+			    		<li class="car-icon">
+					        <img id="carIcon3" src="${ path }/resources/images/payment/caricon_01.png"><br>
+					        <p id="step3" class="step">완료</p>
+			    		</li>
+			    	</ul>
+		    		<div id="navBar"></div>
+	    		</div>
+		    </div>
+		    <br><br>
+		    <div class="shortContainer">
+		        <div id="sectionImg" class="res-section-div">
+		            <div id="carName">
+		                <p style="padding: 25px 0px; margin: 0;">롤스로이스 보트테일</p>
+		            </div>
+		            <div id="carImg">
+		                <img src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png">
+		            </div>
+		            
+		            <ul>
+		                <li class="car-spec-li">
+		                    <p class="car-spec-title">대여 정보</p>
+		                    <span>강남 지점</span> <br>
+		                    <span>2023년 3월 29일 (수) 15:00</span>
+		                </li>
+		                <li class="car-spec-li">
+		                    <p class="car-spec-title">반납 정보</p>
+		                    <span>강남 지점</span> <br>
+		                    <span>2023년 3월 30일 (목) 15:00</span>
+		                </li>
+		                <li class="car-spec-li">
+		                    <p class="car-spec-title">차량 대여 요금</p>
+		                    <p class="car-spec-price">4,350,000 원</p>
+		                </li>
+		                <li class="car-spec-li">
+		                    <p class="car-spec-title">할인 요금</p>
+		                    <p class="car-spec-price">- 0 원</p>
+		                </li>
+		                <li id="totalPrice" class="car-spec-li">
+		                    <p class="car-spec-title">총 금액</p>
+		                    <p class="car-spec-price"><strong>4,350,000 원</strong></p>
+	              		</li>
+		            </ul>
+	        	</div>
 	        <div id="sectionScript" class="res-section-div">
-	            <ul id="sectionScriptContent">
-	                <li class="section-script-title">예약 상세 내역</li>
-	                <hr style="width: 90%;">
-	                <table id="rentalContent">
-	                    <tr>
-	                        <td>대여 일시 / 지점</td>
-	                        <td>2023년 3월 29일 (수) 15:00 / 강남 지점</td>
-	                    </tr>
-	                    <tr>
-	                        <td>반납 일시 / 지점</td>
-	                        <td>2023년 3월 30일 (목) 15:00 / 강남 지점</td>
-	                    </tr>
-	                    <tr>
-	                        <td>차량 상세 정보</td>
-	                        <td>롤스로이스 고스트</td>
-	                    </tr>
-	                </table>
-	                <br>
-	                <span>총 대여 기간</span>
-	                <p id="rentalDate">1 일 0 시간 0 분</p>
-	                <li class="section-script-title">예약자 정보</li>
-	                <hr style="width: 90%;">
-	                <table id="rentalMember">
-	                    <tr>
-	                        <td>이름</td>
-	                        <td>이정환</td>
-	                    </tr>
-	                    <tr>
-	                        <td>성별</td>
-	                        <td>남자</td>
-	                    </tr>
-	                    <tr>
-	                        <td>이메일</td>
-	                        <td>orderby@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <td>전화번호</td>
-	                        <td>010-1234-5678</td>
-	                    </tr>
-	                </table>
-	            </ul>
+	        	<section>
+		        	<div class="scriptHeader">
+		        		<h3 style="color: black;">예약 상세 내역</h3>
+		        	</div>
+		        	<div class="scriptCon">
+			        	<div class="scriptRow">
+			        		<span>대여 일시 / 지점</span>
+			        		<div>
+			        			2023년 3월 29일 (수) 15:00 / 강남 지점
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>반납 일시 / 지점</span>
+			        		<div>
+			        			2023년 3월 29일 (수) 15:00 / 강남 지점
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>차량 상세 정보</span>
+			        		<div>
+			        			롤스로이스 보트 테일
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>총 대여 기간</span>
+			                <div id="rentalDate">1 일 0 시간 0 분</div>	
+			        	</div>
+		        	</div>
+	        	</section>
+	        	<section>
+	        		<div class="scriptHeader">
+	        			<h3 style="color: black;">예약자 정보</h3>
+	        		</div>
+	        		<div class="scriptCon">
+	        			<div class="scriptRow">
+			        		<span>이름</span>
+			        		<div>
+			        			이정환
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>성별</span>
+			        		<div>
+			        			남자
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>이메일</span>
+			        		<div>
+			        			orderby@naver.com
+			        		</div>
+			        	</div>
+			        	<div class="scriptRow">
+			        		<span>전화번호</span>
+			                <div>
+			                	010-1234-5678
+			                </div>	
+			        	</div>
+	        		</div>
+	        	</section>
 	        </div>
+		</div>
+        <div id="button-div">
+        	<ul>
+        		<li class="button-list">
+		            <button id="prevButton" class="button button--aylen button--border-thin button--round-s"><span>이전</span></button>
+        		</li>
+        		<li class="button-list">
+        			<button id="nextButton" class="button button--aylen button--border-thin button--round-s"><span>다음</span></button>
+        		</li>
+        	</ul>
+        </div>
+    </section>
+		
+	<script>
+		$(document).ready(() => {
+			$('#prevButton').on('click', () => {
+				location.href = "${ path }";
+			})
+			
+			$('#nextButton').on('click', () => {
+				location.href = "${ path }/payment/discount"
+			})	
+		
+			
+		});
 	
-	        <div id="button-div">
-	            <button class="button button--aylen button--border-thin button--round-s"><span>다음</span></button>
-	        </div>
-	    </section>
-		
-		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-		
+	</script>	
 		
 	</body>
+	
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </html>
