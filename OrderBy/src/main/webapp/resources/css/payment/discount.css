@@ -33,16 +33,16 @@
 
 #carIcon1 {
 	width: 70px;
+	filter: opacity(0.3);
 }
 
 #carIcon2 {
 	width: 70px;
-    filter: opacity(0.5);
 }
 
 #carIcon3 {
 	width: 70px;
-    filter: opacity(0.5);
+    filter: opacity(0.3);
 }
 
 #step {
@@ -186,6 +186,14 @@
 .scriptRow>span {
 	display: flex;
 	flex-basis: 170px;
+}
+
+#pointButton {
+	width: 100px;
+	height: 40px; 
+	border-radius: 5px; 
+	background-color: dimgrey; 
+	color: white;
 }
 
 /* 버튼 CSS */

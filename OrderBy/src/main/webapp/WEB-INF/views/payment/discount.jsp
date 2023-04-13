@@ -12,6 +12,8 @@
 		<meta charset="UTF-8">
 		<title>할인 / 결제</title>
 		<link rel="stylesheet" href="${ path }/resources/css/payment/discount.css">
+		<!-- iamport.payment.js -->
+		<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 	</head>
 	
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -26,7 +28,7 @@
 				  	<ul>
 			    		<li class="car-icon">
 					        <img id="carIcon1" src="${ path }/resources/images/payment/caricon_01.png"><br>
-					        <p id="step1" class="step">예약 / 약관</p>
+					        <p id="step1" class="step" style="filter: opacity(0.3)" >예약 / 약관</p>
 			    		</li>
 			    		<li class="car-icon">
 					        <img id="carIcon2" src="${ path }/resources/images/payment/caricon_01.png"><br>
@@ -34,7 +36,7 @@
 			    		</li>
 			    		<li class="car-icon">
 					        <img id="carIcon3" src="${ path }/resources/images/payment/caricon_01.png"><br>
-					        <p id="step3" class="step">완료</p>
+					        <p id="step3" class="step" style="filter: opacity(0.3)" >완료</p>
 			    		</li>
 		    		</ul>
 				    <div id="navBar"></div>
@@ -115,14 +117,14 @@
 		        			<div class="scriptRow">
 				        		<span>가용 포인트</span>
 				        		<div>
-				        			<p>1,000</p>&nbsp;p
+				        			<span>1,000</span>&nbsp;p
 				        		</div>
 				        	</div>
 				        	<div class="scriptRow">
 				        		<span>사용할 포인트</span>
 				        		<div>
 				        			<input type="text" class="script-point"> p
-				        			<input type="button" style="width: 100px; height: 40px; border-radius: 5px; background-color: dimgrey; color: white;" value="모두 사용">
+				        			<input type="button" id="pointButton" value="모두 사용">
 				        			<div>
 				        				<p style="font-size: 0.5em; color: red; vertical-align: top;">누적 포인트 50,000 포인트 이상이어야 사용 가능</p>
 				        			</div>
@@ -138,19 +140,46 @@
 			            <button id="prevButton" class="button button--aylen button--border-thin button--round-s"><span>이전</span></button>
 	        		</li>
 	        		<li class="button-list">
-	        			<button id="payments" class="button button--aylen button--border-thin button--round-s"><span>결제</span></button>
+	        			<button id="payments" class="button button--aylen button--border-thin button--round-s" onclick="requestPay()"><span>결제</span></button>
 	        		</li>
 	        	</ul>
       		</div>
 		</section>
 		
+		
 		<script>
-		$(document).ready(() => {
-			$('#prevButton').on('click', () => {
-				location.href = "${ path }/payment/reservation";
-			})
+			// 객체 초기화 하기
+			IMP.init("imp53176208");
 			
-		});
+			function requestPay() {
+					IMP.request_pay({
+						pg: "danal_tpay.9810030929",
+						pay_method: "card",
+						merchant_uid: "ORD20180131-00000112",   // 주문번호
+						name: "TEST",
+						amount: 100,                         // 숫자 타입
+						buyer_email: "leenabro.be@gmail.com",
+						buyer_name: "홍길동",
+						buyer_tel: "010-4242-4242",
+						buyer_addr: "서울특별시 강남구 신사동",
+						buyer_postcode: "01181"
+					}, function (rsp) { // callback
+						if (rsp.success) {
+						  // 결제 성공 시 로직
+						  console.log(rsp);
+						} else {
+						  // 결제 실패 시 로직
+						  console.log(rsp);
+						}
+					});
+			}
+		
+			$(document).ready(() => {
+				$('#prevButton').on('click', () => {
+					location.href = "${ path }/payment/reservation";
+				});
+				
+			});
 	
 	</script>
 		

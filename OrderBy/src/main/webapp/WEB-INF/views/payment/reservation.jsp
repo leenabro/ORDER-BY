@@ -29,11 +29,11 @@
 			    		</li>
 			    		<li class="car-icon">
 					        <img id="carIcon2" src="${ path }/resources/images/payment/caricon_01.png"><br>
-					        <p id="step2" class="step">할인 / 결제</p>
+					        <p id="step2" class="step" style="filter: opacity(0.3)" >할인 / 결제</p>
 			    		</li>
 			    		<li class="car-icon">
 					        <img id="carIcon3" src="${ path }/resources/images/payment/caricon_01.png"><br>
-					        <p id="step3" class="step">완료</p>
+					        <p id="step3" class="step" style="filter: opacity(0.3)" >완료</p>
 			    		</li>
 			    	</ul>
 		    		<div id="navBar"></div>
