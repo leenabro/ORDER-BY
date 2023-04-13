@@ -72,13 +72,13 @@
 			</security:authorize>
 			
 			<security:authorize access="isAuthenticated()">
-				<p><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
-			</security:authorize>
+				<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
 			
-			<form action="${ path }/member/logout" method="POST">
-				<input type="submit" value="로그아웃">
-				<security:csrfInput/>
-			</form>
+				<form action="${ path }/member/logout" method="POST">
+					<input type="submit" value="로그아웃" class="button style4 small">
+					<security:csrfInput/>
+				</form>
+			</security:authorize>
         </nav>
       </section>
 	

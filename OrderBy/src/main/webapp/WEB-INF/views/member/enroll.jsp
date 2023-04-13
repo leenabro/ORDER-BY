@@ -11,6 +11,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<meta name="_csrf" content="${_csrf.token}">
+<security:csrfMetaTags/>
+
 <link rel="stylesheet" href="${path}/resources/css/member/enroll.css"/>
 <link rel="stylesheet" href="${path}/resources/js/member/enroll.js"/>
 <link rel="shortcut icon" href="#">
@@ -57,15 +61,16 @@
 	            <div class="mainEnroll">
 		            <section class="signupWrap">
 		                    <!-- 아이디 -->
-                    	<form name="signupForm" id="signupForm" action="#" method="POST" onsubmit="return checkAll();">
+                    	<form action="${ path }/enroll" name="signupForm" id="signupForm" method="POST" onsubmit="return checkAll();">
+			                <security:csrfInput/>
 			                <div>
 			                    <h3>아이디</h3>
 			                    <label for="memberId" class="signupInput">
 			                        <input name="memberId" id="memberId" type="text" style="ime-mode:disabled" autocomplete="off" maxlength="20" placeholder="4 ~ 20자리 / 영문, 숫자, 특수문자 '_'사용가능" oninput="memberIdch(this)" required autofocus />
 			                        <input type="hidden" id="idDoubleChk"/>
-			                        <!-- <span class="bnum_btn_wrap">
+			                        <span class="bnum_btn_wrap">
 			                            <button id="bnum_btn" onclick="confirmId(event)">중복확인</button>
-			                        </span> -->
+			                        </span>
 			                        
 			                    </label>
 		                        <!-- 조건 3개 -->
@@ -106,6 +111,9 @@
 		                        <!-- 완료 시 텍스트 -->
 		                        <p class="msgInvalId" id="password2goodMsg" style="display:none; color:green;"></p>
 			                </div>
+			                
+			                <security:csrfInput/>
+			                
 						</form>
 			
 						<form action="" name="YYMMDDForm" onsubmit="return check_submit()">

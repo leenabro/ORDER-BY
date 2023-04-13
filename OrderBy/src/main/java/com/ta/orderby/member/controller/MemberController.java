@@ -64,26 +64,26 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	// 로그인 정보 입력 후 처리
-	@PostMapping("/login")
-	public ModelAndView login(ModelAndView modelAndView,
-				@RequestParam("mId") String id, @RequestParam("mPassword") String password) {
-		
-		log.info("{}, {}", id, password);
-		
-		Member loginMember = service.login(id, password);
-		
-		if(loginMember != null) {
-			modelAndView.addObject("loginMember", loginMember);
-			modelAndView.setViewName("redirect:/");
-		} else {
-			modelAndView.addObject("msg", "아이디 혹은 패스워드가 일치하지 않습니다.");
-			modelAndView.addObject("location", "/");
-			modelAndView.setViewName("common/msg");
-		}
-		
-		return modelAndView;
-	}
+//	// 로그인 정보 입력 후 처리(시큐리티 처리전에 여기로 로그인정보 받았었음..시큐리티 적용 후에는 detail로 받음)
+//	@PostMapping("/login")
+//	public ModelAndView login(ModelAndView modelAndView,
+//				@RequestParam("mId") String id, @RequestParam("mPassword") String password) {
+//		
+//		log.info("{}, {}", id, password);
+//		
+//		Member loginMember = service.login(id, password);
+//		
+//		if(loginMember != null) {
+//			modelAndView.addObject("loginMember", loginMember);
+//			modelAndView.setViewName("redirect:/");
+//		} else {
+//			modelAndView.addObject("msg", "아이디 혹은 패스워드가 일치하지 않습니다.");
+//			modelAndView.addObject("location", "/");
+//			modelAndView.setViewName("common/msg");
+//		}
+//		
+//		return modelAndView;
+//	}
 	
 	
 	// 회원가입 페이지로 이동

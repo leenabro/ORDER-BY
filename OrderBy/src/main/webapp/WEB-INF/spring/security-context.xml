@@ -55,10 +55,9 @@
 			security:intercept-url
 			  - pattern 속성에 해당하는 요청에 대한 접속 권한을 설정한다.
 		-->
-		<!--로그인과 홈페이지는 권한없이도 접근 가능하다고 주문을 휘리릭 걸어줌 -->
-		<security:intercept-url pattern="/member/**" access="permitAll"/>
-		<security:intercept-url pattern="/login" access="permitAll"/>
+		<!--로그인과 회원가입,홈은 권한없이도 접근 가능하다고 주문을 휘리릭 걸어줌 -->
 		<security:intercept-url pattern="/member/login" access="permitAll"/>
+		<security:intercept-url pattern="/member/enroll" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
 		
 		
@@ -70,7 +69,7 @@
 <!-- 		<security:intercept-url pattern="/**" access="isAuthenticated()"/> -->
 		
 	<!--
-		로그인 하였으나 권한이 없어서 접근할 수 없으면 /accessError 페이지로 포워딩 시켜줌!
+		로그인 하였으나 권한이 없어서 접근할 수 없는 페이지 방문시 /accessError 페이지로 포워딩 시켜줌!
 		<security:access-denied-handler error-page="/accessError"/>
 	-->
 	
@@ -124,7 +123,6 @@
 		  - In Memory, DB, LDAP 등 다양한 방법으로 유저 조회 및 인증을 구현하여 설정해 줄 수 있다.
 		In Memory 방식 설정 (테스트 용도로 사용)
 		
-	-->
 		<security:authentication-manager>
 			<security:authentication-provider>
 				<security:password-encoder ref="bcryptPasswordEncoder"/>
@@ -138,17 +136,18 @@
 				</security:user-service>
 			</security:authentication-provider>
 		</security:authentication-manager>
+	-->
 
 	<!--
 		TA 계정의 Member 테이블에서 유저 조회 및 인증을 구현하도록 설정
-		memberDetailsService 빈을 연결해서 조회해온다!
+		memberServiceImpl 빈을 연결해서 조회해온다!
+	-->
 
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="memberServiceImpl">
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
-	-->
 	
 	<!-- 참고(존재하지 않는 사용자 입니다. 나옴!)
 	<security:authentication-manager>

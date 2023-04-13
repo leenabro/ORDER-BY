@@ -1,6 +1,9 @@
 
 
 
+
+//-------------------------------------------------------------------------------
+
 // function checkAll() {
 //     if (!checkUserId(form.userId.value)) {
 //         return false;
@@ -349,7 +352,7 @@ var memberIdch = (target) => {
     // .replace();
     
     console.log(target.value);
-};
+};	
 
 var idCheck = 0;
 var pwdCheck = 0;
@@ -367,17 +370,25 @@ $('#memberId')
     
     var memberId = $('#memberId').val(); // #memberId에 입력되는 값
     var data = {mId : memberId}; // '컨트롤에 넘길 데이터 이름' : '데이터(#memberId에 입력되는 값)'
+    var header = $("meta[name='_csrf_header']").attr('content'); // 토큰
+	var token = $("meta[name='_csrf']").attr('content'); // 토큰
 
     var $idFocusMsg  = $('#idFocusMsg'), // 아이디 체크 메시지 포커스
         $idCheckMsg1 = $('#idCheckMsg1'), // 아이디 체크 메시지 실패
         $idCheckMsg2 = $('#idCheckMsg2'); // 아이디 체크 메시지 성공
 
+
+
+        
     $.ajax({
         type : "post",
-        url : "http://localhost:8088/orderby/member/enroll",
+        url : "http://localhost:8088/member/enroll",
         data : data,
-        
-        success:function(result){ //컨트롤러에서 넘어온 result값을 받는다 
+		/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+        success:function(result) { //컨트롤러에서 넘어온 result값을 받는다 
             if(result == 0){ //result가 1이 아니면(= 0일 경우) -> 사용 가능한 아이디
 
                 $idFocusMsg.text("아이디는 필수 입력 정보 입니다.").css({color:"red"}).hide();
@@ -390,7 +401,7 @@ $('#memberId')
             }
         },
         error:function(){
-            alert("에러시발");
+            console.log('에러 시발');
         }
         
     }); // ajax 종료	
@@ -633,7 +644,6 @@ function sample6_execDaumPostcode() {
     
     
 // }
-
 
 
 

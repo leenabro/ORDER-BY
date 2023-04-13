@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ta.orderby.member.model.mapper.MemberMapper;
 import com.ta.orderby.member.model.vo.Member;
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 // 구현내용이 바뀌어서 다른 구현체를 써야할때 결합도를 최소화하기위해 인터페이스를 만들고 그걸 구현한다.
 @Service // 비지니스 로직을 처리하는 빈으로 만들거임!
-//@Transactional
+@Transactional
 @Slf4j
 public class MemberServiceImpl implements MemberService, UserDetailsService {
 //	@Autowired
@@ -41,8 +42,9 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 		System.out.println("member : " + member);
 		
 		if(member == null) {
-			throw new UsernameNotFoundException(mName + "not found");
+			throw new UsernameNotFoundException(mName + "의 사용자를 찾을 수 없습니다.");
 		}
+		
 		
 		log.info("mName : {}", member.getMId());
 		
