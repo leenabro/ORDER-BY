@@ -56,13 +56,14 @@
 			  - pattern 속성에 해당하는 요청에 대한 접속 권한을 설정한다.
 		-->
 		<!--로그인과 회원가입,홈은 권한없이도 접근 가능하다고 주문을 휘리릭 걸어줌 -->
+		<security:intercept-url pattern="/admin/**" access="permitAll"/>
 		<security:intercept-url pattern="/member/login" access="permitAll"/>
 		<security:intercept-url pattern="/member/enroll" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
 		
 		
 		<!-- 관리자만 어드민으로 들어와야해! 할때 넣는 설정 // 어드민으로들어가는 모든 요청에는 들어갈 수 있음 -->
-		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+<!-- 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> -->
 		<!-- 어드민이나 유저 권한 있는 사람만 멤버 페이지 접근할 수 있음! -->
 <!-- 		<security:intercept-url pattern="/member/**" access="hasAnyRole('ADMIN', 'USER')"/> -->
 		<!-- 우리 서비스 사용하려면 무조건 로그인해야해! 할때 넣는 설정 -->

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
@@ -249,7 +250,7 @@
       <div id="joinInfoArea">
          <form id="joinForm" action="${path}/admin/modifyupdate"
          method="POST">
-            
+            <security:csrfInput/>
             <input style="display:none" value="${member.no}" name="no">
             
             <h6>* 아이디</h6>
@@ -282,10 +283,13 @@
             <span class="input_area"><input type="text" name="address1" class="postcodify_details" value="${member.detailAdd}"></span>
             
             <div class="btnArea">
+            <security:csrfInput/>
                <button id="updateBtn" type="submit">회원 수정</button>
                <button id="delBtn" type="button">회원 탈퇴</button>
                <button id="joinBtn" type="button" onclick="location.href='${path}/admin/modifymember';">뒤로가기</button>
+               
             </div>
+            <security:csrfInput/>
          </form>
       </div>
    </div>

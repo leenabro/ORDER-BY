@@ -68,6 +68,7 @@
           </ul>
 			<security:authorize access="isAnonymous()">
 	        	<a href="${ path }/member/login" class="button style4 small">Login</a>
+	        	<a href="${ path }/admin/view" class="button style4 small">admin</a>
 			</security:authorize>
 			
 			<security:authorize access="isAuthenticated()">
