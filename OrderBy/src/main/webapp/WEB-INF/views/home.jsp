@@ -25,23 +25,33 @@
         <div class="title"><strong  style="color:#202431; font-size: large;">이 달의 특가</strong></div>
         <div class="container">
           	<ul>
-	            <li>
-	                <a href="">
-	                  <div class="month-sale-images">
-	                      <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
-	                      <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png">
-	                  </div>
-	                </a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">롤스로이스 <br>보트 테일</h4>
-	                    <br>
-	                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;">12,000,000원</del></p>
-	                    <span class="material-symbols-outlined" style="color:red">
-	                      south
-	                      </span>
-	                    <p>할인 비용(일) : 8,000,000원</p>
-	                  </div>
-	            </li>
+          		<c:forEach var="car" items="${ list }">
+		            <li>
+		            	<c:choose>
+		            		<c:when test="${ car.sale == 'C' }">
+		            			<a href="payment/reservation?name=${ car.name }&price=${ car.price }">
+		            		</c:when>
+		            		<c:when test="${ car.sale == 'S' }">
+		            			<a href="payment/reservation?name=${ car.name }&price=${ car.price * 0.7 }">
+		            		</c:when>
+		            	</c:choose>
+		                  <div class="month-sale-images">
+		                      <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
+		                      <img class="sale-image" src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+		                  </div>
+		                </a>
+		                  <div class="add-information"><br>
+		                  <% pageContext.setAttribute("emptyChar", " "); %>
+		                    <h4 style="color:black; font-size: x-large;"> ${fn:replace(car.name, emptyChar, "<br>")}</h4>
+		                    <br>
+		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
+		                    <span class="material-symbols-outlined" style="color:red">
+		                      south
+		                      </span>
+		                    <p>할인 비용(일) : <fmt:formatNumber value="${ car.price * 0.7 }" pattern="#,###"/> 원</p>
+		                  </div>
+		            </li>
+          		</c:forEach>
 	            <li>
 	              <a href="">
 	                <div class="month-sale-images">

@@ -43,10 +43,10 @@
 		    <div class="shortContainer">
 		        <div id="sectionImg" class="res-section-div">
 		            <div id="carName">
-		                <p style="padding: 25px 0px; margin: 0;">롤스로이스 보트테일</p>
+		                <p style="padding: 25px 0px; margin: 0;">${ car.name }</p>
 		            </div>
 		            <div id="carImg">
-		                <img src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png">
+		                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
 		            </div>
 		            
 		            <ul>
@@ -62,7 +62,7 @@
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">차량 대여 요금</p>
-		                    <p class="car-spec-price">4,350,000 원</p>
+		                    <p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">할인 요금</p>
@@ -156,7 +156,7 @@
 			})
 			
 			$('#nextButton').on('click', () => {
-				location.href = "${ path }/payment/discount"
+				location.href = "${ path }/payment/discount?name=${ car.name }&price=${ car.price }";
 			})	
 		
 			

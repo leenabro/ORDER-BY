@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ta.orderby.car.model.mapper.CarMapper">
+
+	<resultMap id="carResultMap" type="Car">
+		<id property="no" column="C_NO" />
+		<result property="name" column="C_NAME" />
+		<result property="mile" column="C_MILE" />
+		<result property="km" column="C_KM" />
+		<result property="cc" column="C_CC" />
+		<result property="year" column="C_YEAR" />
+		<result property="engine" column="C_ENGINE" />
+		<result property="brand" column="C_BRAND" />
+		<result property="fuel" column="C_FUEL" />
+		<result property="price" column="C_PRICE" />
+		<result property="position" column="C_POSITION" />
+		<result property="status" column="C_STATUS" />
+		<result property="sale" column="C_SALE" />
+		<result property="storeNo" column="S_NO" />
+		<result property="pFileNo" column="PF_NO" />
+		<result property="pFileNo" column="C_COUNT" />
+		<result property="enrollDate" column="C_ENROLL_DATE" />
+	</resultMap>
+
+	<select id="findCarByName" parameterType="string" resultMap="carResultMap">
+		SELECT C_NO,
+    		C_NAME,
+    		C_MILE,
+    		C_KM,
+    		C_CC,
+    		C_YEAR,
+    		C_ENGINE,
+    		C_BRAND,
+    		C_FUEL,
+    		C_PRICE,
+    		C_POSITION,
+    		C_STATUS,
+    		C_SALE,
+    		S_NO,
+    		PF_NO,	
+    		C_COUNT,
+    		C_ENROLL_DATE 
+		FROM CAR
+		WHERE C_NAME = #{name}
+	</select>
+	
+	<select id="findCarBySale" resultMap="carResultMap">
+		SELECT C_NO,
+    		C_NAME,
+    		C_MILE,
+    		C_KM,
+    		C_CC,
+    		C_YEAR,
+    		C_ENGINE,
+    		C_BRAND,
+    		C_FUEL,
+    		C_PRICE,
+    		C_POSITION,
+    		C_STATUS,
+    		C_SALE,
+    		S_NO,
+    		PF_NO,	
+    		C_COUNT,
+    		C_ENROLL_DATE 
+		FROM CAR
+		WHERE C_SALE = 'S'
+	</select>
+	
+	
+</mapper>
