@@ -41,6 +41,7 @@
 		p:basePackage="com.ta.orderby.*.model.mapper"
 	/>
 	
+	
 	<!-- transactionManager -->
 	<bean id="transactionManager"
 		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"

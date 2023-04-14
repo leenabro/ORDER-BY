@@ -9,16 +9,12 @@ import com.ta.orderby.member.model.vo.Member;
 @Mapper
 public interface MemberMapper {
 
-	// 로그인 시
-	Member selectMemberById(@Param("mId") String id);
+	Member selectMemberById(@Param("id") String id);
 	
 	int insertMember(Member member);
 	
 	int updateMember(Member member);
 	
-	int updateMemberStatus(@Param("mNo") int no, @Param("status") String status);
-
-	// 아이디 중복체크
-	// vo가 @Param("mId") 임!
-	int checkId(@Param("mId") String id);
+	// 쿼리문에 파라미터 이름이 @Param("no") 임!
+	int updateMemberStatus(@Param("no") int no, @Param("status") String status);
 }

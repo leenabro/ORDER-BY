@@ -8,8 +8,8 @@ function chageLangSelect(){
         document.getElementById("login-btn").textContent = '로그인';
         document.getElementById("stay-text").textContent = '로그인 상태 유지';
         document.getElementById("ip-check").style.display = '';
-        document.getElementById("easy-login-text").textContent = '또는';
-        document.getElementById("easy-login-wrap").style.height = 'auto';
+        document.getElementById("easy-login-text").textContent = '더욱 간편한 로그인';
+        document.getElementById("easy-login-wrap").style.height = '90px';
         document.getElementById("easy-login-wrap-ko").style.display = '';
         document.getElementById("easy-login-wrap-en").style.display = 'none';
         document.getElementById("find-signup-wrap-ko").style.display = '';
@@ -23,8 +23,8 @@ function chageLangSelect(){
         document.getElementById("login-btn").textContent = 'Sign in';
         document.getElementById("stay-text").textContent = 'Stay Signed in';
         document.getElementById("ip-check").style.display = 'none';
-        document.getElementById("easy-login-text").textContent = 'OR';
-        document.getElementById("easy-login-wrap").style.height = 'auto';
+        document.getElementById("easy-login-text").textContent = 'Easier sign in';
+        document.getElementById("easy-login-wrap").style.height = '215px';
         document.getElementById("easy-login-wrap-ko").style.display = 'none';
         document.getElementById("easy-login-wrap-en").style.display = '';
         document.getElementById("find-signup-wrap-ko").style.display = 'none';

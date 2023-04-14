@@ -55,7 +55,7 @@
 		    <version>${org.springframework-version}</version>
 		</dependency>
 		
-<!-- 		spring security x5 -->
+<!-- 		spring security x4 -->
 <!-- 		spring security-core : https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -80,12 +80,6 @@
 		    <artifactId>spring-security-crypto</artifactId>
 		    <version>${org.spring-security-version}</version>
 		</dependency>
-<!-- 		https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-taglibs</artifactId>
-		    <version>${org.spring-security-version}</version>
-		</dependency>
 		
 <!-- 		mail1: https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
@@ -98,7 +92,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.2.0.RELEASE</version>
 		</dependency>
 
 		<!-- AspectJ -->

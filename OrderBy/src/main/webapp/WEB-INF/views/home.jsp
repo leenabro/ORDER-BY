@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -31,7 +30,7 @@
 		<title>Order By</title>
 	</head>
 	<body class="homepage is-preload">
-
+	
 	
 	
 	
@@ -67,18 +66,14 @@
             </li>
             <li><a href="no-sidebar.html">회사소개</a></li>
           </ul>
-			<security:authorize access="isAnonymous()">
-	        	<a href="${ path }/member/login" class="button style4 small">Login</a>
-			</security:authorize>
-			
-			<security:authorize access="isAuthenticated()">
-				<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
-			
-				<form action="${ path }/member/logout" method="POST">
-					<input type="submit" value="로그아웃" class="button style4 small">
-					<security:csrfInput/>
-				</form>
-			</security:authorize>
+<%--           <a href="${ path }/member/login" class="button style4 small">Login</a> --%>
+
+		<div class="divwrap-sub5">
+                    <button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
+                <form action="${path }/logout" method="GET">
+                    <button onclick="location.replace('${ path }/logout')" class="btn-primary btn-sm">로그아웃</button>
+                </form>
+            </div>
         </nav>
       </section>
 	
