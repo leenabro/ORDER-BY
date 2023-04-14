@@ -66,14 +66,18 @@
             </li>
             <li><a href="no-sidebar.html">회사소개</a></li>
           </ul>
-           <a href="${ path }/member/login" class="button style4 small">Login</a>
-
-		<div class="divwrap-sub5">
-                    <button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
-                <form action="${path }/logout" method="GET">
-                    <button onclick="location.replace('${ path }/logout')" class="btn-primary btn-sm">로그아웃</button>
-                </form>
-            </div>
+			<security:authorize access="isAnonymous()">
+	        	<a href="${ path }/member/login" class="button style4 small">Login</a>
+			</security:authorize>
+			
+			<security:authorize access="isAuthenticated()">
+				<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
+			
+				<form action="${ path }/member/logout" method="POST">
+					<input type="submit" value="로그아웃" class="button style4 small">
+					<security:csrfInput/>
+				</form>
+			</security:authorize>
         </nav>
       </section>
 	

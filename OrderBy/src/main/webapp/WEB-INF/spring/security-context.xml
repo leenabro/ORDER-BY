@@ -11,4 +11,157 @@
 	<bean id="bcryptPasswordEncoder"
 		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
 	/>
+	
+	
+	
+	
+	<!-- 멤버 디테일 서비스 == 멤버 서비스 임플리먼트 빈 생성 -->
+	<bean id="memberServiceImpl"
+		  class="com.ta.orderby.member.model.service.MemberServiceImpl"
+	/>
+	<!-- 굳이 안해도되는데 아이디 패스워드 없다고 나오게 말하고싶으면 아래꺼 하셈.. -->
+	<!--
+	<bean id="daoAuthenticationProvider" 
+		  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+		  p:hideUserNotFoundExceptions="false"
+		  p:passwordEncoder-ref="bcryptPasswordEncoder"
+		  p:userDetailsService-ref="memberDetailsService"
+	/>
+	-->
+	
+	<bean id="loginSuccessHandler"
+		  class="com.ta.orderby.common.handler.LoginSuccessHandler"
+	/>
+	
+	<bean id="loginFailureHandler"
+		  class="com.ta.orderby.common.handler.LoginFailureHandler"
+	/>
+	
+	<!--
+		resources 폴더 안에 있는 파일들은 security 대상이 아니라는 것을 나타낸다.
+	-->
+	<security:http pattern="/resources/**" security="none"></security:http>
+	<security:http pattern="/js/**" security="none"></security:http>
+	<security:http pattern="/css/**" security="none"></security:http>
+	<security:http pattern="/images/**" security="none"></security:http>
+	<!--
+		security:http
+		  - HTTP에 대한 요청을 안전하게 보호하는 방법을 설정하는 요소이다.
+		  - auto-config 속성은 로그인, 로그아웃 등에 대한 기본 설정을 지정하는 속성이다.
+		  - use-expressions 속성은 SpEL(스프링 표현식)의 사용 여부를 지정하는 속성이다.
+	-->
+	<security:http auto-config="true" use-expressions="true">
+		<!--
+			security:intercept-url
+			  - pattern 속성에 해당하는 요청에 대한 접속 권한을 설정한다.
+		-->
+		<!--로그인과 회원가입,홈은 권한없이도 접근 가능하다고 주문을 휘리릭 걸어줌 -->
+		<security:intercept-url pattern="/member/login" access="permitAll"/>
+		<security:intercept-url pattern="/member/enroll" access="permitAll"/>
+		<security:intercept-url pattern="/home" access="permitAll"/>
+		
+		
+		<!-- 관리자만 어드민으로 들어와야해! 할때 넣는 설정 // 어드민으로들어가는 모든 요청에는 들어갈 수 있음 -->
+		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+		<!-- 어드민이나 유저 권한 있는 사람만 멤버 페이지 접근할 수 있음! -->
+<!-- 		<security:intercept-url pattern="/member/**" access="hasAnyRole('ADMIN', 'USER')"/> -->
+		<!-- 우리 서비스 사용하려면 무조건 로그인해야해! 할때 넣는 설정 -->
+<!-- 		<security:intercept-url pattern="/**" access="isAuthenticated()"/> -->
+		
+	<!--
+		로그인 하였으나 권한이 없어서 접근할 수 없는 페이지 방문시 /accessError 페이지로 포워딩 시켜줌!
+		<security:access-denied-handler error-page="/accessError"/>
+	-->
+	
+	<!--
+		CSRF 설정을 사용하지 않는다.
+		<security:csrf disabled="true"/>
+	-->
+	
+	<!--
+		로그인 성공 시 / 페이지로
+			default-target-url="/"
+		로그인 실패 시 /login?err=true 페이지로
+			authentication-failure-url="/login?err=true"
+			authentication-failure-url="/login?error"
+	-->
+	
+		<!-- 로그인 페이지 커스텀 -->
+		<security:form-login
+			login-page="/member/login"
+			username-parameter="mId"
+			password-parameter="mPassword"
+			authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailureHandler"
+		/>
+		
+		<!-- 로그아웃 페이지 커스텀 -->
+		<security:logout
+			logout-url="/member/logout"
+			logout-success-url="/"
+		/>
+
+		<!--
+			로그인유지 기억하기 기능 활성화
+			key="khweb" << 토큰 생성용 키값
+			token-validity-seconds="1209600" << 쿠키 유지시간 : 약 2주동안 안들어오면 로그인 끊기고, 그 안에 들어오면 됨!
+		<security:remember-me key="taKey" token-validity-seconds="1209600" remember-me-parameter="remember-me"/>
+		-->
+	
+		<!--
+			로그인 세션 1개만 유지하기!
+		<security:session-management invalid-session-url="/login">
+			<security:concurrency-control max-sessions="1" expired-url="/login"/>
+		</security:session-management>
+		-->
+	
+	</security:http>
+
+	<!--
+		security:authentication-manager
+		  - 유저들에 대한 인증과 관련된 설정을 하는 요소이다.
+		  - In Memory, DB, LDAP 등 다양한 방법으로 유저 조회 및 인증을 구현하여 설정해 줄 수 있다.
+		In Memory 방식 설정 (테스트 용도로 사용)
+		
+		<security:authentication-manager>
+			<security:authentication-provider>
+				<security:password-encoder ref="bcryptPasswordEncoder"/>
+				<security:user-service>
+					<security:user name="user"
+							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
+								   authorities="ROLE_ADMIN, ROLE_USER"/>
+					<security:user name="admin"
+							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
+								   authorities="ROLE_ADMIN,ROLE_USER"/>
+				</security:user-service>
+			</security:authentication-provider>
+		</security:authentication-manager>
+	-->
+
+	<!--
+		TA 계정의 Member 테이블에서 유저 조회 및 인증을 구현하도록 설정
+		memberServiceImpl 빈을 연결해서 조회해온다!
+	-->
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="memberServiceImpl">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- 참고(존재하지 않는 사용자 입니다. 나옴!)
+	<security:authentication-manager>
+		<security:authentication-provider ref="daoAuthenticationProvider"/>
+	</security:authentication-manager>
+		-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </beans>

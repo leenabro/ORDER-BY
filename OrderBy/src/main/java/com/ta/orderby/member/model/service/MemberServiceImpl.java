@@ -1,17 +1,25 @@
 package com.ta.orderby.member.model.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ta.orderby.member.model.mapper.MemberMapper;
 import com.ta.orderby.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+
 // 구현내용이 바뀌어서 다른 구현체를 써야할때 결합도를 최소화하기위해 인터페이스를 만들고 그걸 구현한다.
 @Service // 비지니스 로직을 처리하는 빈으로 만들거임!
-//@Transactional
-public class MemberServiceImpl implements MemberService {
+@Transactional
+@Slf4j
+public class MemberServiceImpl implements MemberService, UserDetailsService {
 //	@Autowired
 //	private MemberDao dao;
 //	
@@ -25,16 +33,29 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberMapper mapper;
 	
-	// 아이디 조회
+	// UserDetailsService 로그인쪽 조회구현(시큐리티 흑흑)
 	@Override
-	public Member findMemberById(String id) {
+	public UserDetails loadUserByUsername(String mName) throws UsernameNotFoundException {
+		Member member = mapper.selectMemberById(mName);
 		
-		return mapper.selectMemberById(id);
+		System.out.println("mName : " + mName);
+		System.out.println("member : " + member);
+		
+		if(member == null) {
+			throw new UsernameNotFoundException(mName + "의 사용자를 찾을 수 없습니다.");
+		}
+		
+		
+		log.info("mName : {}", member.getMId());
+		
+		return member;
 	}
+	
+
 	
 	// 로그인
 	@Override
-	public Member login(String id, String password) {
+	public Member login(@Param("mId") String id, @Param("mPassword") String password) {
 		Member member = null;
 		
 		member = this.findMemberById(id);
@@ -52,6 +73,13 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 		}
 		
+	}
+	
+	// 아이디 조회 (로그인 시 가능)
+	@Override
+	public Member findMemberById(@Param("mId") String id) {
+		
+		return mapper.selectMemberById(id);
 	}
 
 	// 회원가입
@@ -79,16 +107,26 @@ public class MemberServiceImpl implements MemberService {
 
 	// 아이디 중복검사
 	@Override
-	public Boolean isDuplicateId(String id) {
+	public Boolean isDuplicateId(@Param("mId") String id) {
 		 //널인지 아닌지만 체크허면됨
 		
 		return this.findMemberById(id) != null;
 	}
+	
+	// 아이디 중복체크
+	@Override
+	public int checkId(@Param("mId") String id) {
+		int result = mapper.checkId(id);
+		System.out.println("result: " + result);
+		
+		return result;
+	}
+	
 
 	// 회원 탈퇴
 	@Override
 	@Transactional // 중간에 잘못되면 롤백될수있게 트랜잭셔널 어노테이션 붙여줌!
-	public int delete(int no) {
+	public int delete(@Param("mNo") int no) {
 		
 		return mapper.updateMemberStatus(no, "N");
 	}
