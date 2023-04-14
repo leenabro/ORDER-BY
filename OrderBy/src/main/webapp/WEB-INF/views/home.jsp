@@ -66,7 +66,7 @@
             </li>
             <li><a href="no-sidebar.html">회사소개</a></li>
           </ul>
-<%--           <a href="${ path }/member/login" class="button style4 small">Login</a> --%>
+           <a href="${ path }/member/login" class="button style4 small">Login</a>
 
 		<div class="divwrap-sub5">
                     <button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
