@@ -23,10 +23,6 @@ public class PaymentController {
 	@GetMapping("payment/reservation")
 	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price) {
 		
-		System.out.println(price.substring(0, price.length()-2));
-		
-		price = price.substring(0, price.length()-2); 
-		
 		Car car = carService.findCarByName(name);
 		
 		car.setPrice(Integer.parseInt(price));
@@ -39,9 +35,17 @@ public class PaymentController {
 	
 	// 할인 페이지로 이동
 	@GetMapping("payment/discount")
-	public String discount() {
+	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price) {
 		
-		return "payment/discount";
+		Car car = carService.findCarByName(name);
+		
+		car.setPrice(Integer.parseInt(price));
+		
+		
+		modelAndView.addObject("car", car);
+		modelAndView.setViewName("payment/discount");
+		
+		return modelAndView;
 	}
 	
 	

@@ -46,10 +46,10 @@
 			<div class="shortContainer">
 		        <div id="sectionImg" class="res-section-div">
 		            <div id="carName">
-		                <p style="padding: 25px 0px; margin: 0;">롤스로이스 보트테일</p>
+		                <p style="padding: 25px 0px; margin: 0;">${ car.name }</p>
 		            </div>
 		            <div id="carImg">
-		                <img src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png">
+		                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
 		            </div>
 		            <ul>
 		                <li class="car-spec-li">
@@ -64,7 +64,7 @@
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">차량 대여 요금</p>
-		                    <p class="car-spec-price">4,350,000 원</p>
+		                    <p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">할인 요금</p>
@@ -72,7 +72,7 @@
 		                </li>
 		                <li id="totalPrice" class="car-spec-li">
 		                    <p class="car-spec-title">총 금액</p>
-		                    <p class="car-spec-price"><strong>4,350,000 원</strong></p>
+		                    <p class="car-spec-price" id="finalPrice"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>
 	              		</li>
 		            </ul>
 	        	</div>
@@ -98,7 +98,7 @@
 				        		<span>할인 쿠폰</span>
 				        		<div>
 				        			<select name="coupone" id="disCoupone">
-		                                <option > --------------</option>
+		                                <option value=""> --------------</option>
 		                                <option value="특가 이벤트"> 특가 이벤트(10%)</option>
 		                                <option value="신규 할인"> 신규 할인(15%)</option>
                             		</select>
@@ -176,8 +176,34 @@
 		
 			$(document).ready(() => {
 				$('#prevButton').on('click', () => {
-					location.href = "${ path }/payment/reservation";
+					location.href = "${ path }/payment/reservation?name=${ car.name }&price=${ car.price }";
 				});
+				
+				function comma(num) {
+				    num = String(num);
+				    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+				}				
+				
+				$('#disCoupone').change(function() {
+					let price = ${ car.price };
+					
+					if($(this).val() == '') {
+						price = comma(price);
+						
+						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
+					} 
+					
+					if($(this).val() == '특가 이벤트') {
+						price = comma(price * 0.9);
+						
+						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
+					} 
+					
+					
+					
+				});
+				
+				
 				
 			});
 	

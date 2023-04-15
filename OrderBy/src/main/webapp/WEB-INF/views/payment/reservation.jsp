@@ -70,7 +70,7 @@
 		                </li>
 		                <li id="totalPrice" class="car-spec-li">
 		                    <p class="car-spec-title">총 금액</p>
-		                    <p class="car-spec-price"><strong>4,350,000 원</strong></p>
+		                    <p class="car-spec-price"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>
 	              		</li>
 		            </ul>
 	        	</div>
@@ -95,7 +95,7 @@
 			        	<div class="scriptRow">
 			        		<span>차량 상세 정보</span>
 			        		<div>
-			        			롤스로이스 보트 테일
+			        			${ car.name }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
