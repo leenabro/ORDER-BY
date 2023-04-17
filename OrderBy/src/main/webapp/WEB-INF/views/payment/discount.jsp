@@ -46,7 +46,7 @@
 			<div class="shortContainer">
 		        <div id="sectionImg" class="res-section-div">
 		            <div id="carName">
-		                <p style="padding: 25px 0px; margin: 0;">${ car.name }</p>
+		                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
 		            </div>
 		            <div id="carImg">
 		                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
@@ -68,7 +68,8 @@
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">할인 요금</p>
-		                    <p class="car-spec-price">- 0 원</p>
+		                    <p id="dicPrice" class="car-spec-price">- 0 원</p>
+		                    <p id="dicContent"></p>
 		                </li>
 		                <li id="totalPrice" class="car-spec-li">
 		                    <p class="car-spec-title">총 금액</p>
@@ -156,7 +157,7 @@
 						pg: "danal_tpay.9810030929",
 						pay_method: "card",
 						merchant_uid: "ORD20180131-00000112",   // 주문번호
-						name: "TEST",
+						name: "${ car.brand } ${ car. name } 1일",
 						amount: 100,                         // 숫자 타입
 						buyer_email: "leenabro.be@gmail.com",
 						buyer_name: "홍길동",
@@ -199,8 +200,24 @@
 						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
 					} 
 					
+				});
+				
+				$('#disCoupone').change(function () {
+					let price = ${ car.price };
 					
+					if($(this).val() == '특가 이벤트') {
+						
+						price = comma(price * 0.1);
+						$('#dicPrice').html('- ' + price + ' 원');
+						$('#dicContent').html('특가 이벤트(10% 할인)');
+					};	
 					
+					if($(this).val() == '') {
+						
+						$('#dicPrice').html('- 0 원');
+						$('#dicContent').html('');
+						
+					} 
 				});
 				
 				

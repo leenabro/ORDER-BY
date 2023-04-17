@@ -42,8 +42,8 @@
 		                </a>
 		                  <div class="add-information"><br>
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
-		                    <h4 style="color:black; font-size: x-large;"> ${fn:replace(car.name, emptyChar, "<br>")}</h4>
-<%-- 		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4> --%>
+<%-- 		                    <h4 style="color:black; font-size: x-large;"> ${fn:replace(car.name, emptyChar, "<br>")}</h4> --%>
+		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4>
 		                    <br>
 		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
 		                    <span class="material-symbols-outlined" style="color:red">

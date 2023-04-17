@@ -43,7 +43,7 @@
 		    <div class="shortContainer">
 		        <div id="sectionImg" class="res-section-div">
 		            <div id="carName">
-		                <p style="padding: 25px 0px; margin: 0;">${ car.name }</p>
+		                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
 		            </div>
 		            <div id="carImg">
 		                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">

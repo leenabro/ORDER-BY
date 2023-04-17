@@ -91,6 +91,7 @@
     background-color: darkgrey;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    color: black;
 }
 
 #carImg {
@@ -148,6 +149,12 @@
     text-align: right;
 }
 
+#dicContent {
+	text-align: right;
+	padding-right: 20px;
+	color: red;
+}
+
 #totalPrice {
 	background-color: rgb(129, 129, 129);
 }
@@ -190,7 +197,6 @@
 
 #pointButton {
 	width: 100px;
-	height: 40px; 
 	border-radius: 5px; 
 	background-color: dimgrey; 
 	color: white;
