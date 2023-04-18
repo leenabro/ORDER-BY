@@ -24,7 +24,9 @@
 		       M_ENROLL_DATE,
 		       M_MODIFY_DATE,
 		       M_STATUS,
-		       M_CNUM
+		       M_CNUM,
+		       M_PCOUNT,
+		       M_VERIFIED
 		FROM MEMBER
 	</sql>
 
@@ -32,21 +34,23 @@
 		<!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
 		<id property="no" column="M_NO"/>
 		<!-- 조회 결과의 일반 컬럼을 매핑한다. -->
-		<result property="mId" column="M_ID"/>
-		<result property="mPassword" column="M_PASSWORD"/>
-		<result property="mName" column="M_NAME"/>
-		<result property="mBirth" column="M_BIRTH"/>
-		<result property="mEmail" column="M_EMAIL"/>
-		<result property="mPhone" column="M_PHONE"/>
-		<result property="mGender" column="M_GENDER"/>
-		<result property="mAddress" column="M_ADDRESS"/>
-		<result property="mDetailAdd" column="M_DETAIL_ADD"/>
-		<result property="mPoint" column="M_POINT"/>
-		<result property="mRole" column="M_ROLE"/>
-		<result property="mEnrollDate" column="M_ENROLL_DATE"/>
-		<result property="mModifyDate" column="M_MODIFY_DATE"/>
-		<result property="mStatus" column="M_STATUS"/>
-		<result property="mCnum" column="M_CNUM"/>
+		<result property="id" column="M_ID"/>
+		<result property="password" column="M_PASSWORD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birth" column="M_BIRTH"/>
+		<result property="email" column="M_EMAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="address" column="M_ADDRESS"/>
+		<result property="detailAdd" column="M_DETAIL_ADD"/>
+		<result property="point" column="M_POINT"/>
+		<result property="role" column="M_ROLE"/>
+		<result property="enrollDate" column="M_ENROLL_DATE"/>
+		<result property="modifyDate" column="M_MODIFY_DATE"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="cnum" column="M_CNUM"/>
+		<result property="pcount" column="M_PCOUNT"/>
+		<result property="verified" column="M_VERIFIED"/>
 	</resultMap>
 	
 	<select id="selectCount" resultType="_int">

@@ -1,16 +1,22 @@
 package com.ta.orderby.payment.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ta.orderby.car.model.service.CarService;
 import com.ta.orderby.car.model.vo.Car;
 import com.ta.orderby.payment.model.service.PaymentService;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 @Controller
 public class PaymentController {
@@ -38,12 +44,22 @@ public class PaymentController {
 	// 할인 페이지로 이동
 	@GetMapping("payment/discount")
 	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price) {
-		
+		// 자동차 정보 불러오기
 		Car car = carService.findCarByName(name);
 		
+		// 쿠폰 정보 불러오기
+		List<Coupon> list = service.findCouponByMemberNo(1);
+		Gson gson = new GsonBuilder().create();
+		String coupons = gson.toJson(list);
+
+		// 로그인 멤버 포인트 불러오기
+		
+		
+		// 특가일 경우 할인된 가격 다시 set
 		car.setPrice(Integer.parseInt(price));
 		
-		
+		modelAndView.addObject("coupons", coupons);
+		modelAndView.addObject("coupon", list);
 		modelAndView.addObject("car", car);
 		modelAndView.setViewName("payment/discount");
 		
@@ -84,14 +100,17 @@ public class PaymentController {
 		
 	}
 	
-	@GetMapping("/couponList")
-	public ModelAndView coList(ModelAndView modelAndView) {
+	@ResponseBody
+	@PostMapping("payment/success")
+	public ModelAndView success(ModelAndView modelAndView, @RequestParam("method") String method) {
 		
+		System.out.println(method);
 		
+		modelAndView.setViewName("payment/success");
 		
-		
-		return modelAndView; 
+		return modelAndView;
 	}
+	
 	
 	
 	

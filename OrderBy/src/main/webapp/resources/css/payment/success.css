@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+/* 완료 css */
+#sucTitle {
+    text-align: center;
+    font-size: large;
+    color: black;
+}
+
+/* 자동차 아이콘 css */
+#carIcon {
+	position: relative;
+	margin: auto;
+	width: 600px;
+	height: 60px;
+	text-align: center;
+}
+
+#navBar {
+	position: absolute;
+    width: 380px;
+    left: 18%;
+    bottom: 50%;
+    border: 1px solid black;
+} 
+
+.car-icon {
+	list-style: none;
+	display: inline-block;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+#carIcon1 {
+	width: 70px;
+	filter: opacity(0.3);
+}
+
+#carIcon2 {
+	width: 70px;
+	filter: opacity(0.3);
+}
+
+#carIcon3 {
+	width: 70px;
+}
+
+#step {
+	text-align: center;
+}
+
+.step-list {
+	list-style: none;
+	display: inline-block;
+}
+
+.step {
+	display: inline-block;
+	color: black;
+}
