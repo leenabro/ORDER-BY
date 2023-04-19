@@ -22,9 +22,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 				
 		Member loginMember = (Member) authentication.getPrincipal();
 
-		log.info("ROLE : {}", loginMember.getMRole());
+		log.info("ROLE : {}", loginMember.getRole());
 		
-		if(loginMember.getMRole().equals("ROLE_ADMIN")) {
+		if(loginMember.getRole().equals("ROLE_ADMIN")) {
 //			response.sendRedirect(request.getContextPath() + "/admin/view");
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {

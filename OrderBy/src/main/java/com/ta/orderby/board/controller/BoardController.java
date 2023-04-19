@@ -76,7 +76,7 @@ public class BoardController {
 		
 		board = service.findBoardByNo(no);
 		
-		if(board != null && board.getWriterId().equals(loginMember.getMId())) {
+		if(board != null && board.getWriterId().equals(loginMember.getId())) {
 			result = service.delete(no);
 			
 			if(result > 0) {

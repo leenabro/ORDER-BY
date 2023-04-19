@@ -1,6 +1,14 @@
 
 
 
+// ajax 통신을 위한 csrf 설정
+//var token = $("meta[name='_csrf']").attr("content");
+//var header = $("meta[name='_csrf_header']").attr("content");
+//$(document).ajaxSend(function(e, xhr, options) {
+//    xhr.setRequestHeader(header, token);
+//});
+
+
 
 //-------------------------------------------------------------------------------
 
@@ -24,21 +32,10 @@
 //     return true;
 // }
 
-
-
-
-
-
-
 $(function() { // 윈도우가 열리면
-    
 
-    
+	var $ = jQuery;
 
-
-
-    // 제이쿼리 쓸거야
-var $ = jQuery;
 
 
 
@@ -86,30 +83,13 @@ const $regId = /[^a-z0-9\_]/gi,
     // 비밀번호 (최소 대문자, 소문자, 숫자 1개씩 8~16자)
     $regPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}/g,
     // 이메일
-    $regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/
-    ;
-// var $regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g;
-
-
-
-
-
-// submit 버튼 클릭시 전체 체크 함수
-// form
-
-
-
-
-
-
-
-
+    $regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
 
 /*
     확인해야할 사항
 
     아이디 유효성
-    - 사용가능한 아이디입니다가 안나옴.. 수정해야함
+    - 완료
     비밀번호 유효성
     - 완료
     비밀번호 재확인 유효성
@@ -119,23 +99,23 @@ const $regId = /[^a-z0-9\_]/gi,
     아이디와 비밀번호는 같을 수 없음
     - 완료
     이름 유효성
-    - 한글만 가능하게 함
+    - 한글만 가능하게 함 완료
     생년월일 유효성
     - 완료
     성별(값 잘받아옴)
     - 완료
     이메일 유효성
-    - 
+    - 완료(04/19)
     이메일 인증번호 받기(인증번호 맞아야 가입할수있음)
-    -
+    - 완료(04/19)
     전체 체크
-    -
+    - 
     간편가입
-    -
+    - 
     간편로그인
-    -
+    - 
     주소와 상세주소 넣기
-    -
+    - 완료
 
 */
 
@@ -147,43 +127,10 @@ const $regId = /[^a-z0-9\_]/gi,
 // 엔터 처리(없어도될듯)
 form
 .on('keydown', 'input[type="text"], input[type="email"], input[type="password"], input[type="number"]', function () {
-    // alert('뿌우');
+	// console.log('엔터눌렀지 뿌우');
 })
 
-
-
-
-
-
-
-
-// ======================================== password 돋보기 보기 숨기기 시작 (아직 해결중) ========================================
-// $('.pwdLock')
-// .on('click',function() {
-//     $('input').toggleClass('active');
-//     if($('input').hasClass('active')){
-//         $(this).attr('class',"eye")
-//         .prev('input').attr('type',"text");
-//     }else{
-//         $(this).attr('class',"eyeSlash")
-//         .prev('input').attr('type','password');
-//     }
-// });
-
-
-
-
-
-
 // ======================================== 생년월일 유효성검사 시작 ========================================
-// 생년월일값 가져오기
-// 월
-// .on()
-
-
-
-
-
 
 $('select[name=memberBirthYY]')
 .on({
@@ -248,44 +195,23 @@ $('select[name=genderSelectBox]')
 // 포커스 시 텍스트
 form
 .on('focus', '#memberId', function() {
-    $idFocusMsg.text("아이디는 필수 입력 정보 입니다.").css({color:"red"}).show();
-    $idCheckMsg1.text("4 ~ 20자 / 영문, 숫자와 특수문자 '_'만 사용해주세요.").hide();
-    $idCheckMsg2.text("사용가능한 아이디 입니다.").hide();
+  $('#idFocusMsg').show().text("아이디는 필수 입력 정보 입니다.").css({color:"red"});
 })
-.on('propertychange change keyup paste input', '#memberPwd1', function() {
-    $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").show();
-    $password1warningMsg.text("영문 대/소문자, 숫자와 특수문자를 모두 조합해주세요.").hide();
-    $password1goodMsg.text("비밀번호가 일치합니다.").hide();
+.on('focus', '#memberPwd1', function() {
+  $('#password1FocusMsg').show().text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.");
 })
-// .on('keydown', '#memberPwd1', function() {
-//     $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").hide();
-//     $password1warningMsg.text("영문 대/소문자, 숫자와 특수문자를 모두 조합해주세요.").show();
-//     $password1goodMsg.text("비밀번호가 일치합니다.").hide();
-// })
-.on('propertychange change keyup paste input', '#memberPwd2', function() {
-    $password2FocusMsg.text("위 비밀번호와 동일해야 합니다.").show();
-    $password2warningMsg.text("비밀번호를 동일하게 입력해주세요.").hide();
-    $password2goodMsg.text("비밀번호가 일치합니다.").hide();
+.on('focus', '#memberPwd2', function() {
+  $('#password2FocusMsg').show().text("위 비밀번호와 동일해야 합니다.");
 })
-// .on('keydown', '#memberPwd2', function() {
-//     $password2FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").hide();
-//     $password2warningMsg.text("비밀번호를 동일하게 입력해주세요.").show();
-//     $password2goodMsg.text("비밀번호가 일치합니다.").hide();
-// })
-.on('propertychange change keyup paste input', '.YYMMDD', function() {
-    $memberBirthMsg.text('생년월일은 필수 입력 정보 입니다.').css({color:"red"}).show();
-    // $memberBirthMsg.text("").hide();
+.on('focus', '.YYMMDD', function() {
+  $('#memberBirthMsg').show().text('생년월일은 필수 입력 정보 입니다.').css({color:"red"});
 })
-.on('propertychange change keyup paste input', '#memberPhone', function() {
-    $memberPhoneMsg.text('ORDER BY의 다양한 혜택문자를 받아보세요.').css({color:"gray"}).show();
-    // $memberBirthMsg.text("").hide();
+.on('focus', '#memberPhone', function() {
+  $('#memberPhoneMsg').show().text('ORDER BY의 다양한 혜택문자를 받아보세요.').css({color:"gray"});
 });
 
 
-
-
-
-
+// ======================================== 생년월일 셀렉트 박스 시작 ========================================
 
     // '출생 연도' 셀렉트 박스 option 목록 동적 생성
     var birthYearEl = document.querySelector('#memberBirthYY')
@@ -361,53 +287,65 @@ var nameCheck = 0;
 var pwCheck = 0;
 var authCheck = 0;
 
-
+// 아이디 중복확인 ajax포함
+function checkId() {
+    $('#memberId').trigger('input');
+}
 
 $('#memberId')
-.on("propertychange change keyup paste input", function(){
-
-    // console.log("keyup 테스트");
-    
-    var memberId = $('#memberId').val(); // #memberId에 입력되는 값
-    var data = {mId : memberId}; // '컨트롤에 넘길 데이터 이름' : '데이터(#memberId에 입력되는 값)'
-    var header = $("meta[name='_csrf_header']").attr('content'); // 토큰
+	.on("propertychange change keyup paste input", function(){
+		var memberId = $(this).val().trim(); // #memberId에 입력되는 값
+		if(memberId === '') { // memberId가 빈 문자열인 경우 중복 체크를 하지 않음
+			return;
+	}
+	var data = {id : memberId}; // '컨트롤에 넘길 데이터 이름' : '데이터(#memberId에 입력되는 값)'
+	var header = $("meta[name='_csrf_header']").attr('content'); // 토큰
 	var token = $("meta[name='_csrf']").attr('content'); // 토큰
 
     var $idFocusMsg  = $('#idFocusMsg'), // 아이디 체크 메시지 포커스
         $idCheckMsg1 = $('#idCheckMsg1'), // 아이디 체크 메시지 실패
         $idCheckMsg2 = $('#idCheckMsg2'); // 아이디 체크 메시지 성공
 
-
-
-        
     $.ajax({
-        type : "post",
-        url : "http://localhost:8088/member/enroll",
-        data : data,
-		/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
+        type : "get",
+        url : "http://localhost:8088/member/checkId", // 요청 경로
+        data : {id : memberId}, // 입력되는 아이디값을 mId로 넘김
+        beforeSend : function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
         success:function(result) { //컨트롤러에서 넘어온 result값을 받는다 
             if(result == 0){ //result가 1이 아니면(= 0일 경우) -> 사용 가능한 아이디
-
                 $idFocusMsg.text("아이디는 필수 입력 정보 입니다.").css({color:"red"}).hide();
                 $idCheckMsg2.text("사용가능한 아이디 입니다.").show();
-
+                $idCheckMsg1.hide();
             } else { // result가 1일 경우 -> 이미 존재하는 아이디
-
-                $idCheckMsg2.text("사용가능한 아이디 입니다.").hide();
+                $idCheckMsg2.hide();
                 $idCheckMsg1.text("이미 존재하는 아이디입니다.").show();
             }
         },
-        error:function(){
-            console.log('에러 시발');
+        error:function(xhr, status, error){
+            if(xhr.status === 403){
+                alert("세션이 만료되어 재로그인 해주세요.");
+            } else {
+                alert("에러 발생 : " + xhr.status + ", " + error);
+            }
         }
-        
     }); // ajax 종료	
 
-});// function 종료
-
+}) // 함수 종료하려다가 포커스랑 블러 이벤트줬음..
+.on('focus', function() {
+    var $idFocusMsg  = $('#idFocusMsg'),
+        $idCheckMsg1 = $('#idCheckMsg1'),
+        $idCheckMsg2 = $('#idCheckMsg2');
+    $idCheckMsg1.hide();
+    $idCheckMsg2.hide();
+    $idFocusMsg.show();
+}).on('blur', function() {
+    var $idFocusMsg  = $('#idFocusMsg'),
+        $idCheckMsg1 = $('#idCheckMsg1'),
+        $idCheckMsg2 = $('#idCheckMsg2');
+    $idFocusMsg.hide();
+});
 
 
 // ======================================== password 유효성검사 시작 ========================================
@@ -503,28 +441,6 @@ var $memberName = (target) => {
     console.log(target.value);
 };
 
-// ======================================== email 유효성검사 시작 ========================================
-var $memberEmail = () => {
-    // 이메일 검증 스크립트 작성
-    var emailVal = $("#memberEmail").val();
-
-    var regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
-
-    if (emailVal.match(regEmail) != null) {
-        console.log(emailVal);
-
-        return true;
-    }
-    else {
-        return false;
-    }
-};
-
-
-
-
-
-
 // ======================================== 체크박스 상태검사 시작 ========================================
 $("input:checkbox[name='chkAll']").prop("checked", true);
 $("input:checkbox[name='chk1']").prop("checked", true);
@@ -559,12 +475,7 @@ $(".join_box")
 })
 ;
 
-
-
-
-
-
-//--------------------------------------------- 주소 api
+// ======================================== 주소 api 시작 ========================================
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -614,37 +525,113 @@ function sample6_execDaumPostcode() {
 } // 주소 api종료
 
 
+// ======================================== 이메일 시작 ========================================
+
+    $(document).ready(function() {
+        $(".successEmailChk").text("이메일 입력은 필수입니다.").hide();
+        $("#memberEmail").focus(function() {
+            $(".successEmailChk").text("이메일 입력은 필수입니다.").show();
+        });
+    });
 
 
+// 인증 메일 발송 버튼 클릭 시
+var code = "";
+$("#cnum_btn").click(function(){
+    var emailVal = $("#memberEmail").val();
 
+    // 한글 제거
+    var email = emailVal.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "");
 
+    // 이메일 검증
+    var regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+    if (!regEmail.test(email)) {
+        console.log("유효한 이메일 주소를 입력해주세요.");
+        $("#memberEmail").attr("autofocus", true);
+        $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
+        $(".successEmailChk").css("color", "red");
+        return;
+    }
 
+    $.ajax({
+        type: "GET",
+        url: "/member/enroll/mailCheck?email=" + email,
+        cache: false,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+        },
+        success: function(data) {
+            if(data == "error"){
+                console.log("이메일 주소가 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.");
+                $("#memberEmail").attr("autofocus",true);
+                $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.").show();
+                $(".successEmailChk").css("color","red");
+            }else{                    
+                alert("인증번호 발송이 완료되었습니다.\n입력한 이메일에서 인증번호 확인을 해주십시오.");
+                $('#memberCnum').focus();
+                console.log("인증번호 발송됐대!!");
+		        $("#memberCnum").attr("disabled",false);
+		        $("#cnum_btn2").css("display","inline-block");
+		        $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").show();
+		        $(".successEmailChk").css("color","green");
+                code = data;
+            }
+        }
+    });
+});
 
-
-
-
-
-// $(".signup_btn_wrap, #signup_btn").click(function() {
-//     alert("가입하기 버튼 Disabled 처리");
-//     $("#signup_btn").prop("disabled", true);
-// });
-
-
-
-// $(".signup_btn_wrap #signup_btn").attr("disabled", false);
-// console.log($(".signup_btn_wrap").prop("disabled"));
-// console.log($(".#signup_btn").prop("disabled"));
-
-
-// 버튼이 비활성화 되어있다면 활성화 시키기
-// if($("#signup_btn", '.signup_btn_wrap').prop("disabled") == true) {
-
-//     $(".signup_btn_wrap").attr("disabled", false);
-//     $("#signup_btn").attr("disabled", false);
+// 이메일 인증버튼 클릭 시
+$("#cnum_btn2").click(function(){
+    var memberCnum = $("#memberCnum").val();
+    if (memberCnum === code) {
     
+    	$(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").hide();
+        alert("이메일 인증이 완료되었습니다.");
+        $("#memberEmail").attr("disabled", true);
+        $("#memberCnum").attr("disabled", true);
+        $("#cnum_btn").attr("disabled", true);
+        $("#cnum_btn2").attr("disabled", true);
+    } else {
     
-// }
+    alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+	}
+});
 
 
+// ======================================== 돋보기 버튼 누르면 패스워드 보이기 시작 ========================================
+$('#eye').on('click', function() {
+	$('#memberPwd1').toggleClass('active');
+	
+	if($('#memberPwd1').hasClass('active')) {
+	
+		$('#memberPwd1').prop('type', "text");
+	} else {
+	
+	$('#memberPwd1').prop('type', "password");
+	}
+});
+
+// 회원 가입 버튼 클릭 시
+$("#signup_btn").click(function() {
+    var name = $("#memberName").val();
+    var id = $("#memberId").val();
+    var pw1 = $("#memberPwd1").val();
+    var pw2 = $("#memberPwd2").val();
+    var phone = $("#memberPhone").val();
+    var email = $("#memberEmail").val();
+    var addr = $("#sample6_postcode").val();
+    var code = $("#memberCnum").val();
+    var chk1 = $("#chk1").val();
+    var chk2 = $("#chk2").val();
+
+    // 입력 데이터 검증
+    if (name == "" || id == "" || pw1 == "" || pw2 == "" || phone == "" || email == "" || addr == "" || code == "" || chk1 == "" || chk2 == "") {
+        alert("입력하지 않은 항목이 있거나 필수 동의항목에 체크되지 않았습니다. 모든 항목을 입력해주세요.");
+        
+        return;
+    }
+
+    insertMember(name, id, pw1, pw2, phone, email, addr, code, chk1, chk2);
+});
 
 

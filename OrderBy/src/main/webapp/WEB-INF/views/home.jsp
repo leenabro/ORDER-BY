@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -17,6 +18,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- ajax 통신을 위한 meta tag -->
+		<meta name="_csrf" content="${_csrf.token}">
+		<meta name="_csrf_header" content="${_csrf.headerName}">
+		
 		<link rel="stylesheet" href="${ path }/resources/static/assets/css/main.css" />
 		
 		<!-- 상우 2 -->
@@ -68,16 +73,15 @@
           </ul>
 			<security:authorize access="isAnonymous()">
 	        	<a href="${ path }/member/login" class="button style4 small">Login</a>
-	        	<a href="${ path }/admin/view" class="button style4 small">admin</a>
 			</security:authorize>
+			
+			<form action="${ path }/member/logout" method="POST">
+				<security:csrfInput/>
+				<button class="button style4 small">Logout</button>
+			</form>
 			
 			<security:authorize access="isAuthenticated()">
 				<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
-			
-				<form action="${ path }/member/logout" method="POST">
-					<input type="submit" value="로그아웃" class="button style4 small">
-					<security:csrfInput/>
-				</form>
 			</security:authorize>
         </nav>
       </section>

@@ -1,19 +1,20 @@
 package com.ta.orderby.member.controller;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.Random;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ta.orderby.member.model.service.MemberService;
-import com.ta.orderby.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +27,9 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	
+	@Autowired
+	private JavaMailSender mailSender;
+
 
 //	
 //	// 관리자 전용 페이지 요청
@@ -64,80 +67,35 @@ public class MemberController {
 		return "member/login";
 	}
 	
-//	// 로그인 정보 입력 후 처리(시큐리티 처리전에 여기로 로그인정보 받았었음..시큐리티 적용 후에는 detail로 받음)
-//	@PostMapping("/login")
-//	public ModelAndView login(ModelAndView modelAndView,
-//				@RequestParam("mId") String id, @RequestParam("mPassword") String password) {
-//		
-//		log.info("{}, {}", id, password);
-//		
-//		Member loginMember = service.login(id, password);
-//		
-//		if(loginMember != null) {
-//			modelAndView.addObject("loginMember", loginMember);
-//			modelAndView.setViewName("redirect:/");
-//		} else {
-//			modelAndView.addObject("msg", "아이디 혹은 패스워드가 일치하지 않습니다.");
-//			modelAndView.addObject("location", "/");
-//			modelAndView.setViewName("common/msg");
-//		}
-//		
-//		return modelAndView;
-//	}
-	
+//	// 로그인 정보 입력 후 처리(시큐리티 처리전에 여기로 로그인정보 받았었음..시큐리티 적용 후에는 detail(MemberServiceImpl로 받음)
 	
 	// 회원가입 페이지로 이동
-		@GetMapping("/enroll")
-		public String enroll() {
-			log.info("회원가입 페이지 입장!");
-			
-			return "member/enroll";
-		}
+	@GetMapping("/enroll")
+	public String enroll() {
+		log.info("회원가입 페이지 입장!");
+		
+		return "member/enroll"; // jsp 경로
+	}
 		
 
 // ------------------------------ 회원가입 ------------------------------ //
 		
 	//아이디 중복체크
-		@RequestMapping(value = "/enroll", method = {RequestMethod.POST})
-		@ResponseBody
-		public int checkId(@Param("mId") String id) {
-			
-			log.info("checkId() 입장!");
-			
-			int result = service.checkId(id);
-			
-			log.info("결과값 = " + result);
-			
-			return result;
-			
-		}
+//	@RequestMapping(value = "/enroll", method = {RequestMethod.POST})
+	@GetMapping("/checkId")
+	public @ResponseBody int checkId(String id) {
+		
+		log.info("checkId() 입장!");
+		
+		int result = service.checkId(id);
+		
+		log.info("결과값 = " + result);
+		
+		return result;
+		
+	}
 	
-//	/*
-//	 * 로그인 처리
-//	 * 1. HttpSession과 Model 객체 사용
-//	 *   - Model이라는 객체는 컨트롤러에서 데이터를 뷰로 전달하고자할때 사용하는 객체이다.
-//	 *   - 전달하고자 하는 데이터를 맵 형식(key, value)으로 담을 수 있다.
-//	 *   - Model 객체의 Scope는 request이다.
-//	 */
-//	@PostMapping("/login")
-//	public String login(HttpSession session, Model model,
-//				@RequestParam String id, @RequestParam String password) {
-//		
-//		log.info("{}, {}", id, password);
-//		
-//		Member loginMember = service.login(id, password);
-//		
-//		if (loginMember != null) {
-//			session.setAttribute("loginMember", loginMember);
-//			
-//			return "redirect:/";
-//		} else {
-//			model.addAttribute("msg", "아이디나 패스워드가 일치하지 않습니다.");
-//			model.addAttribute("location", "/");
-//			
-//			return "common/msg";
-//		}		
-//	}
+
 ///*--------------------------------------------------------------------로그아웃 구현 */	
 //	/*
 //	 * 로그아웃 처리
@@ -151,17 +109,6 @@ public class MemberController {
 //		return "redirect:/";
 //	}
 	
-	
-/*--------------------------------------------------------------------로그인 구현2 */
-	/*
-	 * 로그인 처리
-	 * 2. @SessionAttributes과 ModelAndView 객체를 사용
-	 *   1) @SessionAttributes("키값")
-	 *     - Model 객체에서 "키값"에 해당하는 Attribute를 Session 영역까지 범위를 확장시키는 어노테이션이다.
-	 *     
-	 *   2) ModelAndView(스코프가 기본적으로 리퀘스트라서 유지가안되니까 범위확장해줘야함)
-	 *     - 컨트롤러에서 뷰로 전달할 데이터와 포워딩하려는 뷰의 정보를 담는 객체이다.(전달할 데이터 + 뷰의 이름)
-	 */
 
 /*--------------------------------------------------------------------로그아웃 구현2 */	
 	/*
@@ -349,4 +296,48 @@ public class MemberController {
 //	
 //	
 	
+	// 04-19 메일 테스트(완료)
+	// sendMail 코드
+	@RequestMapping(value = "/enroll/mailCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendMail(String email) {
+
+		//뷰에서 넘어왔는지 확인
+		System.out.println("이메일 전송");
+		
+		//난수 생성(인증번호)
+		Random r = new Random();
+		int num = r.nextInt(888888) + 111111;  //111111 ~ 999999 난수~
+		System.out.println("인증번호 : " + num);
+		
+		/* 이메일 보내기 */
+        String setFrom = "mailsender0128@gmail.com"; //보내는 이메일
+        String toMail = email; //받는 사람 이메일
+        String title = "ORDER BY 회원가입 인증 이메일 입니다.";
+        String content = 
+                "ORDER BY 홈페이지를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + num + " 입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
+        String rnum = Integer.toString(num);  //view로 다시 반환할 때 String만 가능
+        
+        return rnum;
+	}
+	
+
+
 }
