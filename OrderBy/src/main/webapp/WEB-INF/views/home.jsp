@@ -14,11 +14,9 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-	</head>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<body class="homepage is-preload">
 	
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
       <!-- 이 달의 특가 -->
       <section id="intro" class="wrapper style1" >
@@ -231,8 +229,6 @@
 	          </div>
 	        </div>
     	</section>
-
-	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	
 	</body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </html>

@@ -11,10 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <title>할인 / 결제</title>
-<link rel="stylesheet"
-	href="${ path }/resources/css/payment/discount.css">
-<!-- iamport.payment.js -->
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<link rel="stylesheet" href="${ path }/resources/css/payment/discount.css">
+	<!-- iamport.payment.js -->
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -122,17 +121,16 @@
 						<div class="scriptRow">
 							<span>가용 포인트</span>
 							<div>
-								<span>1,000</span>&nbsp;p
+								<span><input id="memberPoint" type="text" value="1000"></input></span>&nbsp;p
 							</div>
 						</div>
 						<div class="scriptRow">
-							<span>사용할 포인트</span>
+							<span style="padding-top: 20px;">사용할 포인트</span>
 							<div>
-								<input type="text" class="script-point"> p <input
+								<input id="usePoint" type="text" class="script-point" value="0"> p <input
 									type="button" id="pointButton" value="모두 사용">
 								<div>
-									<p style="font-size: 0.5em; color: red; vertical-align: top;">누적
-										포인트 50,000 포인트 이상이어야 사용 가능</p>
+									<p id="pointMsg" style="font-size: 0.5em; color: red; vertical-align: top;">누적 포인트 50,000 포인트 이상이어야 사용 가능</p>
 								</div>
 							</div>
 						</div>
@@ -140,6 +138,8 @@
 				</section>
 			</div>
 		</div>
+		<hr>
+		<p style="text-align: center;"><strong>차량 렌트 내용을 확인하였으며, 정보 제공 등에 동의합니다.</strong></p>
 		<div id="button-div">
 			<ul>
 				<li class="button-list">
@@ -161,103 +161,137 @@
 
 
 	<script>
-			// 객체 초기화 하기
-			IMP.init("imp53176208");
-			
-			function requestPay() {
-					IMP.request_pay({
-						pg: "danal_tpay.9810030929",
-						pay_method: "card",
-						merchant_uid: "ORD20180131-00000112",   // 주문번호
-						name: "${ car.brand } ${ car. name } 1일",
-						amount: 100,                         // 숫자 타입
-						buyer_email: "leenabro.be@gmail.com",
-						buyer_name: "홍길동",
-						buyer_tel: "010-4242-4242",
-						buyer_addr: "서울특별시 강남구 신사동",
-						buyer_postcode: "01181"
-					}, function (rsp) { // callback
-						if (rsp.success) {
-						  // 결제 성공 시 로직
-						  console.log(rsp);
-						  // 회원 검증 필요, 포인트 차감 필요
-						} else {
-						  // 결제 실패 시 로직
-						  alert("결제가 취소 되었습니다.");
-// 						  location.href = "${ path }/payment/discount?name=${ car.name }&price=${ car.price }";
-// 						  location.replace("${ path }/payment/success");
-						  console.log(rsp.pay_method);
-						  $.ajax({
-							 type: 'POST',
-							 url: '${ path }/payment/success',
-							 dataType: 'json',
-							 data: {
-								method: rsp.pay_method,
-								merchant_uid: rsp.merchant_uid,
-								name: rsp.name,
-								amount: rsp.amount,
-								buyer_email: rsp.buyer_email,
-								buyer_name: rsp.buyer_name,
-								buyer_tel: rsp.buyer_tel,
-								buyer_addr: rsp.buyer_addr,
-								buyer_postcode: rsp.buyer_postcode
-							 },
-							 success: (obj) => {
-								 console.log("success");
-							 }
-						  });
-						}
-					});
-			};
-			
-			
-			
-			
-			$(document).ready(() => {
-				$('#prevButton').on('click', () => {
-					location.href = "${ path }/payment/reservation?name=${ car.name }&price=${ car.price }";
-				});
-				
-				function comma(num) {
-				    num = String(num);
-				    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-				}				
-				
-				$('#disCoupone').change(function() {
-					let price = ${ car.price };
-					let disPercent = 1;
-					let discount = 0;
-					
-					if($(this).val() == '') {
-						price = comma(price);
-						
-						$('#dicPrice').html('- 0 원');
-						$('#dicContent').html('');
-						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
-					} 
-					
-				
-					for(var i = 0; i < ${coupons}.length; i++) {
-						if($(this).val() == ${coupons}[i].name) {
-							disPercent = (1-((${coupons}[i].percent)/100));
-							discount = comma(price*((${coupons}[i].percent)/100));
-							price = comma(price*disPercent);
-							
-							$('#finalPrice').html('<strong>' + price + ' 원</strong>');
-							$('#dicPrice').html('- ' + discount + ' 원');
-							$('#dicContent').html(${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)');
-							
-						};
+		let today = new Date();
+		let year = today.getFullYear(); // 년도
+		let month = today.getMonth(); // 월
+		let date = today.getDate(); // 일
+		let carNo = '${ car.no }';
+		
+		let productId = "";
+		const character = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F',
+			'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
+			'W','X','Y','Z'];
+		
+		for(let i = 0; i < 3; i++) {
+			let randomIndex = Math.floor(Math.random()*36+1);
+			productId += character[randomIndex];
+		};
+		
+		productId = productId + year + month + date + 0 + carNo;
+		
+		// 객체 초기화 하기 
+		IMP.init("imp53176208");
+		
+		function requestPay() {
+				IMP.request_pay({
+					pg: "danal_tpay.9810030929",
+					pay_method: "card",
+					merchant_uid: productId,   // 주문번호
+					name: "${ car.brand } ${ car. name } 1일",
+					amount: 100,                         // 숫자 타입
+					buyer_email: "leenabro.be@gmail.com",
+					buyer_name: "홍길동",
+					buyer_tel: "010-4242-4242",
+					buyer_addr: "서울특별시 강남구 신사동",
+					buyer_postcode: "01181"
+				}, function (rsp) { // callback
+					if (rsp.success) {
+					  // 결제 성공 시 로직
+					  console.log(rsp);
+					  // 회원 검증 필요, 포인트 차감 필요
+					} else {
+					  // 결제 실패 시 로직
+					  alert("결제가 취소 되었습니다.");
+					  $.ajax({
+						 type: 'POST',
+						 url: '${ path }/payment/success',
+						 dataType: 'json',
+						 data: {
+							method: rsp.pay_method,
+							merchant_uid: rsp.merchant_uid,
+							name: rsp.name,
+							amount: rsp.amount,
+							buyer_email: rsp.buyer_email,
+							buyer_name: rsp.buyer_name,
+							buyer_tel: rsp.buyer_tel,
+							buyer_addr: rsp.buyer_addr,
+							buyer_postcode: rsp.buyer_postcode
+						 },
+						 success: (obj) => {
+							 console.log("success");
+							 location.replace("${ path }/payment/success");
+						 }
+					  });
 					}
-					
-					
 				});
+		};
 				
+		$(document).ready(() => {
+			$('#prevButton').on('click', () => {
+				location.href = "${ path }/payment/reservation?name=${ car.name }&price=${ car.price }";
+			});
+			
+			function comma(num) {
+			    num = String(num);
+			    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+			};				
+			
+			$('#disCoupone').change(function() {
+				let price = ${ car.price };
+				let disPercent = 1;
+				let discount = 0;
 				
+				if($(this).val() == '') {
+					price = comma(price);
+					
+					$('#dicPrice').html('- 0 원');
+					$('#dicContent').html('');
+					$('#finalPrice').html('<strong>' + price + ' 원</strong>');
+				}; 
+				
+			
+				for(var i = 0; i < ${coupons}.length; i++) {
+					if($(this).val() == ${coupons}[i].name) {
+						disPercent = (1-((${coupons}[i].percent)/100));
+						discount = comma(price*((${coupons}[i].percent)/100));
+						price = comma(price*disPercent);
+						
+						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
+						$('#dicPrice').html('- ' + discount + ' 원');
+						$('#dicContent').html(${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)');
+						
+					};
+				};
 				
 				
 			});
-	
+			
+			$('#pointButton').on('click', () => {
+				let toPoint = document.getElementById("memberPoint").value;
+				
+				document.getElementById("usePoint").value = toPoint;
+			})
+			
+			$('#usePoint').keyup((event) => {
+				let point = 0;
+				if($(event.target).val() === null || $(event.target).val() === '') {
+					point = 0;
+				} else {
+					point = parseInt($(event.target).val());
+				}
+				let toPoint = parseInt(document.getElementById("memberPoint").value);
+				
+				if(point > toPoint) {
+					document.getElementById("usePoint").value = toPoint;		
+				} else {
+					document.getElementById("usePoint").value = point;
+				}
+				
+			});
+			
+			
+		});
+			
 	</script>
 
 </body>

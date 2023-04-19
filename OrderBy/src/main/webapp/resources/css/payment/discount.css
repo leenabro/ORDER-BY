@@ -195,6 +195,17 @@
 	flex-basis: 170px;
 }
 
+#memberPoint {
+	border: none;
+	background-color: inherit;
+	text-align: right;
+}
+
+#usePoint {
+	height: 35px;
+	text-align: right;	
+}
+
 #pointButton {
 	width: 100px;
 	border-radius: 5px; 

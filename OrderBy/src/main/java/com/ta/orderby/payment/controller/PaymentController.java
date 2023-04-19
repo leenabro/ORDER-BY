@@ -102,9 +102,9 @@ public class PaymentController {
 	
 	@ResponseBody
 	@PostMapping("payment/success")
-	public ModelAndView success(ModelAndView modelAndView, @RequestParam("method") String method) {
+	public ModelAndView success(ModelAndView modelAndView, @RequestParam("method") String method, @RequestParam("merchant_uid") String productId) {
 		
-		System.out.println(method);
+		System.out.println(productId);
 		
 		modelAndView.setViewName("payment/success");
 		

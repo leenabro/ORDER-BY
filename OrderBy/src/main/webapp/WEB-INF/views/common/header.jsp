@@ -9,13 +9,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="icon" type="image/png" href="${ path }/resources/images/common/favicon.png" />
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${ path }/resources/static/assets/css/main.css" />
 		
-		<!-- 상우 2 -->
-		   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-		  	<link rel="stylesheet" href="${ path }/resources/static/assets/css/slide.css">
+		
+		<link rel="stylesheet" href="${ path }/resources/static/assets/css/main.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+		<link rel="stylesheet" href="${ path }/resources/static/assets/css/slide.css">
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 		<!-- 상우 1 -->
@@ -43,9 +44,9 @@
 		                <li><a href="#">지도로 검색</a></li>
 		              </ul>
 		            </li>
-		            <li><a href="left-sidebar.html">차종 및 요금</a></li>
+		            <li><a href="#">차종 및 요금</a></li>
 		            <li>
-		              <a href="right-sidebar.html">고객센터</a>
+		              <a href="#">고객센터</a>
 		              <ul>
 		                <li><a href="#">자주 묻는 질문</a></li>
 		                <li><a href="#">공지사항</a></li>
