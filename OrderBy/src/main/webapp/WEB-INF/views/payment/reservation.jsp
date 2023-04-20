@@ -113,25 +113,25 @@
 	        			<div class="scriptRow">
 			        		<span>이름</span>
 			        		<div>
-			        			이정환
+			        			${ member.id }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>성별</span>
 			        		<div>
-			        			남자
+			        			${ member.gender }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>이메일</span>
 			        		<div>
-			        			orderby@naver.com
+			        			${ member.email }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>전화번호</span>
 			                <div>
-			                	010-1234-5678
+			                	${ member.phone }
 			                </div>	
 			        	</div>
 	        		</div>

@@ -71,7 +71,10 @@
 					<li class="car-spec-li">
 						<p class="car-spec-title">할인 요금</p>
 						<p id="dicPrice" class="car-spec-price">- 0 원</p>
-						<p id="dicContent"></p>
+						<div>
+							<ul id="dicContent">
+							</ul>
+						</div>
 					</li>
 					<li id="totalPrice" class="car-spec-li">
 						<p class="car-spec-title">총 금액</p>
@@ -90,7 +93,20 @@
 					<div class="scriptCon">
 						<div class="scriptRow">
 							<span>회원 등급</span>
-							<div>브론즈(0 %)</div>
+							<c:choose>
+								<c:when test="${ member.role eq 'B' }">
+									<div id="memberRole">브론즈(0 %)</div>
+								</c:when>
+								<c:when test="${ member.role eq 'S' }">
+									<div id="memberRole" style="color: mintcream">실버(5 %)</div>
+								</c:when>
+								<c:when test="${ member.role eq 'G' }">
+									<div id="memberRole" style="color: gold">골드(10 %)</div>
+								</c:when>
+								<c:when test="${ member.role eq 'D' }">
+									<div id="memberRole" style="color: cadetblue;">다이아(20 %)</div>
+								</c:when>
+							</c:choose>
 						</div>
 						<div class="scriptRow">
 							<span>지점 이벤트</span>
@@ -122,7 +138,7 @@
 						<div class="scriptRow">
 							<span>가용 포인트</span>
 							<div>
-								<span><input id="memberPoint" type="text" value="1000"></input></span>&nbsp;p
+								<span><input id="memberPoint" type="text" value="${ member.point }"></input></span>&nbsp;p
 							</div>
 						</div>
 						<div class="scriptRow">
@@ -237,29 +253,48 @@
 			    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 			};				
 			
-			$('#disCoupone').change(function() {
-				let price = ${ car.price };
-				let disPercent = 1;
-				let discount = 0;
+			// 멤버십 할인 및 쿠폰 할인 스크립트 문
+			let price = ${ car.price };
+			let role = document.getElementById('memberRole').innerText;
+			let discount = 0;
+			let ulNode = document.getElementById('dicContent');
+			let liNode = document.createElement('li');
+			
+			console.log(role);
+			if(role === '실버(5 %)') {
+				discount = price * 0.05;
+				price = price * 0.95;
+				liNode.textContent = role + " 할인";
+				ulNode.appendChild(liNode);
 				
-				if($(this).val() == '') {
-					price = comma(price);
+				$('#dicPrice').html('- '+ comma(discount) +' 원');
+				$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
+			}
+			
+			
+			$('#disCoupone').change(function() {
+				let disPercent = 1;
+				
+				if($(this).val() === '' && $(this).val() === null) {
 					
-					$('#dicPrice').html('- 0 원');
+					$('#dicPrice').html('- '+ comma(discount) +' 원');
 					$('#dicContent').html('');
-					$('#finalPrice').html('<strong>' + price + ' 원</strong>');
+					$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 				}; 
 				
 			
 				for(var i = 0; i < ${coupons}.length; i++) {
 					if($(this).val() == ${coupons}[i].name) {
 						disPercent = (1-((${coupons}[i].percent)/100));
-						discount = comma(price*((${coupons}[i].percent)/100));
-						price = comma(price*disPercent);
+						discount = Math.floor(price * ((${coupons}[i].percent)/100));
+						price = Math.round(price * disPercent);
 						
-						$('#finalPrice').html('<strong>' + price + ' 원</strong>');
-						$('#dicPrice').html('- ' + discount + ' 원');
-						$('#dicContent').html(${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)');
+						
+						$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
+						$('#dicPrice').html('- ' + comma(discount) + ' 원');
+						
+						liNode.textContent = ${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)';
+						ulNode.appendChild(liNode);
 						
 					};
 				};
