@@ -2,10 +2,12 @@ package com.ta.orderby.admin.model.service;
 
 import java.util.List;
 
+
 import com.ta.orderby.admin.model.vo.AdminMember;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
+import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.PageInfo;
 
 public interface AdminService {
@@ -47,5 +49,30 @@ public interface AdminService {
 	int save(AdminProductCar procar);
 
 	int save(AdminProductMotocycle promoto);
+
+	int getStoreCount();
+
+	List<AdminStore> getStoreCount(PageInfo pageInfo);
+
+	AdminStore findStore(int no);
+
+	int storedelete(int no);
+
+	int storeactivate(int no);
+
+	AdminStore findStoreProduct(int no);
+
+	int save(AdminStore store);
+
+	int motoactive(int no);
+
+	int caractive(int no);
+
+	int active(int no);
+
+
+
+
+
 
 }

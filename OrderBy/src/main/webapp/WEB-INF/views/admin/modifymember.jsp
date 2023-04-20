@@ -84,7 +84,6 @@
   </head>
 
   <body id="page-top">
-
       <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -165,18 +164,37 @@
 <!--                     <i class="fas fa-fw fa-table"></i> -->
 <!--                     <span>오토바이 현황</span></a> -->
 <!--             </li> -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/insertproduct">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>차종 등록</span></a>
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>차종 등록</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">차종 등록:</h6>
+                        <a class="collapse-item" href="${path }/admin/insertcarproduct">자동차</a>
+                        <a class="collapse-item" href="${path }/admin/insertmotocycleproduct">오토바이</a>
+                    </div>
+                </div>
             </li>
+
+<!--             <li class="nav-item"> -->
+<%--                 <a class="nav-link" href="${path }/admin/insertproduct"> --%>
+<!--                     <i class="fas fa-fw fa-table"></i> -->
+<!--                     <span>차종 등록</span></a> -->
+<!--             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/location">
+                <a class="nav-link" href="${path }/admin/store">
                     <i class="fas fa-fw fa-table"></i>
                     <span>매장 관리</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/insertstore">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>매장 등록</span></a>
+            </li>
 
 
             <!-- Divider -->
@@ -262,10 +280,45 @@
             <span class="input_area"><input type="text" maxlength="5" name="userName" value="${member.name}" readonly></span>
 
             <h6>* 포인트</h6>
-            <span class="input_area"><input type="text" name="userPoint" value="${member.point}" readonly></span>
+            <span class="input_area"><input type="text" name="userPoint" value="${member.point}"></span>
             
             <h6>* 회원등급</h6>
-            <span class="input_area"><input type="text" name="userGrade" value="${member.role}" readonly></span>
+<%--             <span class="input_area"><input type="text" name="userGrade" value="${member.role}" readonly></span> --%>
+            <select name="userGrade" class="input_area" >
+                        <option value="${member.role }" id="sale_product" name="userGrade">${member.role }</option>
+                        <c:choose>
+                        	<c:when test="${member.role =='B' }">
+                        	    <option value="S" id="sale_product" name="userGrade">S</option> 
+                        		<option value="G" id="sale_product" name="userGrade">G</option> 
+                        		<option value="D" id="sale_product" name="userGrade">D</option> 
+                        		<option value="M" id="sale_product" name="userGrade">M</option> 
+                        	</c:when>
+                        	<c:when test="${member.role =='S' }">
+                        	    <option value="B" id="sale_product" name="userGrade">B</option> 
+                        		<option value="G" id="sale_product" name="userGrade">G</option> 
+                        		<option value="D" id="sale_product" name="userGrade">D</option> 
+                        		<option value="M" id="sale_product" name="userGrade">M</option> 
+                        	</c:when>
+                        	<c:when test="${member.role =='G' }">
+                        	    <option value="B" id="sale_product" name="userGrade">B</option> 
+                        		<option value="S" id="sale_product" name="userGrade">S</option> 
+                        		<option value="D" id="sale_product" name="userGrade">D</option> 
+                        		<option value="M" id="sale_product" name="userGrade">M</option> 
+                        	</c:when>
+                        	<c:when test="${member.role =='D' }">
+                        	    <option value="B" id="sale_product" name="userGrade">B</option> 
+                        		<option value="S" id="sale_product" name="userGrade">S</option> 
+                        		<option value="G" id="sale_product" name="userGrade">G</option> 
+                        		<option value="M" id="sale_product" name="userGrade">M</option> 
+                        	</c:when>
+                        	<c:otherwise>
+                        	    <option value="B" id="sale_product" name="userGrade">B</option> 
+                        		<option value="S" id="sale_product" name="userGrade">S</option> 
+                        		<option value="G" id="sale_product" name="userGrade">G</option> 
+                        		<option value="D" id="sale_product" name="userGrade">D</option> 
+                        	</c:otherwise>
+                        </c:choose>
+                        </select>
 
             <h6>* 생년월일</h6>
             <span class="input_area"><input type="text" name="userBirth" value="${member.birth}" readonly></span>
@@ -283,8 +336,13 @@
             
             <div class="btnArea">
                <button id="updateBtn" type="submit">회원 수정</button>
-               <button id="delBtn" type="button">회원 탈퇴</button>
-               <button id="joinBtn" type="button" onclick="location.href='${path}/admin/modifymember';">뒤로가기</button>
+               <c:if test="${member.status eq 'Y'}">
+               <button id="delBtn" type="button">회원 삭제</button>
+               </c:if>
+               <c:if test="${member.status eq 'N'}">
+               <button id="activeBtn" type="button">활성화</button>
+               </c:if>
+               <button id="joinBtn" type="button" onclick="location.href='${path}/admin/member'">뒤로가기</button>
             </div>
          </form>
       </div>
@@ -307,6 +365,14 @@
 			$('#updateBtn').on('click', () => {
 				if(confirm('회원정보를 수정 하시겠습니까?')) {
 					location.replace('${path}/admin/modifyupdate?no=${member.no}');
+				}
+			});
+		});
+		
+        $(document).ready(() => {
+			$('#activeBtn').on('click', () => {
+				if(confirm('회원정보를 활성화 하시겠습니까?')) {
+					location.replace('${path}/admin/modifymemberactive?no=${member.no}');
 				}
 			});
 		});

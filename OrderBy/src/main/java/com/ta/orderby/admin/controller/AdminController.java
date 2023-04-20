@@ -1,12 +1,19 @@
 package com.ta.orderby.admin.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ta.orderby.admin.model.service.AdminService;
@@ -14,6 +21,8 @@ import com.ta.orderby.admin.model.vo.AdminMember;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
+import com.ta.orderby.admin.model.vo.AdminStore;
+import com.ta.orderby.common.util.MultipartFileUtil;
 import com.ta.orderby.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +33,8 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	@Autowired
+	private ResourceLoader resourceLoader;
 	// 관리자페이지 불러오기
 	@GetMapping("/admin/view")
 	public String admin() {
@@ -109,21 +120,127 @@ public class AdminController {
 	}
 
 	
-	// 상품등록
-	@GetMapping("/admin/insertproduct")
-	public String insertproduct() {
-		log.info("Admin InsertProduct 페이지");
+	// 자동차 상품등록
+	@GetMapping("/admin/insertcarproduct")
+	public String insertcarproduct() {
+		log.info("Admin insertcarproduct 페이지");
 		
-		return "admin/insertproduct";
+		return "admin/insertcarproduct";
 	}
 	
-	// 매장정보 불러오기
-	@GetMapping("/admin/location")
-	public String location() {
-		log.info("Admin Location 페이지");
+	// 자동차 상품등록
+	@PostMapping("/admin/insertcarproduct")
+	public ModelAndView insertcar( @ModelAttribute AdminProductCar procar,
+			ModelAndView modelAndView, @RequestParam("upfile") MultipartFile upfile) {
+
 		
-		return "admin/location";
+		int result = 0;
+		
+		log.info("upfile.isEmpty() : {}", upfile.isEmpty());
+		
+		if(upfile != null && !upfile.isEmpty()) {
+			String location = null;
+			String FileName =null;
+			
+			try {
+				location = resourceLoader.getResource("resources/images/car/" + procar.getBrand()).getFile().getPath();
+				
+				FileName = MultipartFileUtil.save(upfile, location);
+				
+				System.out.println(FileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		
+
+		System.out.println(procar);
+		
+		result = service.save(procar);
+		
+		
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "자동차 상품이 정상적으로 등록되었습니다.");
+			modelAndView.addObject("location", "/admin/carproduct");
+		} else {
+			modelAndView.addObject("msg", "자동차 상품 등록을 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/insertcarproduct");
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
 	}
+	
+	// 오토바이 상품등록
+	@GetMapping("/admin/insertmotocycleproduct")
+	public String insertmotoproduct() {
+		log.info("Admin insertmotocycleproduct 페이지");
+		
+		return "admin/insertmotocycleproduct";
+	}
+	
+	// 오토바이 상품등록
+	@PostMapping("/admin/insertmotocylceproduct")
+	public ModelAndView insertmotocycle( @ModelAttribute AdminProductMotocycle promoto,
+			ModelAndView modelAndView, @RequestParam("upfile") MultipartFile upfile) {
+		
+		int result = 0;
+		
+		log.info("upfile.isEmpty() : {}", upfile.isEmpty());
+		
+		if(upfile != null && !upfile.isEmpty()) {
+			String location = null;
+			String FileName =null;
+			
+			try {
+				location = resourceLoader.getResource("resources/images/motocycle/" + promoto.getBrand()).getFile().getPath();
+				
+				FileName = MultipartFileUtil.save(upfile, location);
+				
+				System.out.println(FileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		System.out.println(promoto);
+		
+		result = service.save(promoto);
+		
+		
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "자동차 상품이 정상적으로 등록되었습니다.");
+			modelAndView.addObject("location", "/admin/motocycleproduct");
+		} else {
+			modelAndView.addObject("msg", "자동차 상품 등록을 실패하였습니다.");
+			modelAndView.addObject("location", "admin/insertmotocylceproduct");
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+	
+//	// 매장정보 불러오기
+//	@GetMapping("/admin/location")
+//	public ModelAndView location(ModelAndView modelAndView) {
+//		List<AdminStore> store = service.storefindAll();
+//		
+//		log.info("매장 정보 불러오기");
+//		log.info("store : {}", store);
+//		
+//		modelAndView.addObject("store", store);
+//		modelAndView.setViewName("admin/location");
+//		
+//		return modelAndView;
+//	}
+
 	
 	// 회원관리 수정view 데이터불러오기
 	@GetMapping("/admin/modifymember")
@@ -183,6 +300,33 @@ public class AdminController {
 			modelAndView.addObject("location", "/admin/carproduct");
 		} else {
 			modelAndView.addObject("msg", "차량 삭제를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/carproduct");
+		}
+		
+		System.out.println(no);
+		System.out.println(procar);
+		
+
+		modelAndView.setViewName("common/msg");
+		
+
+		return modelAndView;
+	}
+	
+	// 차량활성화
+	@GetMapping("/admin/modifycaractive")
+	public ModelAndView modifycaractive(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminProductCar procar = null;
+		
+		procar = service.findCarProduct(no);
+		result = service.caractive(no);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "차량 활성화를 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/carproduct");
+		} else {
+			modelAndView.addObject("msg", "차량 활성화를 실패하였습니다.");
 			modelAndView.addObject("location", "/admin/carproduct");
 		}
 		
@@ -295,10 +439,10 @@ public class AdminController {
 		
 		if(result > 0) {
 			modelAndView.addObject("msg", "오토바이 삭제를 성공하였습니다.");
-			modelAndView.addObject("location", "/admin/carproduct");
+			modelAndView.addObject("location", "/admin/motocycleproduct");
 		} else {
 			modelAndView.addObject("msg", "오토바이 삭제를 실패하였습니다.");
-			modelAndView.addObject("location", "/admin/carproduct");
+			modelAndView.addObject("location", "/admin/motocycleproduct");
 		}
 		
 		
@@ -312,6 +456,35 @@ public class AdminController {
 
 		return modelAndView;
 	}
+	// 오토바이 활성화
+	@GetMapping("/admin/modifymotoactive")
+	public ModelAndView modifymotoactive(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminProductMotocycle promoto = null;
+		
+		promoto = service.findMotoProduct(no);
+		result = service.motoactive(no);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "오토바이 활성화를 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/motocycleproduct");
+		} else {
+			modelAndView.addObject("msg", "오토바이 활성화를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/motocycleproduct");
+		}
+		
+		
+		
+		System.out.println(no);
+		System.out.println(promoto);
+		
+
+		modelAndView.setViewName("common/msg");
+		
+
+		return modelAndView;
+	}
+	
 	
 	// 오토바이 정보 수정
 			@GetMapping("/admin/modifymotoupdate")
@@ -454,6 +627,32 @@ public class AdminController {
 		return modelAndView;
 	}
 	
+	// 멤버 활성화
+	@GetMapping("/admin/modifymemberactive")
+	public ModelAndView modifymemberactive(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminMember member = null;
+		
+		member = service.modifyMemberByNo(no);
+		result = service.active(no);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "회원 활성화를 정상적으로 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/member");
+		} else {
+			modelAndView.addObject("msg", "회원 활성화를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/member");
+		}
+		
+		System.out.println(no);
+		System.out.println(member);
+		
+
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+	
 	// 회원정보수정
 	@GetMapping("/admin/modifyupdate")
 	public ModelAndView update(ModelAndView modelAndView, @RequestParam int no) {
@@ -524,6 +723,205 @@ public class AdminController {
 		return modelAndView;
 	}
 	
+	// 매장정보 테이블 불러오기
+	@GetMapping("/admin/store")
+	public ModelAndView store(ModelAndView modelAndView, @RequestParam(defaultValue = "1")int page) {
+		int storeCount = service.getStoreCount();
+		
+		log.info("Store 페이지");
+		log.info("list : {}", storeCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 20, storeCount, 20);
+		List<AdminStore> store = service.getStoreCount(pageInfo);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", store);
+		modelAndView.setViewName("admin/store");
+		
+		return modelAndView;
+	}
 	
 	
+	// 매장정보 불러오기
+	@GetMapping("/admin/modifystore")
+	public ModelAndView modifystore(ModelAndView modelAndView, @RequestParam int no) {
+		AdminStore store = null;
+		
+		log.info("Store 상세정보 불러오기");
+		
+		log.info("no : {}", no);
+		
+		store = service.findStore(no);
+		
+		modelAndView.addObject("store", store);
+		modelAndView.setViewName("admin/modifystore");
+		
+		return modelAndView;
+	}
+	
+	// 매장 삭제
+	@GetMapping("/admin/modifystoredelete")
+	public ModelAndView storedelete(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminStore store = null;
+		
+		store = service.findStore(no);
+		result = service.storedelete(no);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "매장 삭제를 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/store");
+		} else {
+			modelAndView.addObject("msg", "매장 삭제를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/store");
+		}
+		
+		
+		
+		System.out.println(no);
+		System.out.println(store);
+		
+
+		modelAndView.setViewName("common/msg");
+		
+
+		return modelAndView;
+	}	
+	
+	// 매장 활성화
+	@GetMapping("/admin/modifystoreactivate")
+	public ModelAndView storeactivate(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminStore store = null;
+		
+		store = service.findStore(no);
+		result = service.storeactivate(no);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "매장 활성화를 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/store");
+		} else {
+			modelAndView.addObject("msg", "매장 활성화를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/store");
+		}
+		
+		
+		
+		System.out.println(no);
+		System.out.println(store);
+		
+		
+		modelAndView.setViewName("common/msg");
+		
+		
+		return modelAndView;
+	}
+
+	// 자동차 정보 수정
+		@PostMapping("/admin/modifystoreupdate")
+		public ModelAndView storeupdate(ModelAndView modelAndView,  @RequestParam int no, 
+				@RequestParam String name, @RequestParam int count, @RequestParam String location, @RequestParam String address,
+				@RequestParam String slat, @RequestParam String slong) {
+					
+				AdminStore store = null;
+				int result = 0;
+					
+				log.info("no : {}", no);
+				log.info("Store 정보 수정 파라미터");
+				log.info("{}, {}, {}, {}, {}, {}, {}", new Object[] {no, name, count, location, address, slat, slong});
+				
+				store = service.findStoreProduct(no);
+					
+				store.setName(name);
+				store.setCount(count);
+				store.setLocation(location);
+				store.setAddress(address);
+				store.setSlat(slat);
+				store.setSlong(slong);
+				
+					
+				result = service.save(store);
+					
+				if(result > 0) {
+						
+					modelAndView.addObject("msg", "매장 정보 수정을 성공 하였습니다.");
+					modelAndView.addObject("location", "/admin/modifystore?no=" + no);
+				} else {
+					modelAndView.addObject("msg", "매장 정보 수정을 실패 하였습니다.");
+					modelAndView.addObject("location", "/admin/modifystore?no=" + no);
+				}
+					
+				modelAndView.setViewName("common/msg");
+				
+			return modelAndView;
+		}
+	
+	// 매장 등록 불러오기
+	@GetMapping("/admin/insertstore")
+	public ModelAndView insertstoreview(ModelAndView modelAndView) {
+		
+		return modelAndView;
+	}
+	
+	// 매장 등록하기
+	@PostMapping("/admin/insertstore")
+	public ModelAndView insertstore(ModelAndView modelAndView,
+			@ModelAttribute AdminStore store) {
+		int result = 0;
+		
+		result = service.save(store);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "매장 등록을 성공하였습니다.");
+			modelAndView.addObject("location", "/admin/store");
+		} else {
+			modelAndView.addObject("msg", "매장 등록을 실패하였습니다.");
+			modelAndView.addObject("location", "admin/insertstore");
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+	
+
+	//차종 및 요금 불러오기
+	@GetMapping("/admin/priceproduct")
+	public ModelAndView priceproduct(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+		log.info("차종 및 요금 테이블 불러오기");
+		
+		int motocycleCount = service.getMotocylceCount();
+		
+		log.info("Admin carProduct 페이지");
+		log.info("Car Product Count : {}", motocycleCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 10, motocycleCount, 10);
+		List<AdminProductMotocycle> promoto = service.getMotocylceCount(pageInfo);
+		List<AdminProductCar> procar = service.getCarCount(pageInfo);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("procar", procar);
+		modelAndView.addObject("promoto",promoto);
+		modelAndView.setViewName("admin/priceproduct");
+	
+	return modelAndView;
+ }
+	
+//	// 오토바이테이블 불러오기
+//	@GetMapping("/admin/motocycleproduct")
+//	public ModelAndView motocycleproduct(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+//		int motocycleCount = service.getMotocylceCount();
+//		
+//		log.info("Admin carProduct 페이지");
+//		log.info("Car Product Count : {}", motocycleCount);
+//		
+//		PageInfo pageInfo = new PageInfo(page, 10, motocycleCount, 10);
+//		List<AdminProductMotocycle> productmotocycle = service.getMotocylceCount(pageInfo);
+//		
+//		modelAndView.addObject("pageInfo", pageInfo);
+//		modelAndView.addObject("list", productmotocycle);
+//		modelAndView.setViewName("admin/motocycleproduct");
+//		
+//		return modelAndView;
+//	}
 }

@@ -28,8 +28,7 @@ public class MultipartFileUtil {
 		
 		// 밀리세컨드단위로 파일만들고(중복 없게끔) 확장자만 떼어다가 파일명 만들어준다.
 		renamedFileName = 
-				LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS")) + 
-				originalFileName.substring(originalFileName.lastIndexOf("."));
+				originalFileName;
 		
 		try {
 			// 업로드한 파일 데이터를 지정한 파일에 저장한다.(upfile은 사용자가 업로드한 데이터고 그걸 물리적인 경로 new File 오브젝트에 저장한다.)

@@ -70,7 +70,7 @@
 
   <body id="page-top">
 
-       <!-- Page Wrapper -->
+         <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -150,12 +150,27 @@
 <!--                     <i class="fas fa-fw fa-table"></i> -->
 <!--                     <span>오토바이 현황</span></a> -->
 <!--             </li> -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/insertproduct">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>차종 등록</span></a>
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>차종 등록</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">차종 등록:</h6>
+                        <a class="collapse-item" href="${path }/admin/insertcarproduct">자동차</a>
+                        <a class="collapse-item" href="${path }/admin/insertmotocycleproduct">오토바이</a>
+                    </div>
+                </div>
             </li>
+
+<!--             <li class="nav-item"> -->
+<%--                 <a class="nav-link" href="${path }/admin/insertproduct"> --%>
+<!--                     <i class="fas fa-fw fa-table"></i> -->
+<!--                     <span>차종 등록</span></a> -->
+<!--             </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="${path }/admin/location">
                     <i class="fas fa-fw fa-table"></i>
@@ -239,35 +254,27 @@
                         <label for="location_insert"   style="font-size: large;">매장 등록 </label>
 
                     </div>
+                    
+                    <form id="locationForm" action="${path }" msthod="POST">
+
                     <div id="location_all_select">
 
                         <div class="location_content" style="padding-left: 53%;">
                             <span>지역 검색 : </span>
-                            <select name="location" id="location" style="width: 150px; text-align: center;">
-                                <option value="S1">서울 강남구</option>
-                                <option value="S1">서울 영등포구</option>
-                                <option value="GE1">경기 수원시</option>
-                                <option value="GE2">경기 평택시</option>
-                                <option value="GE3">경기 가평군</option>
-                                <option value="D1">대전 중구</option>
-                                <option value="D2">대전 달서구</option>
-                                <option value="B1">부산 수영구</option>
-                                <option value="B2">부산 사상구</option>
-                                <option value="U1">울산 남구</option>
-                                <option value="U2">울산 북구</option>
-                                <option value="I1">인천 연수구</option>
-                                <option value="I2">인천 중구</option>
-                                <option value="G1">광주 서구</option>
-                                <option value="JU1">전주 전주시</option>
-                                <option value="GW1">강원 양양군</option>
-                                <option value="GW2">강원 강릉시</option>
-                                <option value="J1">제주 제주시</option>
-                            </select>
+                            <select name="locationNo" id="locationNo" style="width: 150px; text-align: center;" required>
+                                	<option selected>----- 선택 ------</option>
+                                	<c:forEach var="store" items="${store }">
+                                		<option id="locationNo" value="${ store.no }">${ store.name }</option>
+                                	</c:forEach>
+                             </select>
+                             <input type="button" value="조회하기" id="selectlocation">
                         </div>
                         <br>
 
+							<p id="result1"></p>
+
                         <div class="detail_view">
-                            <details open>
+                            <details>
                                 <summary class="title">매장 정보</summary>
                             <table
                             class="table table-bordered"
@@ -276,42 +283,42 @@
                             cellspacing="0"
                             >
                             <div id="joinInfoArea">
-                                <form id="joinForm" action=""
-                                method="post" onsubmit="return validate();">
+                            <c:forEach var="store" items="${store }">
                                    <div style="float: left; margin-left: 2%;" >
+                                   
                                        <h6>매장 이름</h6>
-                                       <span class="input_area"><input type="text" maxlength="13" name="userId" value="서울1" ></span>
+                                       <span class="input_area"><input type="text" maxlength="13" name="name" value="${store.name }" ></span>
                                        
                                        <h6>매장 보유 차종 수</h6>
-                                       <span class="input_area"><input type="text" maxlength="15" name="userPwd" value="8대"></span>
+                                       <span class="input_area"><input type="text" maxlength="15" name="count" value="${store.count }"></span>
                                        
                                        <h6>매장 지역</h6>
-                                       <span class="input_area"><input type="text" maxlength="5" name="userName" value="서울시"></span>
+                                       <span class="input_area"><input type="text" maxlength="5" name="location" value="${store.location }"></span>
                                     </div>
 
                                     <div style="float: right; margin-right: 2%;">
                                         <h6>매장 상세 주소</h6>
-                                        <span class="input_area"><input type="text" name="userPoint" value="서울 강남구 테헤란로14길 6 남도빌딩"></span>
+                                        <span class="input_area"><input type="text" name="address" value="${store.address }"></span>
                                             
                                         <h6>위도</h6>
-                                        <span class="input_area"><input type="text" maxlength="5" name="userName" value="37.4989761690588"></span>
+                                        <span class="input_area"><input type="text" maxlength="5" name="slat" value="${store.slat }"></span>
                                                 
                                         <h6>경도</h6>
-                                        <span class="input_area"><input type="text" maxlength="5" name="userName" value="127.03290014843104"></span>
+                                        <span class="input_area"><input type="text" maxlength="5" name="slong" value="${store.slong }"></span>
                                     </div>
+                            </c:forEach>
 
                                     <div class="btnArea">
                                         <button id="joinBtn">매장 정보 수정</button>
                                         <button id="joinBtn">매장 삭제</button>
                                      </div>
-                                </form>
                             </div>
                     </table>
                     </details>
                 </div>
                 
                 <div class="detail_view">
-                            <details open>
+                            <details>
                                 <summary class="title">매장 보유 차종 정보</summary>
                                 <table
                                 class="table table-bordered"
@@ -374,6 +381,7 @@
                         </tbody>
                     </table>
                 </details>
+			</form>
             </div>
         </div>
         
@@ -430,7 +438,7 @@
         
                 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=00be5712acaed1c7ea1e3d8899cba967"></script>
                 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-                    <script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
+                <script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
 <script>
 $('#location_all_insert').hide();
     function sample6_execDaumPostcode() {
@@ -480,15 +488,15 @@ $('#location_all_insert').hide();
             }
         }).open();
     }
-</script>
-                    <script>
-                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { 
-        center: new kakao.maps.LatLng(37.4989761690588, 127.03290014843104), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
 
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    
+                    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+                    var options = { //지도를 생성할 때 필요한 기본 옵션
+                    	center: new kakao.maps.LatLng(37.4989761690588, 127.03290014843104), //지도의 중심좌표.
+                    	level: 3 //지도의 레벨(확대, 축소 정도)
+                    };
+
+                    var map = new kakao.maps.Map(container, options);
  
 // 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다 
 var points = [
@@ -562,6 +570,30 @@ function setDisplay() {
         $('#location_all_insert').show();
     }
 }
+
+$(document).ready(() => {
+	$('#slectlocation').on('click', () => {
+		let locationNo = $('#locationNo').val();
+		alert('test');
+		)};
+	)};
+// 매장 조회
+	$(document).ready(() => {
+		$('#locationNo').on('change', () => {
+			let locationNo = $('#locationNo>option:selected').val();
+			
+			$.ajax({
+				type: 'GET',
+				url: '${path}/stores/' + locationNo,
+				dataType: 'json',
+				success: (stores) => {
+					console.log(stores)
+				}
+			});
+		});
+	});
+
+	
 
 </script>
 

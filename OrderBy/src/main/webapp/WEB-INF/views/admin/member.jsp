@@ -117,18 +117,37 @@
 <!--                     <i class="fas fa-fw fa-table"></i> -->
 <!--                     <span>오토바이 현황</span></a> -->
 <!--             </li> -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/insertproduct">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>차종 등록</span></a>
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>차종 등록</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">차종 등록:</h6>
+                        <a class="collapse-item" href="${path }/admin/insertcarproduct">자동차</a>
+                        <a class="collapse-item" href="${path }/admin/insertmotocycleproduct">오토바이</a>
+                    </div>
+                </div>
             </li>
+
+<!--             <li class="nav-item"> -->
+<%--                 <a class="nav-link" href="${path }/admin/insertproduct"> --%>
+<!--                     <i class="fas fa-fw fa-table"></i> -->
+<!--                     <span>차종 등록</span></a> -->
+<!--             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/location">
+                <a class="nav-link" href="${path }/admin/store">
                     <i class="fas fa-fw fa-table"></i>
                     <span>매장 관리</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/insertstore">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>매장 등록</span></a>
+            </li>
 
 
             <!-- Divider -->
@@ -196,7 +215,7 @@
           <div class="container-fluid">
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">회원 관리</h1>
-            <p class="mb-4">Ordry By에서 보유중인 회원들을 관리</p>
+            <p class="mb-4">Order By에서 보유중인 회원들을 관리</p>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -212,19 +231,19 @@
                     <thead>
                       <tr>
                       	<th>번호</th>
-                        <th>이름</th>
-                        <th>주소</th>
-                        <th>전화 번호</th>
+                        <th>회원 이름</th>
+                        <th>회원 주소</th>
+                        <th>전화번호</th>
                         <th>성별</th>
-                        <th>생년 월일</th>
-                        <th>생성 날짜</th>
+                        <th>생년월일</th>
+                        <th>상태</th>
                       </tr>
                     </thead>
                     <tbody>
                     <c:if test="${ empty list }">
                     	<tr>
                     		<td colspan="7" style="text-align:center">
-                    			조회되는 멤버가 없습니다.
+                    			조회되는 매장이 없습니다.
                     		</td>
                     	</tr>
                     </c:if>
@@ -237,7 +256,7 @@
                         <td>${member.phone }</td>
                         <td>${member.gender }</td>
                         <td>${member.birth }</td>
-                        <td>${member.enrollDate }</td>
+                        <td>${member.status }</td>
                       </tr>
                        </c:forEach>
                     </c:if>
