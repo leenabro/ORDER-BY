@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -12,6 +13,8 @@
 		<link rel="icon" type="image/png" href="${ path }/resources/images/common/favicon.png" />
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="_csrf" content="${_csrf.token}">
+		<meta name="_csrf_header" content="${_csrf.headerName}">
 		
 		
 		<link rel="stylesheet" href="${ path }/resources/static/assets/css/main.css" />
@@ -34,27 +37,38 @@
 		        </div>
 		        <!-- Nav -->
 		        <nav id="nav">
-		          <ul>
-		            <li class="current"><a href="index.html">Order By</a></li>
-		            <li>
-		              <a href="#">대여</a>
-		              <ul>
-		                <li><a href="#">자동차</a></li>
-		                <li><a href="#">바이크</a></li>
-		                <li><a href="#">지도로 검색</a></li>
-		              </ul>
-		            </li>
-		            <li><a href="#">차종 및 요금</a></li>
-		            <li>
-		              <a href="#">고객센터</a>
-		              <ul>
-		                <li><a href="#">자주 묻는 질문</a></li>
-		                <li><a href="#">공지사항</a></li>
-		              </ul>
-		            </li>
-		            <li><a href="no-sidebar.html">회사소개</a></li>
-		          </ul>
-		          <a href="${ path }/member/login" class="button style4 small">Login</a>
+					<ul>
+					  <li class="current"><a href="index.html">Order By</a></li>
+					  <li>
+					    <a href="#">대여</a>
+					    <ul>
+					      <li><a href="#">자동차</a></li>
+					      <li><a href="#">바이크</a></li>
+					      <li><a href="#">지도로 검색</a></li>
+					    </ul>
+					  </li>
+					  <li><a href="#">차종 및 요금</a></li>
+					  <li>
+					    <a href="#">고객센터</a>
+					    <ul>
+					      <li><a href="#">자주 묻는 질문</a></li>
+					      <li><a href="#">공지사항</a></li>
+					    </ul>
+					  </li>
+					        <li><a href="no-sidebar.html">회사소개</a></li>
+					</ul>
+					<security:authorize access="isAnonymous()">
+					      	<a href="${ path }/member/login" class="button style4 small">Login</a>
+					</security:authorize>
+					
+					<form action="${ path }/member/logout" method="POST">
+						<security:csrfInput/>
+						<button class="button style4 small">Logout</button>
+					</form>
+					
+					<security:authorize access="isAuthenticated()">
+					<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
+					</security:authorize>
 		        </nav>
 			</header>
 		</div>

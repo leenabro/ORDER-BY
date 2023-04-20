@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -15,6 +16,7 @@
 -->
 <html>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	
 	<body class="homepage is-preload">
 	
 	
@@ -40,7 +42,6 @@
 		                </a>
 		                  <div class="add-information"><br>
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
-<%-- 		                    <h4 style="color:black; font-size: x-large;"> ${fn:replace(car.name, emptyChar, "<br>")}</h4> --%>
 		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4>
 		                    <br>
 		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
