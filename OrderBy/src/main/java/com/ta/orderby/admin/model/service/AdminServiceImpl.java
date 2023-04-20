@@ -2,6 +2,7 @@ package com.ta.orderby.admin.model.service;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.ta.orderby.admin.model.vo.AdminMember;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
+import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.PageInfo;
 
 @Service
@@ -143,19 +145,117 @@ public class AdminServiceImpl  implements AdminService{
 	public int save(AdminProductCar procar) {
 		int result = 0;
 		
-		result = mapper.updateProductCar(procar);
+		if(procar.getNo() > 0) {
+			// 수정
+			result = mapper.updateProductCar(procar);
+		} else {
+			// 등록
+			result = mapper.insertProductCar(procar);
+		}
+		
 		
 		return result;
 	}
 
 	@Override
+	@Transactional
 	public int save(AdminProductMotocycle promoto) {
 		int result = 0;
 		
-		result = mapper.updateProductMotocycle(promoto);
+		if(promoto.getNo() > 0) {
+			// 수정
+			result = mapper.updateProductMotocycle(promoto);
+		} else {
+			// 등록
+			result = mapper.insertProductMotocycle(promoto);
+		}
+		
 		
 		return result;
 	}
+
+	@Override
+	public int getStoreCount() {
+		
+		return mapper.selectStoreCount();
+	}
+
+	@Override
+	public List<AdminStore> getStoreCount(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		
+		return mapper.storeselectAll(rowbounds);
+	}
+
+	@Override
+	public AdminStore findStore(int no) {
+		return mapper.selectStoreByNo(no);
+	}
+
+	@Override
+	public int storedelete(int no) {
+		
+		return mapper.updateStoreStatus(no, "N");
+	}
+
+	@Override
+	public int storeactivate(int no) {
+		
+		return mapper.activateStoreStatus(no, "Y");
+	}
+
+	@Override
+	public AdminStore findStoreProduct(int no) {
+		
+		return mapper.selectStoreByNo(no);
+	}
+
+	@Override
+	public int save(AdminStore store) {
+		int result = 0;
+		
+		if(store.getNo() > 0) {
+			// 수정
+			result = mapper.updateStore(store);
+		} else {
+			// 등록
+			result = mapper.insertStore(store);
+		}
+		
+		
+		return result;
+	}
+
+	@Override
+	public int motoactive(int no) {
+		
+		return mapper.activeMotoStatus(no, "Y");
+	}
+
+	@Override
+	public int caractive(int no) {
+		
+		return mapper.activeCarStatus(no, "Y");
+	}
+
+	@Override
+	public int active(int no) {
+		
+		return mapper.activeMemberStatus(no, "Y");
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

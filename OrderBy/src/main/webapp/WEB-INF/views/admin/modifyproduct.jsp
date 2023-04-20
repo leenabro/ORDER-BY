@@ -87,7 +87,7 @@
 
   <body id="page-top">
 
-        <!-- Page Wrapper -->
+         <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -167,18 +167,37 @@
 <!--                     <i class="fas fa-fw fa-table"></i> -->
 <!--                     <span>오토바이 현황</span></a> -->
 <!--             </li> -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/insertproduct">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>차종 등록</span></a>
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>차종 등록</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">차종 등록:</h6>
+                        <a class="collapse-item" href="${path }/admin/insertcarproduct">자동차</a>
+                        <a class="collapse-item" href="${path }/admin/insertmotocycleproduct">오토바이</a>
+                    </div>
+                </div>
             </li>
+
+<!--             <li class="nav-item"> -->
+<%--                 <a class="nav-link" href="${path }/admin/insertproduct"> --%>
+<!--                     <i class="fas fa-fw fa-table"></i> -->
+<!--                     <span>차종 등록</span></a> -->
+<!--             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/location">
+                <a class="nav-link" href="${path }/admin/store">
                     <i class="fas fa-fw fa-table"></i>
                     <span>매장 관리</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/insertstore">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>매장 등록</span></a>
+            </li>
 
 
             <!-- Divider -->

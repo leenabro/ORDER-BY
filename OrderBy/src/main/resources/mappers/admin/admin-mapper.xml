@@ -46,22 +46,26 @@
 	
 	
 	<select id="selectAdminMemberCount" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER WHERE M_STATUS='Y'
+		SELECT COUNT(*) FROM MEMBER WHERE M_STATUS='Y' OR M_STATUS='N'
 	</select>
 	
 	<select id="selectAll" resultMap="AdminMemberResultMap">
 		<include refid="selectadminmembersql"/>
-		WHERE M_STATUS='Y' ORDER BY M_NO DESC
+		WHERE M_STATUS='Y' OR M_STATUS='N' ORDER BY M_NO DESC
 	</select>
 	
 	<select id="selectAdminMemberByNo" parameterType="_int" resultMap="AdminMemberResultMap">
-		SELECT * FROM MEMBER WHERE M_STATUS='Y' AND M_NO = #{no}
+		SELECT * FROM MEMBER WHERE M_NO = #{no}
 	</select>
 	
 	<update id="updateMemberStatus" parameterType="map">
 		UPDATE MEMBER SET M_STATUS = #{status} WHERE M_NO = #{no}	
 	</update>
 	
+	<update id="activeMemberStatus" parameterType="map">
+		UPDATE MEMBER SET M_STATUS = #{status} WHERE M_NO = #{no}	
+	</update>
+
 	<update id="updateAdminMember" parameterType="AdminMember">
 		UPDATE MEMBER
 		SET	
@@ -171,6 +175,10 @@
 	<update id="updateCarproductStatus" parameterType="map">
 		UPDATE CAR SET C_STATUS = #{status} WHERE C_NO = #{no}	
 	</update>
+
+	<update id="activeCarStatus" parameterType="map">
+		UPDATE CAR SET C_STATUS = #{status} WHERE C_NO = #{no}	
+	</update>
 	
 	<update id="updateProductCar" parameterType="AdminProductCar">
 	UPDATE CAR
@@ -186,7 +194,47 @@
 			C_SALE = #{sale}
 		WHERE C_NO = #{no}
 	</update>
-
+	
+	<insert id="insertProductCar" parameterType="AdminProductCar">
+		INSERT INTO CAR (
+			 	C_NO,
+				C_NAME,
+				C_MILE,
+				C_KM,
+				C_CC,
+				C_YEAR,
+				C_ENGINE,
+				C_BRAND,
+				C_FUEL,
+				C_PRICE,
+				C_POSITION,
+				C_STATUS,
+				C_SALE,
+				S_NO,
+				PF_NO,
+				C_COUNT,
+				C_ENROLL_DATE
+		)
+		VALUES(
+				SEQ_CAR_C_NO.NEXTVAL,
+				#{name},
+				#{mile},
+				#{km},
+				#{cc},
+				#{year},
+				#{engine},
+				#{brand},
+				#{fuel},
+				#{price},
+				#{position},
+				DEFAULT,
+				DEFAULT,
+				NULL,
+				NULL,
+				0,
+				DEFAULT
+		)
+	</insert>
 	
 	<sql id="selectmotocycleproductsql">
 		SELECT  MC_NO,
@@ -209,6 +257,7 @@
 				MC_ENROLL_DATE
 		FROM MOTOCYCLE
 	</sql>
+
 	
 	<resultMap id="AdminMotocycleResultMap" type="AdminProductMotocycle">
 		<id property="no" column="MC_NO"/>
@@ -248,6 +297,9 @@
 		UPDATE MOTOCYCLE SET MC_STATUS = #{status} WHERE MC_NO = #{no}	
 	</update>
 	
+	<update id="activeMotoStatus" parameterType="map">
+		UPDATE MOTOCYCLE SET MC_STATUS = #{status} WHERE MC_NO = #{no}	
+	</update>
 	
 	<update id="updateProductMotocycle" parameterType="AdminProductMotocycle">
 		UPDATE MOTOCYCLE
@@ -265,4 +317,125 @@
 		WHERE MC_NO = #{no}
 	</update>
 	
+		<insert id="insertProductMotocycle" parameterType="AdminProductMotocycle">
+		INSERT INTO MOTOCYCLE (
+			 	MC_NO,
+				MC_NAME,
+				MC_BRAND,
+				MC_ENGINE,
+				MC_CC,
+				MC_OUTPUT,
+				MC_TORQUE,
+				MC_FUEL,
+				MC_YEAR,
+				MC_KM,
+				MC_PRICE,
+				MC_POSITION,
+				MC_STATUS,
+				MC_SALE,
+				S_NO,
+				PF_NO,
+				MC_COUNT,
+				MC_ENROLL_DATE
+		)
+		VALUES(
+				SEQ_MOTOCYCLE_MC_NO.NEXTVAL,
+				#{name},
+				#{brand},
+				#{engine},
+				#{cc},
+				#{output},
+				#{torque},
+				#{fuel},
+				#{year},
+				#{km},
+				#{price},
+				#{position},
+				DEFAULT,
+				DEFAULT,
+				NULL,
+				NULL,
+				0,
+				DEFAULT
+		)
+	</insert>
+	
+	<sql id="selectlocationsql">
+		SELECT  S_NO,
+			    S_NAME,
+				S_COUNT,
+				S_LOCATION,
+				S_ADDRESS,
+				S_LAT,
+				S_LONG,
+				S_STATUS
+		FROM STORE
+	</sql>
+	
+	<resultMap id="AdminStoreResultMap" type="AdminStore">
+		<id property="no" column="S_NO"/>
+		<result property="name" column="S_NAME"/>
+		<result property="count" column="S_COUNT"/>
+		<result property="location" column="S_LOCATION"/>
+		<result property="address" column="S_ADDRESS"/>
+		<result property="slat" column="S_LAT"/>
+		<result property="slong" column="S_LONG"/>
+		<result property="status" column="S_STATUS"/>
+	</resultMap>
+	
+	<select id="selectStoreCount" resultType="_int">
+		SELECT COUNT(*) FROM STORE 
+	</select>
+
+	<select id="storeselectAll" resultMap="AdminStoreResultMap">
+		<include refid="selectlocationsql"/>
+		WHERE S_STATUS='Y' OR S_STATUS='N' ORDER BY S_NO DESC
+	</select>
+	
+	<select id="selectStoreByNo" parameterType="_int" resultMap="AdminStoreResultMap">
+		SELECT * FROM STORE WHERE S_NO = #{no}
+	</select>
+	
+	<update id="updateStoreStatus" parameterType="map">
+		UPDATE STORE SET S_STATUS = #{status} WHERE S_NO = #{no}	
+	</update>
+	
+	<update id="activateStoreStatus" parameterType="map">
+		UPDATE STORE SET S_STATUS = #{status} WHERE S_NO = #{no}	
+	</update>
+	
+		<update id="updateStore" parameterType="AdminStore">
+		UPDATE STORE
+		SET	
+			S_NAME = #{name},
+			S_COUNT = #{count},
+			S_LOCATION = #{location},
+			S_ADDRESS = #{address},
+			S_LAT = #{slat},
+			S_LONG = #{slong}
+		WHERE S_NO = #{no}
+	</update>
+	
+	<insert id="insertStore" parameterType="AdminStore">
+	INSERT INTO STORE (
+		S_NO,
+		S_NAME,
+		S_COUNT,
+		S_LOCATION,
+		S_ADDRESS,
+		S_LAT,
+		S_LONG,
+		S_STATUS
+	) 
+		VALUES (
+		SEQ_STORE_S_NO.NEXTVAL,
+		#{name},
+		#{count},
+		#{location},
+		#{address},
+		#{slat},
+		#{slong},
+		DEFAULT
+	)
+	</insert>
 </mapper>

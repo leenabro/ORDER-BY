@@ -167,18 +167,37 @@
 <!--                     <i class="fas fa-fw fa-table"></i> -->
 <!--                     <span>오토바이 현황</span></a> -->
 <!--             </li> -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/insertproduct">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>차종 등록</span></a>
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>차종 등록</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">차종 등록:</h6>
+                        <a class="collapse-item" href="${path }/admin/insertcarproduct">자동차</a>
+                        <a class="collapse-item" href="${path }/admin/insertmotocycleproduct">오토바이</a>
+                    </div>
+                </div>
             </li>
+
+<!--             <li class="nav-item"> -->
+<%--                 <a class="nav-link" href="${path }/admin/insertproduct"> --%>
+<!--                     <i class="fas fa-fw fa-table"></i> -->
+<!--                     <span>차종 등록</span></a> -->
+<!--             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="${path }/admin/location">
+                <a class="nav-link" href="${path }/admin/store">
                     <i class="fas fa-fw fa-table"></i>
                     <span>매장 관리</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/insertstore">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>매장 등록</span></a>
+            </li>
 
 
             <!-- Divider -->
@@ -246,11 +265,13 @@
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">자동차 정보 수정</h1>
             
+            
             <div style="width:40%; margin-left: 5%; float: right; margin-top: 20%;" >
-                <input type="file"
-                id="avatar" name="avatar" onchange="readURL(this);" style="margin-left: 20%; margin-bottom: 4%;">
-                <img id="preview" style="width: 80%; height: 350px;">
+<!--                 <input type="file" -->
+<!--                 id="avatar" name="avatar" onchange="readURL(this);" style="margin-left: 20%; margin-bottom: 4%;"> -->
+                <img id="preview" style="width: 80%; height: 350px;" src="${path }/resources/images/car/${procar.brand}/${procar.name}.png">
             </div>
+
 
             <div class="outer">
                 <div id="joinInfoArea">
@@ -300,7 +321,12 @@
 
                       <div class="btnArea">
                         <button id="updateBtn" type="submit">수정</button>
+                        <c:if test="${procar.status eq 'Y'}">
                         <button id="delBtn" type="button">삭제</button>
+                        </c:if>
+                        <c:if test="${procar.status eq 'N'}">
+                        <button id="activeBtn" type="button">활성화</button>
+                        </c:if>
                         <button id="joinBtn" type="button" onclick="location.href='${path}/admin/carproduct';">뒤로가기</button>
                       </div>
                   </form>
@@ -324,19 +350,25 @@
     			});
     		});
             
-            
+            $(document).ready(() => {
+    			$('#activeBtn').on('click', () => {
+    				if(confirm('자동차를 활성화 하시겠습니까?')) {
+    					location.replace('${path}/admin/modifycaractive?no=${procar.no}');
+    				}
+    			});
+    		});
               
-                function readURL(input) {
-                  if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                          document.getElementById('preview').src = e.target.result;
-                        };
-                        reader.readAsDataURL(input.files[0]);
-            } else {
-                document.getElementById('preview').src = "";
-                }
-            }
+//                 function readURL(input) {
+//                   if (input.files && input.files[0]) {
+//                         var reader = new FileReader();
+//                         reader.onload = function(e) {
+//                           document.getElementById('preview').src = e.target.result;
+//                         };
+//                         reader.readAsDataURL(input.files[0]);
+//             } else {
+//                 document.getElementById('preview').src = "";
+//                 }
+//             }
 
               
 

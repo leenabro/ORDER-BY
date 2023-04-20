@@ -2,6 +2,7 @@ package com.ta.orderby.admin.model.mapper;
 
 import java.util.List;
 
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +11,7 @@ import com.ta.orderby.admin.model.vo.AdminMember;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
+import com.ta.orderby.admin.model.vo.AdminStore;
 
 @Mapper
 public interface AdminMapper {
@@ -50,6 +52,33 @@ public interface AdminMapper {
 
 	int updateProductCar(AdminProductCar procar);
 
-	int updateProductMotocycle(AdminProductMotocycle promoto);	
+	int updateProductMotocycle(AdminProductMotocycle promoto);
+
+	int insertProductCar(AdminProductCar procar);
+
+	int insertProductMotocycle(AdminProductMotocycle promoto);
+
+	int selectStoreCount();
+
+	List<AdminStore> storeselectAll(RowBounds rowbounds);
+
+	AdminStore selectStoreByNo(@Param("no") int no);
+
+	int updateStoreStatus(@Param("no")int no, @Param("status") String string);
+
+	int activateStoreStatus(@Param("no")int no, @Param("status") String string);
+
+	int updateStore(AdminStore store);
+
+	int activeMotoStatus(@Param("no")int no, @Param("status") String string);
+
+	int activeCarStatus(@Param("no")int no, @Param("status") String string);
+
+	int activeMemberStatus(@Param("no")int no, @Param("status") String string);
+
+	int insertStore(AdminStore store);
+
+
+
 	
 }

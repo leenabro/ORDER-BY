@@ -56,7 +56,7 @@
                 <li><a href="#">지도로 검색</a></li>
               </ul>
             </li>
-            <li><a href="left-sidebar.html">차종 및 요금</a></li>
+            <li><a href="${path }/admin/priceproduct">차종 및 요금</a></li>
             <li>
               <a href="right-sidebar.html">고객센터</a>
               <ul>
