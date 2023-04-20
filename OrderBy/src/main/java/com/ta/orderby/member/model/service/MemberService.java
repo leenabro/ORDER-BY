@@ -13,12 +13,15 @@ public interface MemberService {
 	
 	// 회원가입 (1이면 ㅇㅋ 0이면 ㄴㄴ)
 	int save(Member member);
-
-	// 아이디 중복검사
-	Boolean isDuplicateId(String id);
 	
 	// 회원 탈퇴
 	int delete(int no);
-	
-	
+
+	// 아이디 중복체크
+	int checkId(String id);
+
+
+
+
+
 }

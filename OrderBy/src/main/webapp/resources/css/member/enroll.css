@@ -1,418 +1,460 @@
-@charset "UTF-8";
-
-body{
-    background-color: #f5f6f7;
+*{
+    /* border: 1px solid; */
 }
-select{
+
+input:disabled {
+    background: #F0F0F0;
+}
+
+button:disabled {
+	background: #F0F0F0;
+}
+
+body {
+    background-color: #f5f6f7;
+    width: 350px;
+    margin: auto;
+}
+select {
     width:85px;
     height:25px;
     outline: none;
     background: #f5f6f7;
     border: 1px solid #999;
 }
-a{
+a {
     color: black;
     text-decoration: none;
 }
-.main{
-    text-align: center;
-	margin-top: 20px;
-}
-input{
+input {
     cursor: pointer
 }
 
-/*언어설정*/
-.select-lang{
-    text-align: right;
-    padding-right: 10px;
-}
-/*네이버 로고설정*/
-.image{
-    height: 32px;
-    padding: 20px;
-}
-/*input 아이디박스*/
-.login-id-wrap{
-
-    margin: 0px 10px 8px 10px;
-    padding: 10px;
-    border: solid 1px #dadada;
-    background: #fff;
-}
-/*input 아이디 form*/
-#input-id{
-    border: none;
-    outline:none;
-    width:100%;
-}
-/*input 패스워드박스*/
-.login-pw-wrap{
-
-    margin: 0px 10px 8px 10px;
-    padding: 10px;
-    border: solid 1px #dadada;
-    background: #fff;
-}
-/*input 패스워드 form*/
-#input-pw{
-    border: none;
-    outline:none;
-    width:100%;
-}
-/*로그인버튼박스*/
-.login-btn-wrap{
-    height: 52px;
-    line-height: 55px;
-    margin: 0px 10px 8px 10px;
-    border: solid 1px rgba(0,0,0,.1);
-    background-color: #03c75a;
-    color: #fff;
-    cursor: pointer;
-}
-/*로그인버튼*/
-#login-btn{
-    width:100px;
-    background-color: #03c75a;
-    border: none;
-    color:#fff;
-    font-size: 18px;
-    outline:none;
-    cursor: pointer;
-}
-/*로그인 아래 박스*/
-.under-login{
-    height: 50px;
-    border-bottom: 1px solid gainsboro;
-    margin: 0px 10px 35px 10px;
-}
-/*로그인상태유지*/
-.stay-check{
-    margin-left: 7px;
-    float: left;
-}
-/*로그인상태유지 체크박스*/
-.stay-check input[type="checkbox"] {
-    /*기존 체크박스 숨기기*/
-    position: absolute;
-    width: 0px;
-    position: absolute;
-}
-.stay-check input[type="checkbox"] + label {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    }
-.stay-check input[type="checkbox"] + label::before {
-    content: ' ';
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    line-height: 18px;
-    margin: -2px 8px 0 0;
-    text-align: center;
-    vertical-align: middle;
-    background: #fafafa;
-    border: 1px solid #cacece;
-    border-radius: 50%;
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-}
-.stay-check input[type="checkbox"]:checked + label::before {
-    content: '\2713';
-    color: white;
-    text-shadow: 1px 1px white;
-    background: #03c75a;
-    border-color: #03c75a;
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-}
-/*IP보안 표시X*/
-#ip-check{
-    display: none;
-}
-/*IP보안 ON/OFF*/
-#ip-context{
-    color:rgb(160, 160, 160);
-    font-weight: 900;
-    display: inline-block;
-    width: 22px;
-}
-/*간편한 로그인 구역*/
-#easy-login-wrap{
-    height: 90px;
-    margin: 0px 10px 35px 10px;
-}
-/*간편한 로그인 텍스트*/
-.easy-login{
-    font-size: 20px;
-    font-weight: 500;
-}
-/*QR & 일회용 로그인 박스 구역*/
-.easy-login-box{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-/*QR코드 로그인*/
-.qr-login{
-    float: left;
-    border: 1px solid #03c75a;
-    background-color: #fff;
-    margin: 0px 4px 0px 0px;
-    line-height: 55px;
-}
-/*일회용 번호 로그인*/
-.onetime-login{
-    float: right;
-    border: 1px solid #03c75a;
-    background-color: #fff;
-    margin: 0px 0px 0px 4px;
-    line-height: 55px;
-}
-/*더욱 간편한 로그인-en모드*/
-.qr-login-en, .facebook-login, .line-login{
-    font-family: Helvetica,Dotum,sans-serif;
-    font-size: 18px;
-    font-weight: 400;
+/* 박스아래 조건문 */
+.msgInvalId, .YYMMDD, .successEmailChk {
+    /* border: 1px solid; */
+    margin-top: 5px;
+    font-size: 12px;
     text-align: left;
-    line-height: 55px;
-    border: solid 1px #dadada;
-    background: #fff;
-    margin-bottom: 10px;
-}
-/*더욱 간편한 로그인 이미지-en모드*/
-.easy-login-box-en img{
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 10px 0 10px;
-}
-/*찾기 및 회원가입*/
-.find-signupWrap{
-    height: 100px;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-/*찾기 및 회원가입 글자 희미하게 바꾸기*/
-.find-signupWrap a{
-    color: rgb(150, 150, 150);
-    text-decoration: none;
-    font-weight: 500;
-}
-.find-signupWrap span{
-    color: rgb(150, 150, 150);
-    font-weight: 500;
-}
-/*아이디 찾기*/
-.find-id{
-    margin: 3px;
-    font-size: 14px;
-    border-right: 1px solid gainsboro;
-}
-/*아이디 찾기-en모드*/
-.find-id-en{
-    font-size: 14px;
-}
-/*비밀번호 찾기*/
-.find-pw{
-    margin: 3px;
-    font-size: 14px;
-    border-right: 1px solid gainsboro;
-}
-/*회원가입*/
-.sign-up{
-    margin: 3px;
-    font-size: 14px;
-}
-/*저작권 표시X*/
-footer{
-    display: none;
 }
 
-
-/*가로 800px 이상일때*/
-@media(min-width : 800px)
-{
-    .main{
-        width: 460px;
-        margin: auto;
-    }
-
-/*언어설정*/
-.select-lang{
-    margin-top: 20px;
-    width: 550px;
-    padding-right: 10px;
+/* 회원가입 */
+.mainEnroll {
+    /* text-align: center; */
+    width: 350px;
+    /* margin: auto; */
 }
-/*네이버 로고설정*/
-.image{
-    margin-top: 40px;
-    height: 44px;
-    padding: 20px;
-}
-
-/*IP보안 표시*/
-#ip-check{
-    margin-right: 7px;
-    float: right;
-    display:block;
-}
-
-/*저작권 표시*/
-footer{
-    display:block;
-}
-
-}
-
-
-/*회원가입 부분*/
-.mainSignup{
-    text-align: center;
-    width: 460px;
-    margin: auto;
-}
-h3{
+h3 {
     margin:19px 0px 8px;
     text-align: left;
     font-size: 14px;
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
-.signupInput{
+/* 인풋박스 */
+.signupInput {
     display:flex;
-    /* margin: 0px 10px 8px 10px; */
-    padding: 10px;
-    border: solid 1px #dadada;
-    background: #fff;
+    height: 50px;
+    width: 350px;
+    /* border: solid 1px #8491a7; */
+    /* background: #fff; */
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+/* 중복확인 버튼박스 */
+.bnum_btn_wrap {
+    height: 50px;
+    line-height: 50px;
+    margin: 0px 0px 0px 10px;
+    border: solid 1px rgba(0,0,0,.1);
+    background-color: #203050;
+    color: #fff;
     cursor: pointer;
 }
-.signupInput_c{
-    display:flex;
-    /* margin: 0px 10px 8px 10px; */
-    padding: 10px;
-    border: solid 1px #dadada;
-    background: #f5f6f7;
-    cursor: pointer;
-}
-.signupInput_c input{
-    background: #f5f6f7;
-}
-#memberId, #memberPwd, #memberPwdd{
-    height: 29px;
+/* 중복확인 버튼 */
+#bnum_btn {
+    width: 75px;
+    background-color: #203050;
     border: none;
+    color:#fff;
+    font-size: 15px;
     outline:none;
-    width:100%;
+    cursor: pointer;
 }
-.signupAt{
+
+#memberId, #memberName, #memberPhone {
+    width: 350px;
+    border: none;
+    border: solid 1px #8491a7;
+}
+.memberEmail {
+    display:flex;
+    height: 50px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+#memberEmail {
+    width: 100%;
+    height: 48px;
+    border: solid 1px #8491a7;
+}
+
+#memberPwd1, #memberPwd2 {
+    flex: 1;
+    /* border: none; */
+    border: solid 1px #8491a7;
+    /* background: #fff; */
+    cursor: pointer;
+}
+.lockBox {
+    display: flex;
+    /* justify-content: space-between; */
+    height: 50px;
+    width: 350px;
+    /* border: solid 1px #8491a7; */
+    border: none;
+}
+
+/* 인증번호 */
+.signupInput_c {
+    display:flex;
+    /* justify-content: space-between; */
+    margin: 10px 0px 10px 0px;
+    height: 50px;
+    /* padding: 10px; */
+    border: solid 1px #8491a7;
+    background: #f5f6f7;
+    cursor: pointer;
+}
+.signupInput_c input {
+    background: #f5f6f7;
+}
+
+.signupAt {
     color: rgb(150, 150, 150);
     font-size: 15px;
     font-family: Dotum,'돋움',Helvetica,sans-serif;
     margin-top: 8px;
     border: 10px solid;
 }
-.pwdLock{
+
+/* 비밀번호 숫자 확인하기 돋보기 */
+.pwdLock {
     /* content: ''; */
     /* display: inline-block; */
     top: 50%;
     right: 13px;
     width: 24px;
     height: 24px;
-    margin-top: 5px;
-    background-image: url(https://static.nid.naver.com/images/ui/join/m_icon_pw_step.png);
+    margin-top: 13px;
+    margin-left: 10px;
+    /* background-image: url(https://static.nid.naver.com/images/ui/join/m_icon_pw_step.png); */
     background-size: 125px 75px;
     cursor: pointer;
 }
-.pwddLock{
+.pwddLock {
     /* content: ''; */
     /* display: inline-block; */
     top: 50%;
     right: 13px;
     width: 24px;
     height: 24px;
-    margin-top: 5px;
-    background-image: url(https://static.nid.naver.com/images/ui/join/m_icon_pw_step.png);
+    margin-top: 13px;
+    margin-left: 10px;
+    /* background-image: url(https://static.nid.naver.com/images/ui/join/m_icon_pw_step.png); */
     background-size: 125px 75px;
     cursor: pointer;
 }
 
-.signupInputBirth{
-    display: block;
-    position: relative;
+.YYMMDD {
+    display: flex;
+    justify-content: space-between;
+    width: 350px;
+}
+
+#memberBirthMM {
+    width: 110px;
+    border: none;
+    outline:none;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: solid 1px #8491a7;
+}
+#memberBirthYY, #memberBirthDD {
+    width: auto;
+    width: 110px;
+    height: 46px;
+    border: none;
+    outline:none;
+    /* margin: 0; */
+    border: solid 1px #8491a7;
+}
+
+/* 주소 영역 */
+.ADD0 {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    width: 345px;
+}
+.ADD {
+    display: flex;
+    width: 500px;
+}
+
+.address1 {
+    height: 48px;
+    width: 235px;
+    border: solid 1px #8491a7;
+    justify-content: space-between;
+}
+.addressBtn {
+    width: 100px;
+    margin-left: 10px;
+    background-color: #203050;
+    border: none;
+    color:#fff;
+    font-size: 15px;
+    outline:none;
+    cursor: pointer;
+    
+}
+.address2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.address2, .address3 {
     width: 100%;
-    height: 51px;
-    border: solid 1px #dadada;
-    padding: 10px;
-    background: #fff;
-    box-sizing: border-box;
+    height: 48px;
+    border: solid 1px #8491a7;
 }
-#signupBirthYY, #signupBirthMM, #signupBirthDD{
-    width: 113px;
-    height: 29px;
-    border: none;
-    outline:none;
-}
-#memberName, #memberGender, #memberEmail, #memberCountry, #memberPhone, #memberCnum{
+
+/* 성별, 인증번호 */
+#genderSelectBox, #memberCnum {
     width:100%;
-    height: 29px;
     border: none;
     outline:none;
 }
-#memberGender{
+#genderSelectBox {
+    border: solid 1px #8491a7;
+}
+
+#genderSelectBox {
+    background-color: white;
+    height: 50px;
+}
+#memberCountry {
     background-color: white;
 }
-#memberCountry{
+#memberBirthYY, #memberBirthMM, #memberBirthDD {
     background-color: white;
-}
-#signupBirthMM{
-    background-color: white;
+    height: 50px;
 }
 /*본인 확인 이메일*/
-.choice{
+.choice {
     display: flex;
+    justify-content: space-between;
 }
-.choice span{
+.choice span {
     margin-top: 20px;
-    color: rgb(150, 150, 150);
+    color: rgb(255, 0, 0);
     font-size: 13px;
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
 /*회원가입버튼박스*/
-.signup_btn_wrap{
+.signup_btn_wrap {
     height: 52px;
     line-height: 55px;
     margin: 10px 0px 50px 0px;
+    text-align: center;
     border: solid 1px rgba(0,0,0,.1);
-    background-color: #03c75a;
+    background-color: #203050;
     color: #fff;
     cursor: pointer;
 }
+
 /*회원가입버튼*/
-#signup_btn{
+#signup_btn {
     width:100px;
-    background-color: #03c75a;
+    background-color: #203050;
     border: none;
     color:#fff;
     font-size: 18px;
     outline:none;
     cursor: pointer;
 }
+
+/* 버튼 비활성화시 불투명도 */
+/* .signup_btn_wrap, #signup_btn {
+    opacity: 0.6;
+    cursor: not-allowed;
+} */
+
+
 /*인증번호버튼박스*/
-.cnum_btn_wrap{
-    height: 52px;
-    line-height: 55px;
-    margin: 10px 0px 0px 10px;
+.cnum_btn_wrap {
+    height: 50px;
+    line-height: 50px;
+    margin: 0px 0px 0px 10px;
     border: solid 1px rgba(0,0,0,.1);
-    background-color: #03c75a;
+    background-color: #203050;
     color: #fff;
     cursor: pointer;
 }
 /*인증번호버튼*/
-#cnum_btn{
-    width:115px;
-    background-color: #03c75a;
+#cnum_btn {
+    width:100px;
+    background-color: #203050;
     border: none;
     color:#fff;
     font-size: 15px;
     outline:none;
     cursor: pointer;
 }
+
+/* 인증번호를 입력해주세요 박스 */
+.memberCnum {
+    margin-top: 10px;
+    display:flex;
+    height: 50px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+#memberCnum {
+    width: 100%;
+    height: 48px;
+    border: solid 1px #8491a7;
+    background-color: #f5f6f7;
+}
+
+/*인증번호 확인 버튼박스*/
+.cnum_btn_wrap2 {
+    height: 50px;
+    line-height: 50px;
+    margin: 0px 0px 0px 10px;
+    border: solid 1px rgba(0,0,0,.1);
+    background-color: #203050;
+    color: #fff;
+    cursor: pointer;
+}
+/*인증번호 확인 버튼박스*/
+#cnum_btn2 {
+    width:100px;
+    background-color: #203050;
+    border: none;
+    color:#fff;
+    font-size: 15px;
+    outline:none;
+    cursor: pointer;
+}
+
+/* .signupInput:focus, */
+#memberBirthMM:focus,
+#memberName:focus,
+#memberId:focus,
+/* .lockBox:focus, */
+#memberPwd1:focus,
+#memberPwd2:focus,
+#memberPhone:focus,
+#memberEmail:focus,
+#memberBirthYY:focus,
+#memberBirthDD:focus,
+#genderSelectBox:focus {
+    outline: 2px solid #2d65f2;
+    border-color: 2px solid #2d65f2;
+    /* margin: 0px; */
+}
+
+
+div.main i {
+    position: absolute;
+    left: 75%;
+    top: 27px;
+    color: orange;
+}
+
+
+
+
+
+
+
+
+/* 약관동의 */
+#joinForm {
+	width: 350px;
+	margin: 0 auto;
+}
+.join_box {
+	border: 1px solid #8491a7;
+	background-color: #fff;
+	padding: 0;
+}
+.checkBox, .checkBox > ul {
+	position: relative;
+	list-style: none;
+}
+.checkBox>ul>li {
+	float: left;
+	list-style: none;
+	box-sizing: border-box;
+}
+.checkBox>ul>li:first-child {
+	width: 85%;
+	padding: 15px;
+	font-size: 15px;
+	font-weight: 600;
+}
+.checkBox>ul>li:nth-child(2) {
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	margin-top: -12px;
+}
+.checkBox textarea {
+	width: 96%;
+	height: 90px;
+	margin: 0 2%;
+	background-color: #f7f7f7;
+	font-size: 11px;
+	color: gray;
+	border: none;
+	resize: none;
+}
+.footBtwrap {
+	margin-top: 15px;
+}
+.footBtwrap>li {
+	float: left;
+	width: 50%;
+	height: 60px;
+	list-style: none;
+}
+.footBtwrap>li>button {
+	display: block;
+	width: 100%;
+	height: 100%;
+	font-size: 20px;
+	text-align: center;
+	line-height: 60px;
+}
+.clearfix {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.clearfix::after {
+	content: "";
+	display: block;clear: both;
+}
+ul {
+	position: relative;
+	list-style: none;
+}
+
+
+
+
+
+
+
+
