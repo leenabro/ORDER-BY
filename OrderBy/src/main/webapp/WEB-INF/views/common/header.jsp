@@ -47,7 +47,7 @@
 					      <li><a href="#">지도로 검색</a></li>
 					    </ul>
 					  </li>
-					  <li><a href="#">차종 및 요금</a></li>
+					  <li><a href="${path }/admin/priceproduct">차종 및 요금</a></li>
 					  <li>
 					    <a href="#">고객센터</a>
 					    <ul>
@@ -60,6 +60,8 @@
 					<security:authorize access="isAnonymous()">
 					      	<a href="${ path }/member/login" class="button style4 small">Login</a>
 					</security:authorize>
+					
+					<button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
 					
 					<form action="${ path }/member/logout" method="POST">
 						<security:csrfInput/>
