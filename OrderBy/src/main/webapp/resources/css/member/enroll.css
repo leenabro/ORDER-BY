@@ -2,6 +2,14 @@
     /* border: 1px solid; */
 }
 
+input:disabled {
+    background: #F0F0F0;
+}
+
+button:disabled {
+	background: #F0F0F0;
+}
+
 body {
     background-color: #f5f6f7;
     width: 350px;
@@ -23,7 +31,7 @@ input {
 }
 
 /* 박스아래 조건문 */
-.msgInvalId, .YYMMDD {
+.msgInvalId, .YYMMDD, .successEmailChk {
     /* border: 1px solid; */
     margin-top: 5px;
     font-size: 12px;
@@ -294,6 +302,42 @@ h3 {
 }
 /*인증번호버튼*/
 #cnum_btn {
+    width:100px;
+    background-color: #203050;
+    border: none;
+    color:#fff;
+    font-size: 15px;
+    outline:none;
+    cursor: pointer;
+}
+
+/* 인증번호를 입력해주세요 박스 */
+.memberCnum {
+    margin-top: 10px;
+    display:flex;
+    height: 50px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+#memberCnum {
+    width: 100%;
+    height: 48px;
+    border: solid 1px #8491a7;
+    background-color: #f5f6f7;
+}
+
+/*인증번호 확인 버튼박스*/
+.cnum_btn_wrap2 {
+    height: 50px;
+    line-height: 50px;
+    margin: 0px 0px 0px 10px;
+    border: solid 1px rgba(0,0,0,.1);
+    background-color: #203050;
+    color: #fff;
+    cursor: pointer;
+}
+/*인증번호 확인 버튼박스*/
+#cnum_btn2 {
     width:100px;
     background-color: #203050;
     border: none;

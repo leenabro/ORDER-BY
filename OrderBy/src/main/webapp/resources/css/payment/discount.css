@@ -1,0 +1,312 @@
+@charset "UTF-8";
+
+/* 할인 / 결제 css */
+#disTitle {
+    text-align: center;
+    font-size: large;
+    color: black;
+}
+
+/* 자동차 아이콘 css */
+#carIcon {
+	position: relative;
+	margin: auto;
+	width: 600px;
+	height: 60px;
+	text-align: center;
+}
+
+#navBar {
+	position: absolute;
+    width: 380px;
+    left: 18%;
+    bottom: 50%;
+    border: 1px solid black;
+} 
+
+.car-icon {
+	list-style: none;
+	display: inline-block;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+#carIcon1 {
+	width: 70px;
+	filter: opacity(0.3);
+}
+
+#carIcon2 {
+	width: 70px;
+}
+
+#carIcon3 {
+	width: 70px;
+    filter: opacity(0.3);
+}
+
+#step {
+	text-align: center;
+}
+
+.step-list {
+	list-style: none;
+	display: inline-block;
+}
+
+.step {
+	display: inline-block;
+	color: black;
+}
+
+/* section css */
+.shortContainer {
+	position: relative;
+	margin: auto;
+	width: 1200px;
+	min-height: 1150px;
+}
+
+.res-section-div {
+    height: 800px;
+    display: inline-block;
+    float: left;
+    /* 임시로 */
+    /* border: 1px solid black; */
+}
+
+/* 예약 자동차 정보 출력 */
+#sectionImg {
+    margin-left: 20px;
+    width: 420px;
+    height: auto;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
+#carName {
+    text-align: center;
+    font-size: 1.5em;
+    height: 80px;
+    background-color: darkgrey;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: black;
+}
+
+#carImg {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: white;
+}
+
+#carImg>img {
+	width: 100%;
+}
+
+#carSpec {
+    padding-left: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 0;
+}
+
+.car-spec-li:first-child {
+    padding-top: 20px;
+}
+
+.car-spec-li:last-child {
+	border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.car-spec-li {
+    list-style: none;
+    background-color: rgb(189, 189, 189);
+    padding-top: 10px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid darkgray;
+}
+
+.car-spec-title {
+    padding-left: 15px;
+    font-size: 1.3em;
+    color: white;
+}
+
+.car-spec-li>span {
+	float: right;
+    font-size: 1.2em;
+    padding-right: 20px;
+}
+
+.car-spec-price {
+	padding: 10px 0px;
+	padding-right: 20px;
+	font-size: 2.0em;
+    margin: 0px;
+    text-align: right;
+}
+
+#dicContent {
+	text-align: right;
+	padding-right: 20px;
+	color: red;
+}
+
+#totalPrice {
+	background-color: rgb(129, 129, 129);
+}
+
+/* 할인 내역 및 포인트 사용 */
+#sectionScript {
+    margin-left: 20px;
+    width: 730px;
+}
+
+.scriptHeader {
+	display: flex;
+	height: 80px;
+	background-color: rgba(255, 255, 255, 0.50);
+	border-radius: 10px;
+	align-items: center;
+	padding-left: 20px;
+	font-size: 1.3em;
+}
+
+.scriptCon {
+	padding-top: 10px;	
+	padding-bottom: 70px;
+}
+
+.scriptRow {
+	padding: 0 40px;
+	display: flex;
+	
+}
+
+.scriptRow:nth-child(n+2) {
+	padding-top: 40px;
+}
+
+.scriptRow>span {
+	display: flex;
+	flex-basis: 170px;
+}
+
+#memberPoint {
+	border: none;
+	background-color: inherit;
+	text-align: right;
+}
+
+#usePoint {
+	height: 35px;
+	text-align: right;	
+}
+
+#pointButton {
+	width: 100px;
+	border-radius: 5px; 
+	background-color: dimgrey; 
+	color: white;
+}
+
+/* 버튼 CSS */
+#button-div {
+    display: flex;
+    margin-top: 100px;
+    justify-content: space-around;
+}
+
+#button-div>ul {
+	list-style: none;
+}
+
+.button-list {
+	float: left;
+	padding: 0px 15px;
+}
+
+/* Common button styles */
+.button {
+    float: left;
+    min-width: 400px;
+    max-width: 500px;
+    display: block;
+    padding: 1em 2em;
+    border: none;
+    background: none;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+    -moz-osx-font-smoothing: grayscale;
+}
+.button:focus {
+    outline: none;
+}
+.button > span {
+    vertical-align: middle;
+    font-size: 1.5em;
+}
+
+.button--round-s {
+    border-radius: 5px;
+}
+
+.button--border-thin {
+    border: 1px solid;
+}
+
+.button.button--aylen {
+    background: #fff;
+    color: #37474f;
+    overflow: hidden;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+.button--aylen.button--inverted {
+    background: none;
+    color: #fff;
+}
+.button--aylen::before,
+.button--aylen::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    bottom: 100%;
+    left: 0;
+    z-index: -1;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+.button--aylen::before {
+    background: #a7a7a7;
+}
+.button--aylen::after {
+    background: #1b1b1b;
+}
+.button--aylen:hover {
+    color: #fff;
+}
+.button--aylen:hover::before,
+.button--aylen:hover::after {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+}
+.button--aylen:hover::after {
+    -webkit-transition-delay: 0.175s;
+    transition-delay: 0.175s;
+}
+
+#reservationSection::after {
+	display: block;
+	clear: both;
+	content:'';
+}
+
+

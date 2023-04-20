@@ -8,47 +8,58 @@
 		중복되는 쿼리 내용을 재사용하기 위한 SQL 조각으로 사용하려는 요소보다 항상 위에 있어야한다.
 		sql 조각 저장~ includ로 사용 
 	-->
-	<sql id="selectMemberSql">
-		SELECT M_NO,
-       		   M_ID,
-		       M_PASSWORD,
-		       M_NAME,
-		       M_BIRTH,
-		       M_EMAIL,
-		       M_PHONE,
-		       M_GENDER,
-		       M_ADDRESS,
-		       M_DETAIL_ADD,
-		       M_POINT,
-		       M_ROLE,
-		       M_ENROLL_DATE,
-		       M_MODIFY_DATE,
-		       M_STATUS,
-		       M_CNUM,
-		       M_PCOUNT
-		FROM MEMBER
-	</sql>
+<sql id="selectMemberSql">
+      SELECT M_NO,
+             M_ID,
+             M_PASSWORD,
+             M_NAME,
+             M_BIRTH,
+             M_EMAIL,
+             M_PHONE,
+             M_GENDER,
+             M_ADDRESS,
+             M_DETAIL_ADD,
+             M_POINT,
+             M_ROLE,
+             M_ENROLL_DATE,
+             M_MODIFY_DATE,
+             M_STATUS,
+             M_CNUM,
+             M_PCOUNT,
+             M_VERIFIED
+      FROM MEMBER
+   </sql>
 
-	<resultMap id="memberResultMap" type="Member">
+   <resultMap id="memberResultMap" type="Member">
+      <!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
+      <id property="no" column="M_NO"/>
+      <!-- 조회 결과의 일반 컬럼을 매핑한다. -->
+      <result property="id" column="M_ID"/>
+      <result property="password" column="M_PASSWORD"/>
+      <result property="name" column="M_NAME"/>
+      <result property="birth" column="M_BIRTH"/>
+      <result property="email" column="M_EMAIL"/>
+      <result property="phone" column="M_PHONE"/>
+      <result property="gender" column="M_GENDER"/>
+      <result property="address" column="M_ADDRESS"/>
+      <result property="detailAdd" column="M_DETAIL_ADD"/>
+      <result property="point" column="M_POINT"/>
+      <result property="role" column="M_ROLE"/>
+      <result property="enrollDate" column="M_ENROLL_DATE"/>
+      <result property="modifyDate" column="M_MODIFY_DATE"/>
+      <result property="status" column="M_STATUS"/>
+      <result property="cnum" column="M_CNUM"/>
+      <result property="pcount" column="M_PCOUNT"/>
+      <result property="verified" column="M_VERIFIED"/>
+   </resultMap>
+	
+	<resultMap id="tokenResultMap" type="Member">
 		<!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
-		<id property="mNo" column="M_NO"/>
+		<id property="tkNo" column="TK_NO"/>
 		<!-- 조회 결과의 일반 컬럼을 매핑한다. -->
-		<result property="mId" column="M_ID"/>
-		<result property="mPassword" column="M_PASSWORD"/>
-		<result property="mName" column="M_NAME"/>
-		<result property="mBirth" column="M_BIRTH"/>
-		<result property="mEmail" column="M_EMAIL"/>
-		<result property="mPhone" column="M_PHONE"/>
-		<result property="mGender" column="M_GENDER"/>
-		<result property="mAddress" column="M_ADDRESS"/>
-		<result property="mDetailAdd" column="M_DETAIL_ADD"/>
-		<result property="mPoint" column="M_POINT"/>
-		<result property="mRole" column="M_ROLE"/>
-		<result property="mEnrollDate" column="M_ENROLL_DATE"/>
-		<result property="mModifyDate" column="M_MODIFY_DATE"/>
-		<result property="mStatus" column="M_STATUS"/>
-		<result property="mCnum" column="M_CNUM"/>
-		<result property="mPcount" column="M_PCOUNT"/>
+		<result property="tkEmail" column="TK_EMAIL"/>
+		<result property="tkToken" column="TK_TOKEN"/>
+		<result property="tkExtime" column="TK_EXTIME"/>
 	</resultMap>
 	
 	<select id="selectCount" resultType="_int">
@@ -57,11 +68,19 @@
 	
 	
 	<!-- 아이디 중복 체크 -->
-	<select id="checkId" parameterType="String" resultType="int">
+	<select id="selectCountById" parameterType="String" resultType="int">
 		SELECT COUNT(M_ID)
 		FROM MEMBER
-		WHERE M_ID = #{mId}
+		WHERE M_ID = #{id}
 	</select>
+
+	<!-- 이메일 중복 체크 -->
+	<select id="selectOneMember" parameterType="String" resultType="string">
+		SELECT M_EMAIL
+		FROM MEMBER
+		WHERE M_EMAIL = #{email}
+	</select>
+
 	
 	
    <select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
@@ -83,13 +102,13 @@
 	         M_CNUM,
 	         M_PCOUNT
       FROM MEMBER
-      WHERE M_ID = #{mId}
+      WHERE M_ID = #{id}
    </select>
 
 
 
 	<insert id="insertMember" parameterType="Member"
-		useGeneratedKeys="true" keyColumn="M_NO" keyProperty="mNo"> <!-- 프라이머리 키값을 외래키로 들어가게 하는거 -->
+		useGeneratedKeys="true" keyColumn="NO" keyProperty="no"> <!-- 프라이머리 키값을 외래키로 들어가게 하는거 -->
 		INSERT INTO MEMBER (
 			M_NO,
 			M_ID,
@@ -107,18 +126,19 @@
 			M_MODIFY_DATE,
 			M_STATUS,
 			M_CNUM,
-			M_PCOUNT
-			) VALUES(
+			M_PCOUNT,
+			M_VERIFIED
+		) VALUES (
 			SEQ_MEMBER_M_NO.NEXTVAL,
-			#{mId},
-			#{mPassword},
-			#{mName},
-			#{mBirth},
-			#{mEmail},
-			#{mPhone},
-			#{mGender},
-			#{mAddress},
-			#{mDetailAdd},
+			#{id},
+			#{password},
+			#{name},
+			#{birth},
+			#{email},
+			#{phone},
+			#{gender},
+			#{address},
+			#{detailAdd},
 			DEFAULT,
 			DEFAULT,
 			DEFAULT,
@@ -126,5 +146,73 @@
 			DEFAULT,
 			DEFAULT,
 			DEFAULT
+		)
 	</insert>
+	
+    <insert id="insertVerificationToken">
+        INSERT INTO TOKEN (
+        	TK_EMAIL,
+        	TK_TOKEN
+       	) VALUES (
+        	#{tkEmail},
+        	#{tkToken}
+       	)
+    </insert>
+
+    <select id="getVerificationToken" resultType="string">
+        SELECT TOKEN
+        FROM TOKEN
+        WHERE TK_EMAIL = #{tkEmail}
+    </select>
+
+    <update id="setVerified">
+        UPDATE MEMBER
+        SET M_VERIFIED = 'Y'
+        WHERE M_EMAIL = #{email}
+    </update>
+
+    <select id="getMember" resultType="Member">
+        SELECT M_EMAIL,
+        	   M_NAME,
+        	   M_PASSWORD,
+        	   M_VERIFIED
+        FROM MEMBER
+        WHERE M_EMAIL = #{email}
+    </select>
+    
+        <select id="getEmail" resultType="Member">
+        SELECT M_EMAIL
+        FROM MEMBER
+        WHERE M_EMAIL = #{email}
+    </select>
+    
+    
+    
+    <!-- 회원가입 시 이메일 인증을 위한 랜덤번호 저장 -->
+    <update id="updateMailToken" parameterType="Member">
+        UPDATE MEMBER
+        INNER JOIN TOKEN ON MEMBER.M_NO = TOKEN.M_NO
+        SET TOKEN.TK_TOKEN=#{tkToken}
+        WHERE TOKEN.TK_EMAIL=#{email}
+		AND MEMBER.M_ID=#{id};
+    </update>
+    
+    <!-- 메일인증을 하면 tk_auth(메일인증여부) 컬럼을 기본값0에서 1로 바꿔 로그인을 허용 -->
+    <update id="updateMailAuth" parameterType="Member">
+	    UPDATE TOKEN
+	    SET TK_AUTH=1
+	    WHERE TK_EMAIL=#tkEmail}
+	    AND TK_TOKEN=#{tkToken}
+    </update>
+    
+    <!-- 이메일 인증을 안했으면 0을 반환, 로그인 시 인증 했나 안했나 체크하기 위함 -->
+    <select id="emailAuthFail" parameterType="String" resultType="int">
+	    SELECT COUNT(*)
+	    FROM MEMBER
+	    INNER JOIN TOKEN ON MEMBER.M_NO = TOKEN.M_NO
+	    WHERE MEMBER.M_ID=#{id} AND TOKEN.TK_AUTH=1
+    </select>
+    
+    
+
 </mapper>

@@ -44,6 +44,7 @@
 	<security:http pattern="/js/**" security="none"></security:http>
 	<security:http pattern="/css/**" security="none"></security:http>
 	<security:http pattern="/images/**" security="none"></security:http>
+	<security:http pattern="/member/request" security="none"></security:http>
 	<!--
 		security:http
 		  - HTTP에 대한 요청을 안전하게 보호하는 방법을 설정하는 요소이다.
@@ -51,6 +52,7 @@
 		  - use-expressions 속성은 SpEL(스프링 표현식)의 사용 여부를 지정하는 속성이다.
 	-->
 	<security:http auto-config="true" use-expressions="true">
+	
 		<!--
 			security:intercept-url
 			  - pattern 속성에 해당하는 요청에 대한 접속 권한을 설정한다.
@@ -60,6 +62,7 @@
 		<security:intercept-url pattern="/member/login" access="permitAll"/>
 		<security:intercept-url pattern="/member/enroll" access="permitAll"/>
 		<security:intercept-url pattern="/home" access="permitAll"/>
+
 		
 		
 		<!-- 관리자만 어드민으로 들어와야해! 할때 넣는 설정 // 어드민으로들어가는 모든 요청에는 들어갈 수 있음 -->
@@ -85,13 +88,16 @@
 		로그인 실패 시 /login?err=true 페이지로
 			authentication-failure-url="/login?err=true"
 			authentication-failure-url="/login?error"
+			
+			login-processing-url="/login"
 	-->
 	
 		<!-- 로그인 페이지 커스텀 -->
 		<security:form-login
 			login-page="/member/login"
-			username-parameter="mId"
-			password-parameter="mPassword"
+			
+			username-parameter="id"
+			password-parameter="password"
 			authentication-success-handler-ref="loginSuccessHandler"
 			authentication-failure-handler-ref="loginFailureHandler"
 		/>

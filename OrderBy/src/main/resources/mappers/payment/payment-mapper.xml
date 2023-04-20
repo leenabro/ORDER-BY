@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ta.orderby.payment.model.mapper.PaymentMapper">
+
+	<resultMap id="couponResultMap" type="Coupon" >
+		<result property="code" column="CO_CODE" />
+		<result property="name" column="CO_NAME" />
+		<result property="percent" column="CO_PERCENT" />
+		<result property="createDate" column="CO_C_DATE" />
+		<result property="status" column="CO_STATUS" />
+		<result property="regiDate" column="CO_REGI" />
+		<result property="period" column="CO_PERIOD" />
+		<result property="memberNo" column="M_NO" />
+		
+	</resultMap>
+	
+	<select id="findCouponByMemberNo" parameterType="_int" resultMap="couponResultMap">
+		SELECT 
+			CO_CODE,
+			CO_NAME,
+    		CO_PERCENT,
+    		CO_C_DATE,
+    		CO_STATUS,
+    		CO_REGI,
+    		CO_PERIOD,
+    		M_NO
+		FROM COUPON
+		WHERE M_NO = #{memberNo}
+	</select>
+	
+	
+	
+	
+
+</mapper>

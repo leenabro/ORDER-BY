@@ -11,8 +11,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf_header" content="${_csrf.headerName}">
+<!-- ajax 통신을 위한 meta tag -->
 <meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <security:csrfMetaTags/>
 
 <link rel="stylesheet" href="${path}/resources/css/member/login.css"/>
@@ -48,10 +49,10 @@
 				<!-- 폼은 ${path}/member/login 으로 하면 필터 못타서 ${path}/login으로 해줘야함 -->
 				<form action="${path}/login" method="POST">
 					<div class="login-id-wrap">
-						<input id="input-id" name="mId" placeholder="아이디" type="text"></input>
+						<input id="input-id" name="id" placeholder="아이디" type="text"></input>
 					</div>
 					<div class="login-pw-wrap">
-						<input id="input-pw" name="mPassword" placeholder="비밀번호" type="password" autoComplete="off"></input>
+						<input id="input-pw" name="password" placeholder="비밀번호" type="password" autoComplete="off"></input>
 					</div>
 					<div class="login-btn-wrap">
 						<security:csrfInput/>
