@@ -40,9 +40,10 @@
 				<div id="navBar"></div>
 			</div>
 		</div>
-		
 		<div>
 			
+			<p>하이</p>
+			<p>${ payment.values() }</p>
 		</div>	
 	
 	</section>

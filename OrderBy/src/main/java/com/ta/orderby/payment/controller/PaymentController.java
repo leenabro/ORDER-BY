@@ -1,5 +1,6 @@
 package com.ta.orderby.payment.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -126,10 +128,19 @@ public class PaymentController {
 	}
 	
 	@ResponseBody
-	@PostMapping("payment/success")
-	public ModelAndView success(ModelAndView modelAndView, @RequestParam("method") String method, @RequestParam("merchant_uid") String productId) {
+	@PostMapping("payment/pay")
+	public HashMap<String, Object> pay(@RequestBody HashMap<String, Object> map ) {
 		
-		System.out.println(productId);
+		System.out.println(map);
+		System.out.println(map.values());
+		
+		
+		return map;
+	}
+	
+	@GetMapping("payment/success")
+	public ModelAndView success (ModelAndView modelAndView) {
+		
 		
 		modelAndView.setViewName("payment/success");
 		
