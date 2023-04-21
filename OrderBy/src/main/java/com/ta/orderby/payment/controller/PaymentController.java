@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -39,9 +38,8 @@ public class PaymentController {
 	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price, 
 									@AuthenticationPrincipal Member loginMember) {
 		
-		Member member = memberService.findMemberById(loginMember.getId()); 
-		
-		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+		if(loginMember != null) {
+			Member member = memberService.findMemberById(loginMember.getId()); 
 			Car car = carService.findCarByName(name);
 			
 			car.setPrice(Integer.parseInt(price));
@@ -64,9 +62,9 @@ public class PaymentController {
 	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price,
 								@AuthenticationPrincipal Member loginMember) {
 		
-		Member member = memberService.findMemberById(loginMember.getId()); 
 		
-		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+		if(loginMember != null) {
+			Member member = memberService.findMemberById(loginMember.getId()); 
 			// 자동차 정보 불러오기
 			Car car = carService.findCarByName(name);
 			
@@ -137,7 +135,6 @@ public class PaymentController {
 		
 		return modelAndView;
 	}
-	
 	
 	
 	

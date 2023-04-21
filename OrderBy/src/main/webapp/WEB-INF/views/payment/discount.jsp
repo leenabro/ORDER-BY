@@ -73,6 +73,7 @@
 						<p id="dicPrice" class="car-spec-price">- 0 원</p>
 						<div>
 							<ul id="dicContent">
+								<li id="couponList"></li>
 							</ul>
 						</div>
 					</li>
@@ -95,16 +96,16 @@
 							<span>회원 등급</span>
 							<c:choose>
 								<c:when test="${ member.role eq 'B' }">
-									<div id="memberRole">브론즈(0 %)</div>
+									<div id="memberRole">브론즈</div>
 								</c:when>
 								<c:when test="${ member.role eq 'S' }">
-									<div id="memberRole" style="color: mintcream">실버(5 %)</div>
+									<div id="memberRole" style="color: mintcream">실버</div>
 								</c:when>
 								<c:when test="${ member.role eq 'G' }">
-									<div id="memberRole" style="color: gold">골드(10 %)</div>
+									<div id="memberRole" style="color: gold">골드</div>
 								</c:when>
 								<c:when test="${ member.role eq 'D' }">
-									<div id="memberRole" style="color: cadetblue;">다이아(20 %)</div>
+									<div id="memberRole" style="color: cadetblue;">다이아</div>
 								</c:when>
 							</c:choose>
 						</div>
@@ -144,8 +145,9 @@
 						<div class="scriptRow">
 							<span style="padding-top: 20px;">사용할 포인트</span>
 							<div>
-								<input id="usePoint" type="text" class="script-point" value="0"> p <input
-									type="button" id="pointButton" value="모두 사용">
+								<input id="usePoint" type="text" class="script-point" value="0"> p
+								<input type="button" id="pointButton" value="모두 사용">
+								<input type="button" id="cancelButton" value="취소">
 								<div>
 									<p id="pointMsg" style="font-size: 0.5em; color: red; vertical-align: top;">누적 포인트 50,000 포인트 이상이어야 사용 가능</p>
 								</div>
@@ -254,31 +256,21 @@
 			};				
 			
 			// 멤버십 할인 및 쿠폰 할인 스크립트 문
-			let price = ${ car.price };
-			let role = document.getElementById('memberRole').innerText;
-			let discount = 0;
-			let ulNode = document.getElementById('dicContent');
-			let liNode = document.createElement('li');
-			
-			console.log(role);
-			if(role === '실버(5 %)') {
-				discount = price * 0.05;
-				price = price * 0.95;
-				liNode.textContent = role + " 할인";
-				ulNode.appendChild(liNode);
-				
-				$('#dicPrice').html('- '+ comma(discount) +' 원');
-				$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
-			}
-			
 			
 			$('#disCoupone').change(function() {
+				let price = ${ car.price };
+				let discount = 0;
+				let ulNode = document.getElementById('dicContent');
+				let liNode = document.createElement('li');
 				let disPercent = 1;
 				
-				if($(this).val() === '' && $(this).val() === null) {
+				if($(this).val() === '' || $(this).val() === null) {
+					discount = 0;
+					price = ${ car.price };
+					console.log(discount);
 					
-					$('#dicPrice').html('- '+ comma(discount) +' 원');
-					$('#dicContent').html('');
+					$('#dicPrice').html('- '+ discount +' 원');
+					$('#couponList').html('');
 					$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 				}; 
 				
@@ -292,9 +284,8 @@
 						
 						$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 						$('#dicPrice').html('- ' + comma(discount) + ' 원');
-						
-						liNode.textContent = ${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)';
-						ulNode.appendChild(liNode);
+
+						$('#couponList').html(${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)');
 						
 					};
 				};
@@ -306,6 +297,11 @@
 				let toPoint = document.getElementById("memberPoint").value;
 				
 				document.getElementById("usePoint").value = toPoint;
+			})
+			
+			$('#cancelButton').on('click', () => {
+				
+				document.getElementById("usePoint").value = 0;
 			})
 			
 			$('#usePoint').keyup((event) => {
@@ -324,6 +320,11 @@
 				}
 				
 			});
+			
+			if(document.getElementById("usePoint").value >= 50000) {
+				let finalPrice = document.getElementById("finalPrice").value;
+				console.log(finalPrice);
+			}
 			
 			
 		});

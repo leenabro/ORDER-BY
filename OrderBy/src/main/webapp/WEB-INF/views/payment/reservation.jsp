@@ -158,7 +158,8 @@
 			
 			$('#nextButton').on('click', () => {
 				location.href = "${ path }/payment/discount?name=${ car.name }&price=${ car.price }";
-			})	
+			})
+			
 		
 			
 		});
