@@ -44,6 +44,8 @@ public class AdminMember {
 
 	private int pcount;
 	
+	private String verified;
+	
 	public AdminMember(String id, String password) {
 		this.id = id;
 		this.password = password;

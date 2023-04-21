@@ -30,7 +30,7 @@ public class AdminProductMotocycle {
 
 	private int km;
 	
-	private String price;
+	private int price;
 	
 	private String position;
 	
@@ -40,7 +40,7 @@ public class AdminProductMotocycle {
 	
 	private int s_no;
 	
-	private String pf_no;
+	private int pf_no;
 	
 	private int count;
 	

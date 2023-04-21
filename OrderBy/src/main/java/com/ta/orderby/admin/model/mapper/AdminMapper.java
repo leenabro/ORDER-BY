@@ -78,6 +78,8 @@ public interface AdminMapper {
 
 	int insertStore(AdminStore store);
 
+	int allproductCount();
+
 
 
 	

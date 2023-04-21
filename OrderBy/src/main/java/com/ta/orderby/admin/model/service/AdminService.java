@@ -70,6 +70,8 @@ public interface AdminService {
 
 	int active(int no);
 
+	int allproductcount();
+
 
 
 
