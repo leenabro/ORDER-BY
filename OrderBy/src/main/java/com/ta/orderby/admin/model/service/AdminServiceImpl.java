@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class AdminServiceImpl  implements AdminService{
 	
 	@Autowired
 	private AdminMapper mapper;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public int getAdminMemberCount() {
@@ -40,6 +44,8 @@ public class AdminServiceImpl  implements AdminService{
 	@Override
 	public AdminMember modifyMemberByNo(int no) {
 		
+		
+		
 		return mapper.selectAdminMemberByNo(no);
 	}
 
@@ -54,6 +60,8 @@ public class AdminServiceImpl  implements AdminService{
 	@Transactional
 	public int save(AdminMember member) {
 		int result = 0;
+		
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		
 		result = mapper.updateAdminMember(member);
 		

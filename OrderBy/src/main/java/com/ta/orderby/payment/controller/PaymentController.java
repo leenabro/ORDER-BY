@@ -39,9 +39,9 @@ public class PaymentController {
 	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price, 
 									@AuthenticationPrincipal Member loginMember) {
 		
-		Member member = memberService.findMemberById(loginMember.getId()); 
 		
-		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+		if(loginMember != null) {
+			Member member = memberService.findMemberById(loginMember.getId()); 
 			Car car = carService.findCarByName(name);
 			
 			car.setPrice(Integer.parseInt(price));
