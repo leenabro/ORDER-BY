@@ -20,7 +20,8 @@
 		       M_MODIFY_DATE,
 		       M_STATUS,
 		       M_CNUM,
-		       M_PCOUNT
+		       M_PCOUNT,
+		       M_VERIFIED
 		FROM MEMBER
 	</sql>
 	
@@ -42,6 +43,7 @@
 		<result property="status" column="M_STATUS"/>
 		<result property="cnum" column="M_CNUM"/>
 		<result property="pcount" column="M_PCOUNT"/>
+		<result property="verified" column="M_VERIFIED"/>
 	</resultMap>
 	
 	
@@ -438,4 +440,10 @@
 		DEFAULT
 	)
 	</insert>
+	
+	<select id="allproductCount" resultType="_int">
+	SELECT
+	(SELECT COUNT(*) FROM CAR) + 
+	(SELECT COUNT(*) FROM MOTOCYCLE) FROM DUAL
+	</select>
 </mapper>

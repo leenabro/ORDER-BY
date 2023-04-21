@@ -29,7 +29,7 @@ public class AdminProductCar {
 		
 		private String fuel;
 		
-		private String price;
+		private int price;
 		
 		private String position;
 		
@@ -37,9 +37,9 @@ public class AdminProductCar {
 		
 		private String sale;
 		
-		private int s_no;
+		private int sno;
 		
-		private String pf_no;
+		private int pfno;
 		
 		private int count;
 		

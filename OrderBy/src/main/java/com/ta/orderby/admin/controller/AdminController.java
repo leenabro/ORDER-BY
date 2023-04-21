@@ -37,10 +37,17 @@ public class AdminController {
 	private ResourceLoader resourceLoader;
 	// 관리자페이지 불러오기
 	@GetMapping("/admin/view")
-	public String admin() {
+	public ModelAndView admin(ModelAndView modelAndView) {
 		log.info("Admin 페이지");
+		int allproductcount = service.allproductcount();
 		
-		return "admin/view";
+		int allstorecount = service.getStoreCount();
+		
+		System.out.println(allproductcount);
+
+		modelAndView.addObject("count", allproductcount);
+		modelAndView.addObject("storecount",allstorecount);
+		return modelAndView;
 	}
 	
 	// 회원테이블 불러오기
@@ -184,7 +191,7 @@ public class AdminController {
 	}
 	
 	// 오토바이 상품등록
-	@PostMapping("/admin/insertmotocylceproduct")
+	@PostMapping("/admin/insertmotocycleproduct")
 	public ModelAndView insertmotocycle( @ModelAttribute AdminProductMotocycle promoto,
 			ModelAndView modelAndView, @RequestParam("upfile") MultipartFile upfile) {
 		
@@ -219,7 +226,7 @@ public class AdminController {
 			modelAndView.addObject("location", "/admin/motocycleproduct");
 		} else {
 			modelAndView.addObject("msg", "자동차 상품 등록을 실패하였습니다.");
-			modelAndView.addObject("location", "admin/insertmotocylceproduct");
+			modelAndView.addObject("location", "admin/insertmotocycleproduct");
 		}
 		
 		modelAndView.setViewName("common/msg");
@@ -371,7 +378,7 @@ public class AdminController {
 		@PostMapping("/admin/modifycarupdate")
 		public ModelAndView carupdate(ModelAndView modelAndView,  @RequestParam int no, 
 				@RequestParam String cname, @RequestParam String cbrand, @RequestParam String cengine, @RequestParam int ccc,
-				@RequestParam String cfuel, @RequestParam String cprice, @RequestParam String cposition, @RequestParam int ckm,
+				@RequestParam String cfuel, @RequestParam int cprice, @RequestParam String cposition, @RequestParam int ckm,
 				@RequestParam String cstatus) {
 				
 				AdminProductCar procar = null;
@@ -517,7 +524,7 @@ public class AdminController {
 			@PostMapping("/admin/modifymotoupdate")
 			public ModelAndView motoupdate(ModelAndView modelAndView,  @RequestParam int no, 
 					@RequestParam String mcname, @RequestParam String mcbrand, @RequestParam String mcengine, @RequestParam int mccc,
-					@RequestParam int mcoutput, @RequestParam int mctorque, @RequestParam String mcprice, @RequestParam String mcposition, @RequestParam int mckm,
+					@RequestParam int mcoutput, @RequestParam int mctorque, @RequestParam int mcprice, @RequestParam String mcposition, @RequestParam int mckm,
 					@RequestParam String mcstatus) {
 					
 					AdminProductMotocycle promoto = null;
@@ -546,10 +553,10 @@ public class AdminController {
 					
 					if(result > 0) {
 						
-						modelAndView.addObject("msg", "회원정보수정을 성공 하였습니다.");
+						modelAndView.addObject("msg", "자동차 정보 수정을 성공 하였습니다.");
 						modelAndView.addObject("location", "/admin/modifymotocycleproduct?no=" + no);
 					} else {
-						modelAndView.addObject("msg", "회원정보수정을 실패 하였습니다.");
+						modelAndView.addObject("msg", "자동차 정보 수정을 실패 하였습니다.");
 						modelAndView.addObject("location", "/admin/modifymotocycleproduct?no=" + no);
 					}
 					
@@ -924,4 +931,11 @@ public class AdminController {
 //		
 //		return modelAndView;
 //	}
+	
+	// 쿠폰 (정환)
+	@GetMapping("/admin/coupon")
+	public ModelAndView coupon(ModelAndView modelAndView) {
+		
+		return modelAndView;
+	}
 }

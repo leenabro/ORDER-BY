@@ -246,6 +246,12 @@ public class AdminServiceImpl  implements AdminService{
 		return mapper.activeMemberStatus(no, "Y");
 	}
 
+	@Override
+	public int allproductcount() {
+		
+		return mapper.allproductCount();
+	}
+
 
 
 

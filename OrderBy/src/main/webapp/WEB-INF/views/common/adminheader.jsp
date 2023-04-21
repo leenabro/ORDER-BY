@@ -3,28 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
-<c:set var="path" value="${ pageContext.request.contextPath }"/>
-<!DOCTYPE html>
-<html>
-<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Order By</title>
-    <body id="page-top">
-         <!-- Page Wrapper -->
+     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${path }/admin/view">
+             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${path }/">
                 <div class="sidebar-brand-icon rotate-n-15" style="transform: rotate(0deg)">
                      <img src="${path }/resources/static/assets/css/images/main_logo.png" style="width: 50px; margin-right: -20px;">
                 </div>
@@ -62,6 +51,12 @@
                 <a class="nav-link" href="${path }/admin/popqna">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상담 관리</span></a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/coupon">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>쿠폰 관리</span></a>
             </li>
 
             <!-- Divider -->
