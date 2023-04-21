@@ -150,8 +150,9 @@
 }
 
 #dicContent {
-	text-align: right;
+	list-style: none;
 	padding-right: 20px;
+	text-align: right;
 	color: red;
 }
 

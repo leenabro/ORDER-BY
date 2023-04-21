@@ -38,41 +38,57 @@ public class PaymentController {
 	@GetMapping("payment/reservation")
 	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price, 
 									@AuthenticationPrincipal Member loginMember) {
+		
 		Member member = memberService.findMemberById(loginMember.getId()); 
-		Car car = carService.findCarByName(name);
 		
-		car.setPrice(Integer.parseInt(price));
-		
-		System.out.println(member);
-		
-		modelAndView.addObject("member", member);
-		modelAndView.addObject("car", car);
-		modelAndView.setViewName("payment/reservation");
+		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+			Car car = carService.findCarByName(name);
+			
+			car.setPrice(Integer.parseInt(price));
+			
+			modelAndView.addObject("member", member);
+			modelAndView.addObject("car", car);
+			modelAndView.setViewName("payment/reservation");
+		} else {
+			modelAndView.addObject("msg", "로그인 후 이용해 주세요.");
+			modelAndView.addObject("location", "/");
+			
+			modelAndView.setViewName("common/msg");
+		}
 		
 		return modelAndView;
 	}
 	
 	// 할인 페이지로 이동
 	@GetMapping("payment/discount")
-	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price) {
-		// 자동차 정보 불러오기
-		Car car = carService.findCarByName(name);
+	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price,
+								@AuthenticationPrincipal Member loginMember) {
 		
-		// 쿠폰 정보 불러오기
-		List<Coupon> list = service.findCouponByMemberNo(1);
-		Gson gson = new GsonBuilder().create();
-		String coupons = gson.toJson(list);
-
-		// 로그인 멤버 포인트 불러오기
+		Member member = memberService.findMemberById(loginMember.getId()); 
 		
-		
-		// 특가일 경우 할인된 가격 다시 set
-		car.setPrice(Integer.parseInt(price));
-		
-		modelAndView.addObject("coupons", coupons);
-		modelAndView.addObject("coupon", list);
-		modelAndView.addObject("car", car);
-		modelAndView.setViewName("payment/discount");
+		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+			// 자동차 정보 불러오기
+			Car car = carService.findCarByName(name);
+			
+			// 쿠폰 정보 불러오기
+			List<Coupon> list = service.findCouponByMemberNo(1);
+			Gson gson = new GsonBuilder().create();
+			String coupons = gson.toJson(list);
+			
+			// 특가일 경우 할인된 가격 다시 set
+			car.setPrice(Integer.parseInt(price));
+			
+			modelAndView.addObject("member", member);
+			modelAndView.addObject("coupons", coupons);
+			modelAndView.addObject("coupon", list);
+			modelAndView.addObject("car", car);
+			modelAndView.setViewName("payment/discount");
+		} else {
+			modelAndView.addObject("msg", "로그인 후 이용해 주세요.");
+			modelAndView.addObject("location", "/");
+			
+			modelAndView.setViewName("common/msg");
+		}
 		
 		return modelAndView;
 	}
