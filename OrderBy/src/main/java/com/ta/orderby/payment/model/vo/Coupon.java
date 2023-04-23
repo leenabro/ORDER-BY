@@ -10,7 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coupon {
-	private String code;
+	private int ciNumber;
+	
+	private int coNumber;
+	
+	private int memberNo;
+	
+	private String status;
+	
+	private Date regiDate;
 	
 	private String name;
 	
@@ -18,11 +26,7 @@ public class Coupon {
 	
 	private Date createDate;
 	
-	private String status;
-	
-	private Date regiDate;
-	
 	private String period;
 	
-	private int memberNo;
+	
 }
