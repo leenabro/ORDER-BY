@@ -43,7 +43,7 @@
 		<div>
 			
 			<p>하이</p>
-			<p>${ payment.values() }</p>
+			<p>${ payment }</p>
 		</div>	
 	
 	</section>

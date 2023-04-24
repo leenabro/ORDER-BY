@@ -14,7 +14,20 @@
 		<result property="percent" column="CO_PERCENT" />
 		<result property="createDate" column="CO_CDATE" />
 		<result property="period" column="CO_PERIOD" />
-		
+	</resultMap>
+	
+	<resultMap type="Payment" id="paymentResultMap">
+		<id property="no" column="P_NO" />
+		<result property="method" column="P_UID" />
+		<result property="uid" column="P_NAME" />
+		<result property="productName" column="P_METHOD" />
+		<result property="date" column="P_DATE" />
+		<result property="totPrice" column="P_TOT_PRICE" />
+		<result property="finPrice" column="P_FIN_PRICE" />
+		<result property="status" column="P_STATUS" />
+		<result property="memberNo" column="M_NO" />
+		<result property="carNo" column="C_NO" />
+		<result property="motocycleNo" column="MC_NO" />
 	</resultMap>
 	
 	<select id="findCouponByMemberNo" parameterType="_int" resultMap="couponResultMap">
@@ -32,6 +45,49 @@
 		JOIN COUPON C ON (I.CO_NUMBER = C.CO_NUMBER)
 		WHERE I.M_NO = #{memberNo}
 	</select>
+	
+	<insert id="insertPayment" parameterType="Payment">
+		INSERT INTO PAYMENT(
+		    P_NO,
+		    P_UID,
+		    P_NAME,
+		    P_METHOD,
+		    P_DATE,
+		    P_TOT_PRICE,
+		    P_FIN_PRICE,
+		    P_STATUS,
+		    M_NO,
+		    C_NO,
+		    MC_NO
+		) VALUES (
+		    SEQ_PAYMENT_P_NO.NEXTVAL,
+		    #{uid},
+		    #{productName},
+		    #{method},
+		    SYSDATE,
+		    #{totPrice},
+		    #{finPrice},
+		    'Y',
+		    #{memberNo},
+			<choose>
+				<when test="carNo != null">
+					#{carNo},
+				</when>
+				<when test="carNo == null">
+					NULL,
+				</when>
+			</choose>
+			<choose>
+				<when test="motocycleNo != null">
+					#{motocycleNo}
+				</when>
+				<when test="motocycleNo == null">
+					NULL
+				</when>
+			</choose>		    
+		)
+	
+	</insert>
 	
 	
 	

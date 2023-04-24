@@ -3,7 +3,6 @@ package com.ta.orderby.car.model.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ta.orderby.car.model.vo.Car;

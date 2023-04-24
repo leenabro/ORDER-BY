@@ -25,16 +25,9 @@
         <div class="title"><strong  style="color:#202431; font-size: large;">이 달의 특가</strong></div>
         <div class="container">
           	<ul>
-          		<c:forEach var="car" items="${ list }">
+          		<c:forEach var="car" items="${ carList }">
 		            <li>
-		            	<c:choose>
-		            		<c:when test="${ car.sale == 'C' }">
-		            			<a href="payment/reservation?name=${ car.name }&price=${ car.price }">
-		            		</c:when>
-		            		<c:when test="${ car.sale == 'S' }">
-		            			<a href="payment/reservation?name=${ car.name }&price=<fmt:parseNumber var="price" value="${ car.price * 0.7 }" integerOnly="true" />${ price }">
-		            		</c:when>
-		            	</c:choose>
+           				<a href="payment/reservation?name=${ car.name }&price=<fmt:parseNumber var="price" value="${ car.price * 0.7 }" integerOnly="true" />${ price }">
 		                  <div class="month-sale-images">
 		                      <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
 		                      <img class="sale-image" src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
@@ -44,7 +37,7 @@
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
 		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4>
 		                    <br>
-		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
+		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</del></p>
 		                    <span class="material-symbols-outlined" style="color:red">
 		                      south
 		                      </span>
@@ -52,23 +45,25 @@
 		                  </div>
 		            </li>
           		</c:forEach>
-	          	<li>
-	            <a href="" class="hover-test">
-	              <div class="month-sale-images">
-	                <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
-	                <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/BMW_M_1000_RR.png">
-	              </div>
-	            </a>
-	            <div class="add-information"><br>
-	              <h4 style="color:black; font-size: x-large;">BMW <br>M_1000_RR</h4>
-	              <br>
-	              <p style="font-size: medium;">대여 비용(일) : <del style="color: red;">12,000,000원</del></p>
-	              <span class="material-symbols-outlined" style="color:red">
-	                south
-	                </span>
-	              <p>할인 비용(일) : 8,000,000원</p>
-	            </div>
-        	</li>
+          		<c:forEach var="motocycle" items="${ motoList }">
+		          	<li>
+			            <a href="payment/reservation?name=${ motocycle.name }&price=<fmt:parseNumber var="price" value="${ motocycle.price * 0.7 }" integerOnly="true" />${ price }" class="hover-test">
+			              <div class="month-sale-images">
+			                <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
+			                <img class="sale-image" src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png">
+			              </div>
+			            </a>
+			            <div class="add-information"><br>
+			              <h4 style="color:black; font-size: x-large;">${ motocycle.brand }<br>${ motocycle.name }</h4>
+			              <br>
+			              <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</del></p>
+			              <span class="material-symbols-outlined" style="color:red">
+			                south
+			                </span>
+			              <p>할인 비용(일) : <fmt:formatNumber value="${ motocycle.price * 0.7 }" pattern="#,###" /> 원</p>
+			            </div>
+		        	</li>
+          		</c:forEach>
       		</ul>
       	</div>
       </section>

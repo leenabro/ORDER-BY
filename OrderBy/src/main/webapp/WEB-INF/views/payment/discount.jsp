@@ -49,12 +49,25 @@
 		<br>
 		<div class="shortContainer">
 			<div id="sectionImg" class="res-section-div">
-				<div id="carName">
-					<p style="padding: 25px 0px; margin: 0;">${ car.brand }${ car.name }</p>
+				<div id="productName">
+					<c:choose>
+	            		<c:when test="${ not empty car.brand }">
+			                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
+	            		</c:when>
+	            		<c:when test="${ not empty motocycle.brand }">
+			                <p style="padding: 25px 0px; margin: 0;">${ motocycle.brand } ${ motocycle.name }</p>
+	            		</c:when>
+	            	</c:choose>
 				</div>
-				<div id="carImg">
-					<img
-						src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+				<div id="productImg">
+					<c:choose>
+	            		<c:when test="${ not empty car.brand }">
+			                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+	            		</c:when>
+	            		<c:when test="${ not empty motocycle.brand }">
+			                <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png">
+	            		</c:when>
+	            	</c:choose>
 				</div>
 				<ul>
 					<li class="car-spec-li">
@@ -67,10 +80,14 @@
 					</li>
 					<li class="car-spec-li">
 						<p class="car-spec-title">차량 대여 요금</p>
-						<p class="car-spec-price">
-							<fmt:formatNumber value="${ car.price }" pattern="#,###" />
-							원
-						</p>
+						<c:choose>
+	                    	<c:when test="${ not empty car.brand }">
+	                    		<p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>	
+	                    	</c:when>
+	                    	<c:when test="${ not empty motocycle.brand }">
+	                    		<p class="car-spec-price"><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</p>
+	                    	</c:when>
+	                    </c:choose>
 					</li>
 					<li class="car-spec-li">
 						<p class="car-spec-title">할인 요금</p>
@@ -84,10 +101,14 @@
 					</li>
 					<li id="totalPrice" class="car-spec-li">
 						<p class="car-spec-title">총 금액</p>
-						<p class="car-spec-price" id="finalPrice">
-							<strong><fmt:formatNumber value="${ car.price }"
-									pattern="#,###" /> 원</strong>
-						</p>
+						<c:choose>
+	                    	<c:when test="${ not empty car.brand }">
+	                    		<p class="car-spec-price" id="finalPrice"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>	
+	                    	</c:when>
+	                    	<c:when test="${ not empty motocycle.brand }">
+	                    		<p class="car-spec-price" id="finalPrice"><strong><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</strong></p>
+	                    	</c:when>
+	                    </c:choose>
 					</li>
 				</ul>
 			</div>
@@ -181,6 +202,13 @@
 				</li>
 			</ul>
 		</div>
+		
+		<form name="payForm" action="${ path }/payment/success" method="POST">
+			<security:csrfInput/>
+			<input type="hidden" id="uid" name="uid"/>
+			<input type="hidden" id="finPrice" name="finPrice"/>
+			<input type="hidden" id="buyerName" name="buyerName"/>
+		</form>
 	</section>
 
 
@@ -189,9 +217,27 @@
 		let year = today.getFullYear(); // 년도
 		let month = today.getMonth(); // 월
 		let date = today.getDate(); // 일
-		let carNo = '${ car.no }';
-		
+		let productNo = 0;
+		let productName = "";
+		let productFullName = "";
+		let productPrice = 0;
 		let productId = "";
+		let productCate = "";
+		
+		if('${car.no}' === null || '${car.no}' === '') {
+			productNo = '${ motocycle.no }';
+			productName = '${ motocycle.name }';
+			productFullName = '${ motocycle.brand } ${ motocycle.name }';
+			productPrice = '${ motocycle.price }';
+			productCate = 'm';
+		} else {
+			productNo = '${ car.no }';
+			productName = '${ car.name }';
+			productFullName = '${ car.brand } ${ car.name }';
+			productPrice = '${ car.price }';
+			productCate = 'c';
+		}
+		
 		const character = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F',
 			'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
 			'W','X','Y','Z'];
@@ -200,8 +246,8 @@
 			let randomIndex = Math.floor(Math.random()*36+1);
 			productId += character[randomIndex];
 		};
-		
-		productId = productId + year + month + date + 0 + carNo;
+		console.log(productId);
+		productId = productId + year + month + date + 0 + productNo;
 		
 		// 객체 초기화 하기 
 		IMP.init("imp53176208");
@@ -211,13 +257,12 @@
 					pg: "danal_tpay.9810030929",
 					pay_method: "card",
 					merchant_uid: productId,   // 주문번호
-					name: "${ car.brand } ${ car. name } 1일",
+					name: productFullName + " 1일",
 					amount: 100,                         // 숫자 타입
 					buyer_email: "${member.email}",
 					buyer_name: "${member.name}",
 					buyer_tel: "${member.phone}",
 					buyer_addr: "${member.address}",
-					buyer_postcode: "01181"
 				}, function (rsp) { // callback
 					if (rsp.success) {
 					  // 결제 성공 시 로직
@@ -226,14 +271,17 @@
 							  method: rsp.pay_method,
 						      uid: rsp.merchant_uid,
 						      productName: rsp.name,
-						      amount: rsp.amount,
+						      productCate: productCate,
+						      productNo: productNo,
+						      totPrice: productPrice,
+						      finPrice: rsp.paid_amount,
 						      email: rsp.buyer_email,
 						      name: rsp.buyer_name,
 						      tel: rsp.buyer_tel
 						      };
 					  
 					  $.ajax({
-					        url: "${path}/payment/success",
+					        url: "${path}/payment/pay",
 					        method: "POST",
 					        beforeSend: function(xhr) {
 			            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
@@ -243,6 +291,11 @@
 					        success: function (response) {
 					          console.log(response);
 					          // 성공적으로 처리된 경우
+					          $('#uid').attr('value', response.uid);
+					          $('#finPrice').attr('value', response.finPrice);
+					          $('#buyerName').attr('value', response.name);
+					          
+					          document.payForm.submit();
 					        },
 					        error: function (xhr, status, error) {
 					          console.error(xhr);
@@ -256,24 +309,23 @@
 					  console.log(rsp);
 					  let data = {
 						  uid: rsp.merchant_uid,
-						  method: rsp.pay_method
+						  method: rsp.pay_method,
 					  };
 					  
-					  $.ajax({
-						  url: "${path}/payment/pay",
-						  method: "POST",
-						  beforeSend: function(xhr) {
-					            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-					            		},
-						  data: JSON.stringify(data),
-						  contentType: "application/json; charset=UTF-8",
-						  success: function(response) {
-							  console.log(response);
-// 							  location.href = "${ path }/payment/success";
-						  },
-						  error: (error) => {
-							  console.log(error);
-						  }
+					$.ajax({
+						url: "${path}/payment/pay",
+						method: "POST",
+						beforeSend: function(xhr) {
+		            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+						},
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8",
+						success: function(response) {
+							console.log(response);
+						},
+						error: (error) => {
+							console.log(error);
+						}
 					  });
 					  
 					}
@@ -281,20 +333,24 @@
 		};
 				
 		$(document).ready(() => {
+			
 			$('#prevButton').on('click', () => {
-				location.href = "${ path }/payment/reservation?name=${ car.name }&price=${ car.price }";
+				location.href = "${ path }/payment/reservation?name="+productName+"&price="+productPrice;
 			});
+			
 			
 			function comma(num) {
 			    num = String(num);
 			    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-			};				
+			};			
+			
+			console.log(productNo + productName + productPrice);
 			
 			// 멤버십 할인 및 쿠폰 할인 스크립트 문
-			let price = ${ car.price };
+			let price = productPrice;
 			let discount = Number(0);
 			$('#disCoupone').change(function() {
-				price = ${ car.price };
+				price = productPrice;
 				discount = Number(0);
 				let ulNode = document.getElementById('dicContent');
 				let liNode = document.createElement('li');
@@ -302,8 +358,7 @@
 				
 				if($(this).val() === '' || $(this).val() === null) {
 					discount = Number(0);
-					price = ${ car.price };
-					console.log(discount);
+					price = productPrice;
 					
 					$('#dicPrice').html('- '+ discount +' 원');
 					$('#couponList').html('');
@@ -316,7 +371,6 @@
 						disPercent = (1-((${coupons}[i].percent)/100));
 						discount = Math.floor(price * ((${coupons}[i].percent)/100));
 						price = Math.round(price * disPercent);
-						
 						
 						$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 						$('#dicPrice').html('- ' + comma(discount) + ' 원');
@@ -365,8 +419,6 @@
 						
 						document.getElementById('usePoint').disabled = true;
 						document.getElementById('applyButton').disabled = true;
-						console.log(discount);
-						console.log(price);		
 						
 						$('#dicPrice').html('- ' + comma(discount) + ' 원');
 						$('#couponList+li').html(point + ' 포인트 사용');
