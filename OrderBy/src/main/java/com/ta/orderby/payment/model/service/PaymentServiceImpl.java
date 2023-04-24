@@ -32,4 +32,11 @@ public class PaymentServiceImpl implements PaymentService {
 		return result;
 	}
 
+
+	@Override
+	public Payment selectPaymentByUid(String uid) {
+
+		return mapper.selectPaymentByUid(uid);
+	}
+
 }

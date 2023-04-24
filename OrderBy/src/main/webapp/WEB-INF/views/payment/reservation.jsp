@@ -198,7 +198,6 @@
 				productPrice = '${ car.price }';
 			}
 			
-			console.log(productNo + productName + productFullName + productPrice);
 			$('#prevButton').on('click', () => {
 				location.href = "${ path }";
 			})

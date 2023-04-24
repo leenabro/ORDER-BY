@@ -11,4 +11,6 @@ public interface PaymentService {
 
 	int save(Payment payment);
 
+	Payment selectPaymentByUid(String uid);
+
 }

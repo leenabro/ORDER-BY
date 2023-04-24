@@ -154,56 +154,54 @@ public class PaymentController {
 	
 	@ResponseBody
 	@PostMapping("/payment/pay")
-	public ModelAndView pay(ModelAndView modelAndView, @RequestBody HashMap<String, Object> map, @AuthenticationPrincipal Member loginMember) {
+	public HashMap<String, Object> pay(@RequestBody HashMap<String, Object> map, @AuthenticationPrincipal Member loginMember) {
 		
-		if(loginMember != null) {
-//			Payment payment = new Payment();
-//			int result = 0;
-//			
-//			payment.setMethod(String.valueOf(map.get("method")));
-//			payment.setUid(String.valueOf(map.get("uid")));
-//			payment.setProductName(String.valueOf(map.get("productName")));
-//			payment.setTotPrice(Integer.valueOf(String.valueOf(map.get("totPrice"))));
-//			payment.setFinPrice(Integer.valueOf(String.valueOf(map.get("finPrice"))));
-//			payment.setMemberNo(loginMember.getNo());
-//			
-//			if(String.valueOf(map.get("productCate")).equals("c")) {
-//				payment.setCarNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
-//			} else {
-//				payment.setMotocycleNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
-//			}
-			
-//			System.out.println(payment);
-			
-//			System.out.println("result 값 : " + result);
-			
-			System.out.println(map.get("method"));
-			
-
-			modelAndView.addObject("map", map);
-			modelAndView.setViewName("payment/success");
+		Payment payment = new Payment();
+		int result = 0;
+		
+		payment.setMethod(String.valueOf(map.get("method")));
+		payment.setUid(String.valueOf(map.get("uid")));
+		payment.setProductName(String.valueOf(map.get("productName")));
+		payment.setTotPrice(Integer.valueOf(String.valueOf(map.get("totPrice"))));
+		payment.setFinPrice(Integer.valueOf(String.valueOf(map.get("finPrice"))));
+		payment.setMemberNo(loginMember.getNo());
+		
+		if(String.valueOf(map.get("productCate")).equals("c")) {
+			payment.setCarNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
 		} else {
-			modelAndView.addObject("msg", "잘못된 접근입니다.");
-			modelAndView.addObject("location", "/");
-			
-			modelAndView.setViewName("common/msg");
+			payment.setMotocycleNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
 		}
 		
-//		result = service.save(payment);
+		System.out.println(payment);
 		
-		return modelAndView;
+		System.out.println("result 값 : " + result);
+		System.out.println("member point update 값 : " + Integer.valueOf(String.valueOf(map.get("memberPoint"))));
+		System.out.println(map.get("method"));
+			
+		result = service.save(payment);
+		
+		return map;
 		
 	}
 	
 	@PostMapping("/payment/success")
-	public ModelAndView success (ModelAndView modelAndView, @RequestParam("uid") String uid, @RequestParam("finPrice") String finPrice, @RequestParam("buyerName") String buyerName,
-									@AuthenticationPrincipal Member loginMember) {
+	public ModelAndView success (ModelAndView modelAndView, 
+			@RequestParam("uid") String uid, @RequestParam("finPrice") String finPrice, @RequestParam("buyerName") String buyerName,
+			@AuthenticationPrincipal Member loginMember) {
 		
-		System.out.println(uid);
-		System.out.println(finPrice);
-		System.out.println(buyerName);
-		
-		modelAndView.setViewName("/payment/success");
+		if(loginMember != null) {
+			Payment payment = service.selectPaymentByUid(uid);
+			
+			System.out.println(payment);
+			
+			modelAndView.addObject("payment", payment);
+			modelAndView.setViewName("/payment/success");
+		} else {
+			modelAndView.addObject("msg", "잘못된 접근입니다.");
+			modelAndView.addObject("location", "/");
+			modelAndView.setViewName("/common/msg");
+			
+		}
 		
 		return modelAndView;
 	}

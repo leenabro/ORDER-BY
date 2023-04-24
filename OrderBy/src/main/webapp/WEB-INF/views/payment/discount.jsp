@@ -223,6 +223,7 @@
 		let productPrice = 0;
 		let productId = "";
 		let productCate = "";
+		let memberPoint = '${ member.point }';
 		
 		if('${car.no}' === null || '${car.no}' === '') {
 			productNo = '${ motocycle.no }';
@@ -243,95 +244,12 @@
 			'W','X','Y','Z'];
 		
 		for(let i = 0; i < 3; i++) {
-			let randomIndex = Math.floor(Math.random()*36+1);
+			let randomIndex = Math.floor(Math.random()*35+1);
 			productId += character[randomIndex];
 		};
-		console.log(productId);
+		
 		productId = productId + year + month + date + 0 + productNo;
 		
-		// 객체 초기화 하기 
-		IMP.init("imp53176208");
-		
-		function requestPay() {
-				IMP.request_pay({
-					pg: "danal_tpay.9810030929",
-					pay_method: "card",
-					merchant_uid: productId,   // 주문번호
-					name: productFullName + " 1일",
-					amount: 100,                         // 숫자 타입
-					buyer_email: "${member.email}",
-					buyer_name: "${member.name}",
-					buyer_tel: "${member.phone}",
-					buyer_addr: "${member.address}",
-				}, function (rsp) { // callback
-					if (rsp.success) {
-					  // 결제 성공 시 로직
-					  console.log(rsp);
-					  var paymentData = {
-							  method: rsp.pay_method,
-						      uid: rsp.merchant_uid,
-						      productName: rsp.name,
-						      productCate: productCate,
-						      productNo: productNo,
-						      totPrice: productPrice,
-						      finPrice: rsp.paid_amount,
-						      email: rsp.buyer_email,
-						      name: rsp.buyer_name,
-						      tel: rsp.buyer_tel
-						      };
-					  
-					  $.ajax({
-					        url: "${path}/payment/pay",
-					        method: "POST",
-					        beforeSend: function(xhr) {
-			            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-			            	},
-					        data: JSON.stringify(paymentData),
-					        contentType: "application/json; charset=utf-8",
-					        success: function (response) {
-					          console.log(response);
-					          // 성공적으로 처리된 경우
-					          $('#uid').attr('value', response.uid);
-					          $('#finPrice').attr('value', response.finPrice);
-					          $('#buyerName').attr('value', response.name);
-					          
-					          document.payForm.submit();
-					        },
-					        error: function (xhr, status, error) {
-					          console.error(xhr);
-					          // 에러 발생 시 처리할 로직
-					        }
-					  });
-					  // 회원 검증 필요, 포인트 차감 필요
-					} else {
-					  // 결제 실패 시 로직
-					  alert("결제가 취소 되었습니다.");
-					  console.log(rsp);
-					  let data = {
-						  uid: rsp.merchant_uid,
-						  method: rsp.pay_method,
-					  };
-					  
-					$.ajax({
-						url: "${path}/payment/pay",
-						method: "POST",
-						beforeSend: function(xhr) {
-		            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-						},
-						data: JSON.stringify(data),
-						contentType: "application/json; charset=UTF-8",
-						success: function(response) {
-							console.log(response);
-						},
-						error: (error) => {
-							console.log(error);
-						}
-					  });
-					  
-					}
-				});
-		};
-				
 		$(document).ready(() => {
 			
 			$('#prevButton').on('click', () => {
@@ -343,8 +261,6 @@
 			    num = String(num);
 			    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 			};			
-			
-			console.log(productNo + productName + productPrice);
 			
 			// 멤버십 할인 및 쿠폰 할인 스크립트 문
 			let price = productPrice;
@@ -416,6 +332,7 @@
 						
 						price = price - point; 
 						discount = discount + Number(point);
+						memberPoint = memberPoint - point;
 						
 						document.getElementById('usePoint').disabled = true;
 						document.getElementById('applyButton').disabled = true;
@@ -432,12 +349,120 @@
 				}
 				
 				
-				
-				
 			})
 			
-			
 		});
+		
+		// 결제 로직
+		// 결제 사전 검증
+// 		$.ajax({
+// 			url: "https://api.iamport.kr/payments/prepare",
+// 			beforeSend: function(xhr) {
+//         		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+//         		xhr.setRequestHeader("Authorization", "3dd17df5e368e165fbac1f3d00f4e8237d6be1df");
+//         	},
+// 			method: "POST",
+// 			contentType: "application/json; charset=utf-8",
+// 			data: {
+// 				merchant_uid: productId, // 가맹점 주문번호
+// 				amount: 100 // 결제 예정금액
+// 			},
+// 			success: (result) => {
+// 				console.log(result);  
+// 			},
+// 			error: (error) => {
+// 				console.log(error);  
+// 			}
+// 		});
+		
+		// 객체 초기화 하기 
+		IMP.init("imp53176208");
+		
+		function requestPay() {
+				
+			
+				IMP.request_pay({
+					pg: "danal_tpay.9810030929",
+					pay_method: "card",
+					merchant_uid: productId,   // 주문번호
+					name: productFullName + " 1일",
+					amount: 100,                         // 숫자 타입
+					buyer_email: "${member.email}",
+					buyer_name: "${member.name}",
+					buyer_tel: "${member.phone}",
+					buyer_addr: "${member.address}",
+				}, function (rsp) { // callback
+					if (rsp.success) {
+					  // 결제 성공 시 로직
+					  console.log(rsp);
+					  var paymentData = {
+							  method: rsp.pay_method,
+						      uid: rsp.merchant_uid,
+						      productName: rsp.name,
+						      productCate: productCate,
+						      productNo: productNo,
+						      totPrice: productPrice,
+						      finPrice: rsp.paid_amount,
+						      email: rsp.buyer_email,
+						      name: rsp.buyer_name,
+						      tel: rsp.buyer_tel,
+						      memberPoint: memberPoint
+						      };
+					  
+					  $.ajax({
+					        url: "${path}/payment/pay",
+					        method: "POST",
+					        beforeSend: function(xhr) {
+			            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+			            	},
+					        data: JSON.stringify(paymentData),
+					        contentType: "application/json; charset=utf-8",
+					        success: function (response) {
+					          console.log(response);
+					          // 성공적으로 처리된 경우
+					          $('#uid').attr('value', response.uid);
+					          $('#finPrice').attr('value', response.finPrice);
+					          $('#buyerName').attr('value', response.name);
+					          
+					          document.payForm.submit();
+					        },
+					        error: function (xhr, status, error) {
+					          console.error(xhr);
+					          // 에러 발생 시 처리할 로직
+					        }
+					  });
+					  // 회원 검증 필요, 포인트 차감 필요
+					} else {
+					  // 결제 실패 시 로직
+					  alert("결제가 취소 되었습니다.");
+					  console.log(rsp);
+					  // ajax 테스트
+					  /*
+					  let data = {
+						  uid: rsp.merchant_uid,
+						  method: rsp.pay_method,
+					  };
+					  
+					$.ajax({
+						url: "${path}/payment/pay",
+						method: "POST",
+						beforeSend: function(xhr) {
+		            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+						},
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8",
+						success: function(response) {
+							console.log(response);
+						},
+						error: (error) => {
+							console.log(error);
+						}
+					  });
+					  */
+					  
+					}
+				});
+		};
 			
 	</script>
 

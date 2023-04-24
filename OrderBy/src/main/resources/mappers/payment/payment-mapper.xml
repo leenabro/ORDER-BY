@@ -70,24 +70,30 @@
 		    'Y',
 		    #{memberNo},
 			<choose>
-				<when test="carNo != null">
+				<when test="carNo != 0">
 					#{carNo},
 				</when>
-				<when test="carNo == null">
+				<when test="carNo == 0">
 					NULL,
 				</when>
 			</choose>
 			<choose>
-				<when test="motocycleNo != null">
+				<when test="motocycleNo != 0">
 					#{motocycleNo}
 				</when>
-				<when test="motocycleNo == null">
+				<when test="motocycleNo == 0">
 					NULL
 				</when>
 			</choose>		    
 		)
 	
 	</insert>
+	
+	<select id="selectPaymentByUid" parameterType="string" resultMap="paymentResultMap">
+		SELECT *
+		FROM PAYMENT
+		WHERE P_UID = #{uid}
+	</select>
 	
 	
 	

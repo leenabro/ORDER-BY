@@ -42,7 +42,6 @@
 		</div>
 		<div>
 			
-			<p>하이</p>
 			<p>${ payment }</p>
 		</div>	
 	

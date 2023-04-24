@@ -13,5 +13,7 @@ public interface PaymentMapper {
 	List<Coupon> findCouponByMemberNo(int memberNo);
 
 	int insertPayment(Payment payment);
+
+	Payment selectPaymentByUid(String uid);
 	
 }
