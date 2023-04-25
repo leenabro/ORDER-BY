@@ -43,11 +43,25 @@
 		    <br><br>
 		    <div class="shortContainer">
 		        <div id="sectionImg" class="res-section-div">
-		            <div id="carName">
-		                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
+		            <div id="productName">
+		            	<c:choose>
+		            		<c:when test="${ not empty car.brand }">
+				                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
+		            		</c:when>
+		            		<c:when test="${ not empty motocycle.brand }">
+				                <p style="padding: 25px 0px; margin: 0;">${ motocycle.brand } ${ motocycle.name }</p>
+		            		</c:when>
+		            	</c:choose>
 		            </div>
-		            <div id="carImg">
-		                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+		            <div id="productImg">
+		            	<c:choose>
+		            		<c:when test="${ not empty car.brand }">
+				                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+		            		</c:when>
+		            		<c:when test="${ not empty motocycle.brand }">
+				                <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png">
+		            		</c:when>
+		            	</c:choose>
 		            </div>
 		            
 		            <ul>
@@ -63,7 +77,14 @@
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">차량 대여 요금</p>
-		                    <p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>
+		                    <c:choose>
+		                    	<c:when test="${ not empty car.brand }">
+		                    		<p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>	
+		                    	</c:when>
+		                    	<c:when test="${ not empty motocycle.brand }">
+		                    		<p class="car-spec-price"><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</p>
+		                    	</c:when>
+		                    </c:choose>
 		                </li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">할인 요금</p>
@@ -71,7 +92,15 @@
 		                </li>
 		                <li id="totalPrice" class="car-spec-li">
 		                    <p class="car-spec-title">총 금액</p>
-		                    <p class="car-spec-price"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>
+		                    <c:choose>
+		                    	<c:when test="${ not empty car.brand }">
+		                    		<p class="car-spec-price"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>	
+		                    	</c:when>
+		                    	<c:when test="${ not empty motocycle.brand }">
+		                    		<p class="car-spec-price"><strong><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</strong></p>
+		                    	</c:when>
+		                    </c:choose>
+		                    
 	              		</li>
 		            </ul>
 	        	</div>
@@ -152,12 +181,29 @@
 		
 	<script>
 		$(document).ready(() => {
+			let productNo = 0;
+			let productName = "";
+			let productFullName = "";
+			let productPrice = 0;
+			
+			if('${car.no}' === null || '${car.no}' === '') {
+				productNo = '${ motocycle.no }';
+				productName = '${ motocycle.name }';
+				productFullName = '${ motocycle.brand } ${ motocycle.name }';
+				productPrice = '${ motocycle.price }';
+			} else {
+				productNo = '${ car.no }';
+				productName = '${ car.name }';
+				productFullName = '${ car.brand } ${ car.name }';
+				productPrice = '${ car.price }';
+			}
+			
 			$('#prevButton').on('click', () => {
 				location.href = "${ path }";
 			})
 			
 			$('#nextButton').on('click', () => {
-				location.href = "${ path }/payment/discount?name=${ car.name }&price=${ car.price }";
+				location.href = "${ path }/payment/discount?name="+productName+"&price=" + productPrice;
 			})
 			
 		

@@ -5,29 +5,94 @@
 <mapper namespace="com.ta.orderby.payment.model.mapper.PaymentMapper">
 
 	<resultMap id="couponResultMap" type="Coupon" >
-		<result property="code" column="CO_CODE" />
+		<id property="ciNumber" column="CI_NUMBER"/>
+		<result property="coNumber" column="CO_NUMBER" />
+		<result property="memberNo" column="M_NO" />
+		<result property="status" column="CI_STATUS" />
+		<result property="regiDate" column="CI_REGI" />
 		<result property="name" column="CO_NAME" />
 		<result property="percent" column="CO_PERCENT" />
-		<result property="createDate" column="CO_C_DATE" />
-		<result property="status" column="CO_STATUS" />
-		<result property="regiDate" column="CO_REGI" />
+		<result property="createDate" column="CO_CDATE" />
 		<result property="period" column="CO_PERIOD" />
+	</resultMap>
+	
+	<resultMap type="Payment" id="paymentResultMap">
+		<id property="no" column="P_NO" />
+		<result property="method" column="P_UID" />
+		<result property="uid" column="P_NAME" />
+		<result property="productName" column="P_METHOD" />
+		<result property="date" column="P_DATE" />
+		<result property="totPrice" column="P_TOT_PRICE" />
+		<result property="finPrice" column="P_FIN_PRICE" />
+		<result property="status" column="P_STATUS" />
 		<result property="memberNo" column="M_NO" />
-		
+		<result property="carNo" column="C_NO" />
+		<result property="motocycleNo" column="MC_NO" />
 	</resultMap>
 	
 	<select id="findCouponByMemberNo" parameterType="_int" resultMap="couponResultMap">
 		SELECT 
-			CO_CODE,
-			CO_NAME,
-    		CO_PERCENT,
-    		CO_C_DATE,
-    		CO_STATUS,
-    		CO_REGI,
-    		CO_PERIOD,
-    		M_NO
-		FROM COUPON
-		WHERE M_NO = #{memberNo}
+		    I.CI_NUMBER,
+		    C.CO_NUMBER,
+		    I.M_NO,
+		    I.CI_STATUS,
+		    I.CI_REGI,
+		    C.CO_NAME,
+		    C.CO_PERCENT,
+		    C.CO_CDATE,
+		    C.CO_PERIOD
+		FROM COUPON_ISSUE I
+		JOIN COUPON C ON (I.CO_NUMBER = C.CO_NUMBER)
+		WHERE I.M_NO = #{memberNo}
+	</select>
+	
+	<insert id="insertPayment" parameterType="Payment">
+		INSERT INTO PAYMENT(
+		    P_NO,
+		    P_UID,
+		    P_NAME,
+		    P_METHOD,
+		    P_DATE,
+		    P_TOT_PRICE,
+		    P_FIN_PRICE,
+		    P_STATUS,
+		    M_NO,
+		    C_NO,
+		    MC_NO
+		) VALUES (
+		    SEQ_PAYMENT_P_NO.NEXTVAL,
+		    #{uid},
+		    #{productName},
+		    #{method},
+		    SYSDATE,
+		    #{totPrice},
+		    #{finPrice},
+		    'Y',
+		    #{memberNo},
+			<choose>
+				<when test="carNo != 0">
+					#{carNo},
+				</when>
+				<when test="carNo == 0">
+					NULL,
+				</when>
+			</choose>
+			<choose>
+				<when test="motocycleNo != 0">
+					#{motocycleNo}
+				</when>
+				<when test="motocycleNo == 0">
+					NULL
+				</when>
+			</choose>		    
+		)
+	
+	</insert>
+	
+	<select id="selectPaymentByUid" parameterType="string" resultMap="paymentResultMap">
+		SELECT *
+		FROM PAYMENT
+		WHERE P_UID = #{uid}
 	</select>
 	
 	

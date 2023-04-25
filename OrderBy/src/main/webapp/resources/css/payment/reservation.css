@@ -83,7 +83,7 @@
     border-radius: 10px;
 }
 
-#carName {
+#productName {
     text-align: center;
     font-size: 1.5em;
     height: 80px;
@@ -93,14 +93,14 @@
     color: black;
 }
 
-#carImg {
+#productImg {
     text-align: center;
     padding-top: 30px;
     padding-bottom: 30px;
     background-color: white;
 }
 
-#carImg>img {
+#productImg>img {
 	width: 100%;
 }
 
