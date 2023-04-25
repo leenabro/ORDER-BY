@@ -1,8 +1,8 @@
-package com.ta.orderby.rent.model.service;
+package com.ta.orderby.store.model.service;
 
 import java.util.List;
 
-import com.ta.orderby.rent.model.vo.Store;
+import com.ta.orderby.store.model.vo.Store;
 
 public interface StoreService {
 

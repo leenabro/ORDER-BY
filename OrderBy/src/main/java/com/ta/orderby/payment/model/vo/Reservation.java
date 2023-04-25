@@ -1,4 +1,4 @@
-package com.ta.orderby.rent.model.vo;
+package com.ta.orderby.payment.model.vo;
 
 import java.sql.Date;
 

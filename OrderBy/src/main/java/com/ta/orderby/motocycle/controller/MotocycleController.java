@@ -1,25 +1,20 @@
-package com.ta.orderby.rent.controller;
+package com.ta.orderby.motocycle.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ta.orderby.rent.model.service.CarService;
-import com.ta.orderby.rent.model.service.MotocycleService;
-import com.ta.orderby.rent.model.service.StoreService;
-import com.ta.orderby.rent.model.vo.Car;
-import com.ta.orderby.rent.model.vo.Motocycle;
-import com.ta.orderby.rent.model.vo.Store;
+import com.ta.orderby.car.model.service.CarService;
+import com.ta.orderby.motocycle.model.service.MotocycleService;
+import com.ta.orderby.motocycle.model.vo.Motocycle;
+import com.ta.orderby.store.model.service.StoreService;
+import com.ta.orderby.store.model.vo.Store;
 
 import lombok.extern.slf4j.Slf4j;
 

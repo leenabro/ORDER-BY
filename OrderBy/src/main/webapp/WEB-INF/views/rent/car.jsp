@@ -1009,7 +1009,7 @@
     let modal = document.getElementById("modal");
 
 	function modalOn(no, brand, name, mile, cc, year, fuel, engine, price) {
-
+	
         modal.style.display = "flex";
         
         document.getElementById('modal-cCode').value=no;

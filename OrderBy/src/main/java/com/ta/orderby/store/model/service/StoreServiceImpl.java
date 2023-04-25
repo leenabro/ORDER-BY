@@ -1,12 +1,12 @@
-package com.ta.orderby.rent.model.service;
+package com.ta.orderby.store.model.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ta.orderby.rent.model.mapper.StoreMapper;
-import com.ta.orderby.rent.model.vo.Store;
+import com.ta.orderby.store.model.mapper.StoreMapper;
+import com.ta.orderby.store.model.vo.Store;
 
 @Service
 public class StoreServiceImpl implements StoreService{

@@ -1,4 +1,4 @@
-package com.ta.orderby.rent.model.vo;
+package com.ta.orderby.store.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

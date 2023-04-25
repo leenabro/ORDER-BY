@@ -1,10 +1,10 @@
-package com.ta.orderby.rent.model.mapper;
+package com.ta.orderby.store.model.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ta.orderby.rent.model.vo.Store;
+import com.ta.orderby.store.model.vo.Store;
 
 @Mapper
 public interface StoreMapper {
