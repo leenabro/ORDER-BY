@@ -21,4 +21,8 @@ public interface MotocycleService {
 	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo);
 
 	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand);
+
+	List<Motocycle> findMotoBySale();
+
+	List<Motocycle> bestMotoList();
 }

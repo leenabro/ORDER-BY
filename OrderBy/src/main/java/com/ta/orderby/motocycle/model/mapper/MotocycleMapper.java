@@ -26,4 +26,8 @@ public interface MotocycleMapper {
 	List<Motocycle> selectAllByDateStoreBrand(
 			@Param("rentDate") Date rentDate, @Param("returnDate") Date returnDate,
 			@Param("sNo") String sNo, @Param("brand") String brnad);
+
+	List<Motocycle> findMotoBySale();
+
+	List<Motocycle> bestMotofind();
 }
