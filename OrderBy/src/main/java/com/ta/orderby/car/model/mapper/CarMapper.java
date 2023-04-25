@@ -20,4 +20,6 @@ public interface CarMapper {
 
 	List<AdminProductMotocycle> bestMotofind();
 
+	Car findCarByNo(int carNo);
+
 }

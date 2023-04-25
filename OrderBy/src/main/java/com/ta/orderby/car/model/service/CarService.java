@@ -17,4 +17,6 @@ public interface CarService {
 
 	List<AdminProductMotocycle> bestMotoList();
 
+	Car findCarByNo(int carNo);
+
 }

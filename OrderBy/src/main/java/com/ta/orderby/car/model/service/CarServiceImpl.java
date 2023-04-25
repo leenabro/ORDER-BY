@@ -43,5 +43,11 @@ public class CarServiceImpl implements CarService {
 		return mapper.bestMotofind();
 	}
 
+	@Override
+	public Car findCarByNo(int carNo) {
+
+		return mapper.findCarByNo(carNo);
+	}
+
 
 }
