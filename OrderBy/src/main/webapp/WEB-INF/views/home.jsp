@@ -6,7 +6,6 @@
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
-<%@ page session="false" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -51,8 +50,8 @@
             <li>
               <a href="#">대여</a>
               <ul>
-                <li><a href="#">자동차</a></li>
-                <li><a href="#">바이크</a></li>
+                <li><a href="${ path }/rent/car">자동차</a></li>
+                <li><a href="${ path }/rent/motocycle">바이크</a></li>
                 <li><a href="#">지도로 검색</a></li>
               </ul>
             </li>
