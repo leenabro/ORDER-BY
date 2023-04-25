@@ -166,7 +166,7 @@ public class PaymentController {
 		payment.setFinPrice(Integer.valueOf(String.valueOf(map.get("finPrice"))));
 		payment.setMemberNo(loginMember.getNo());
 		
-		if(String.valueOf(map.get("productCate")).equals("c")) {
+		if(String.valueOf(map.get("productCate")).equals("C")) {
 			payment.setCarNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
 		} else {
 			payment.setMotocycleNo(Integer.valueOf(String.valueOf(map.get("productNo"))));
@@ -193,6 +193,18 @@ public class PaymentController {
 			Payment payment = service.selectPaymentByUid(uid);
 			
 			System.out.println(payment);
+			
+			if(uid.charAt(0) == 'C') {
+				Car car = carService.findCarByNo(payment.getCarNo());
+				
+				modelAndView.addObject("car", car);
+			}
+			
+			if(uid.charAt(0) == 'M') {
+				Motocycle motocycle = motoService.findMotocycleByNo(payment.getMotocycleNo());
+				
+				modelAndView.addObject("motocycle", motocycle);
+			}
 			
 			modelAndView.addObject("payment", payment);
 			modelAndView.setViewName("/payment/success");

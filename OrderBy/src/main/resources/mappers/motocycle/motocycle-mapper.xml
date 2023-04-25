@@ -72,4 +72,28 @@
 		WHERE MC_SALE = 'S'
 	</select>
 	
+	<select id="findMotocycleByNo" parameterType="_int" resultMap="motocycleResultMap">
+		SELECT 
+		    MC_NO,
+		    MC_NAME,
+		    MC_BRAND,
+		    MC_ENGINE,
+		    MC_CC,
+		    MC_OUTPUT,
+		    MC_TORQUE,
+		    MC_FUEL,
+		    MC_YEAR,
+		    MC_KM,
+		    MC_PRICE,
+		    MC_POSITION,
+		    MC_STATUS,
+		    MC_SALE,
+		    S_NO,
+		    MC_COUNT,
+		    MC_ENROLL_DATE,
+		    PF_NO
+		FROM MOTOCYCLE
+		WHERE MC_NO = #{motocycleNo}
+	</select>
+	
 </mapper>

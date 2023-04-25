@@ -58,3 +58,56 @@
 	display: inline-block;
 	color: black;
 }
+
+.success-container {
+	text-align: center;
+	width: 800px;
+	margin: auto;
+}
+
+#successContainer1 {
+	height: 100px;
+}
+
+#successContainer1>h2 {
+	padding-top: 25px;
+	font-size: 2em;
+}
+
+#productName {
+	font-size: 1.5em;
+	color: white;
+	background-color: #304050;
+	height: 40px;
+	padding-top: 10px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+}
+
+#successContainer3 {
+	text-align: center;
+    width: 800px;
+    margin: auto;
+    background-color: #304050;
+    border-radius: 10px;
+}
+#rentInfo {
+    border-bottom: 2px solid white;
+    height: 40px;
+    font-size: 1.3em;
+    padding-top: 20px;
+}
+
+#successContainer3>div>ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+}
+
+#successContainer3>div>ul>li {
+	width: 500px;
+	margin: auto;
+}
+
+
+

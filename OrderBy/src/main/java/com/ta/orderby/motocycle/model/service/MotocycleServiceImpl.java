@@ -27,4 +27,11 @@ public class MotocycleServiceImpl implements MotocycleService {
 		return mapper.findMotocycleByName(name);
 	}
 
+
+	@Override
+	public Motocycle findMotocycleByNo(int motocycleNo) {
+
+		return mapper.findMotocycleByNo(motocycleNo);
+	}
+
 }

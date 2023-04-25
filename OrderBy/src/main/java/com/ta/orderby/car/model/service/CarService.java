@@ -10,4 +10,6 @@ public interface CarService {
 
 	List<Car> findCarBySale();
 
+	Car findCarByNo(int carNo);
+
 }

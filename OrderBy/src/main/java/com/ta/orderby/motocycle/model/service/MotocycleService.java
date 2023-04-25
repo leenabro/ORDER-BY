@@ -10,4 +10,6 @@ public interface MotocycleService {
 
 	Motocycle findMotocycleByName(String name);
 
+	Motocycle findMotocycleByNo(int motocycleNo);
+
 }

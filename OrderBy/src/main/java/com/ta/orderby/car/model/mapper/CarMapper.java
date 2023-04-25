@@ -12,4 +12,6 @@ public interface CarMapper {
 	Car findCarByName(@RequestParam("name") String name);
 	
 	List<Car> findCarBySale();
+
+	Car findCarByNo(int carNo);
 }

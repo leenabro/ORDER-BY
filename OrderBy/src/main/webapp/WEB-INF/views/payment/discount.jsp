@@ -225,20 +225,6 @@
 		let productCate = "";
 		let memberPoint = '${ member.point }';
 		
-		if('${car.no}' === null || '${car.no}' === '') {
-			productNo = '${ motocycle.no }';
-			productName = '${ motocycle.name }';
-			productFullName = '${ motocycle.brand } ${ motocycle.name }';
-			productPrice = '${ motocycle.price }';
-			productCate = 'm';
-		} else {
-			productNo = '${ car.no }';
-			productName = '${ car.name }';
-			productFullName = '${ car.brand } ${ car.name }';
-			productPrice = '${ car.price }';
-			productCate = 'c';
-		}
-		
 		const character = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F',
 			'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
 			'W','X','Y','Z'];
@@ -248,7 +234,22 @@
 			productId += character[randomIndex];
 		};
 		
-		productId = productId + year + month + date + 0 + productNo;
+		if('${car.no}' === null || '${car.no}' === '') {
+			productNo = '${ motocycle.no }';
+			productName = '${ motocycle.name }';
+			productFullName = '${ motocycle.brand } ${ motocycle.name }';
+			productPrice = '${ motocycle.price }';
+			productCate = 'M';
+		} else {
+			productNo = '${ car.no }';
+			productName = '${ car.name }';
+			productFullName = '${ car.brand } ${ car.name }';
+			productPrice = '${ car.price }';
+			productCate = 'C';
+		}
+		
+		
+		productId = productCate + productId + year + month + date + 0 + productNo;
 		
 		$(document).ready(() => {
 			
@@ -359,7 +360,7 @@
 // 			url: "https://api.iamport.kr/payments/prepare",
 // 			beforeSend: function(xhr) {
 //         		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-//         		xhr.setRequestHeader("Authorization", "3dd17df5e368e165fbac1f3d00f4e8237d6be1df");
+//         		xhr.setRequestHeader("Authorization", "검증코드");
 //         	},
 // 			method: "POST",
 // 			contentType: "application/json; charset=utf-8",
