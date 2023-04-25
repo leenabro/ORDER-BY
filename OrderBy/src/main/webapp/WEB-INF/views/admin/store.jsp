@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
@@ -21,13 +20,12 @@
     <link href="${ path }/resources/static/assets/css/admin.all.min.css" rel="stylesheet" type="text/css">
     <link
         href="${ path }/resources/static/assets/css/admin.font.css" rel="stylesheet">
-        <script src="${path }/resources/static/assets/js/jquery.min.js"></script>
-
+<script src="${path }/resources/static/assets/js/jquery.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="${ path }/resources/static/assets/css/admin2.css" rel="stylesheet">
     <style>
       .dataTables_filter {
-        margin-left: 55%;
+        margin-left: 65%;
       }
 
       .col-sm-12 .dataTables_info {
@@ -56,7 +54,6 @@
                     cellspacing="0"
                     style="font-size:small;"
                   >
-                  <security:csrfInput/>
                     <thead>
                       <tr>
                       	<th>번호</th>
@@ -69,7 +66,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <security:csrfInput/>
                     <c:if test="${ empty list }">
                     	<tr>
                     		<td colspan="7" style="text-align:center">
@@ -82,16 +78,15 @@
                       <tr>
                       	<td>${store.no}</td>
                         <td><a href="${path }/admin/modifystore?no=${store.no}">${store.name}</a></td>
-                        <td>${store.location }</td>
+                        <td style="width:50px">${store.location }</td>
                         <td>${store.address }</td>
                         <td>${store.slat }</td>
                         <td>${store.slong }</td>
-                        <td>${store.status }</td>
+                        <td style="width:50px">${store.status }</td>
                       </tr>
                        </c:forEach>
                     </c:if>
                     </tbody>
- 
                   </table>
                 </div>
               </div>

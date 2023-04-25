@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ta.orderby.admin.model.mapper.AdminMapper;
 import com.ta.orderby.admin.model.vo.AdminMember;
+import com.ta.orderby.admin.model.vo.AdminPayment;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
@@ -259,6 +260,65 @@ public class AdminServiceImpl  implements AdminService{
 		
 		return mapper.allproductCount();
 	}
+
+	@Override
+	public List<AdminProductMotocycle> getdisMotocylceCount(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		
+		return mapper.productmotodiscylceselectAll(rowbounds);
+	}
+
+	@Override
+	public List<AdminProductCar> getdisCarCount(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		
+		return mapper.productcardisselectAll(rowbounds);
+	}
+
+	@Override
+	public List<AdminPayment> getAdminReservationCount(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		
+		return mapper.reservationSelectAll(rowbounds);
+	}
+
+	@Override
+	public int getAdminReservationCount() {
+		
+		return mapper.selectreservationCount();
+	}
+
+	@Override
+	public AdminPayment findPaymentByNo(int no) {
+		
+		return mapper.selectAdminPaymentByNo(no);
+	}
+
+	@Override
+	public int paymentcancle(int no) {
+
+		return mapper.updatePayment(no, "N");
+	}
+
+	@Override
+	public int pricepoint(int point, int mno) {
+		
+		return mapper.updatePoint(point, mno);
+	}
+
+
+
+
+
+
+
+
 
 
 

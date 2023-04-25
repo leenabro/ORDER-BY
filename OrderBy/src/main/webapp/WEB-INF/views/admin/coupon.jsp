@@ -29,5 +29,8 @@
         </head>
 <body>
 <%@ include file="/WEB-INF/views/common/adminheader.jsp" %>
+
+
+<script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
 </body>
 </html>

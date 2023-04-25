@@ -148,25 +148,25 @@
                   <span class="input_area">
 				 <select name="position" id="locationNo" style="width: 150px; text-align: center;" required>
                       <option selected>----- 선택 ------</option>
-                      <option value="서울1">서울1</option>
-                      <option value="서울2">서울2</option>
-                      <option value="대전">대전</option>
-                      <option value="대구1">대구1</option>
-                      <option value="대구2">대구2</option>
-                      <option value="부산1">부산1</option>
-                      <option value="부산2">부산2</option>
-                      <option value="울산1">울산1</option>
-                      <option value="울산2">울산2</option>
-                      <option value="인천1">인천1</option>
-                      <option value="인천2">인천2</option>
-                      <option value="경기1">경기1</option>
-                      <option value="경기2">경기2</option>
-                      <option value="경기3">경기3</option>
-                      <option value="광주">광주</option>
-                      <option value="전주">전주</option>
-                      <option value="강원1">강원1</option>
-                      <option value="강원2">강원2</option>
-                      <option value="제주">제주</option>
+                      <option value="서울 강남점">서울 강남점</option>
+                      <option value="서울 영등포점">서울 영등포점</option>
+                      <option value="대전 서구점">대전 서구점</option>
+                      <option value="대구 중구점">대구 중구점</option>
+                      <option value="대구 달서점">대구 달서점</option>
+                      <option value="부산 수영점">부산 수영점</option>
+                      <option value="부산 사상점">부산 사상점</option>
+                      <option value="울산 남구점">울산 남구점</option>
+                      <option value="울산 북구점">울산 북구점</option>
+                      <option value="인천 연수점">인천 연수점</option>
+                      <option value="인천 중구점">인천 중구점</option>
+                      <option value="경기 수원점">경기 수원점</option>
+                      <option value="경기 평택점">경기 평택점</option>
+                      <option value="경기 가평점">경기 가평점</option>
+                      <option value="광주 서구점">광주 서구점</option>
+                      <option value="전주 전주점">전주 전주점</option>
+                      <option value="강원 양양점">강원 양양점</option>
+                      <option value="강원 강릉점">강원 강릉점</option>
+                      <option value="제주 공항점">제주 공항점</option>
                   </select>
                   </span>
 <!--                   <span class="input_area"><input type="text" name="position"></span> -->

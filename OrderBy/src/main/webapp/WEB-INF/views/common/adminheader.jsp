@@ -58,6 +58,13 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>쿠폰 관리</span></a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="${path }/admin/reservation">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>결제 내역 확인</span></a>
+            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider">

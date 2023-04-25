@@ -22,20 +22,21 @@
     <link href="${ path }/resources/static/assets/css/admin.all.min.css" rel="stylesheet" type="text/css">
     <link
         href="${ path }/resources/static/assets/css/admin.font.css" rel="stylesheet">
-
+<script src="${path }/resources/static/assets/js/jquery.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="${ path }/resources/static/assets/css/admin2.css" rel="stylesheet">
     <style>
       .dataTables_filter {
-        margin-left: 55%;
+        margin-left: 65%;
       }
 
       .col-sm-12 .dataTables_info {
         display: none;
       }
+   
     </style>
 </head>
-
+<body>
 <%@ include file="/WEB-INF/views/common/adminheader.jsp" %>
 
           <!-- Begin Page Content -->
@@ -54,6 +55,7 @@
                     id="dataTable"
                     width="100%"
                     cellspacing="0"
+                    
                   >
                     <thead>
                       <tr>
@@ -84,11 +86,11 @@
                         <td>
                           <a href="${path }/admin/modifymotocycleproduct?no=${moto.no}">${moto.name }</a>
                         </td>
-                        <td>${moto.cc }</td>
+                        <td>${moto.cc } CC</td>
                         <td>${moto.position }</td>
                         <td>${moto.enrolldate }</td>
-                        <td>${moto.price }</td>
-                        <td>${moto.status }</td>
+                        <td><fmt:formatNumber value="${moto.price }" pattern="#,###"/> 원</td>
+                        <td style="width:50px; text-align:center;">${moto.status }</td>
                       </tr>
                     	</c:forEach>
                     </c:if>

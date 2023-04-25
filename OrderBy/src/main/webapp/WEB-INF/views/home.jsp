@@ -42,8 +42,10 @@
 		                </a>
 		                  <div class="add-information"><br>
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
-		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4>
+		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4> 
+		                    
 		                    <br>
+		                    <p class="postionstyle" style="font-size:small;"> ${car.position } </p>
 		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
 		                    <span class="material-symbols-outlined" style="color:red">
 		                      south
@@ -52,22 +54,29 @@
 		                  </div>
 		            </li>
           		</c:forEach>
+	              <c:forEach var="moto" items="${moto}">
 	          	<li>
+	              	<c:if test="${ moto.sale == 'S' }">
 	            <a href="" class="hover-test">
 	              <div class="month-sale-images">
 	                <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
-	                <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/BMW_M_1000_RR.png">
+	                <img class="sale-image" src="${ path }/resources/images/motocycle/${ moto.brand }/${moto.name }.png">
 	              </div>
 	            </a>
 	            <div class="add-information"><br>
-	              <h4 style="color:black; font-size: x-large;">BMW <br>M_1000_RR</h4>
+	            <% pageContext.setAttribute("emptyChar", " "); %>
+	              <h4 style="color:black; font-size: x-large;">${moto.brand } <br> ${moto.name }</h4>
+	                
 	              <br>
-	              <p style="font-size: medium;">대여 비용(일) : <del style="color: red;">12,000,000원</del></p>
+	              <p class="postionstyle" style="font-size:small;"> ${moto.position } </p>
+	              <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ moto.price }" pattern="#,###"/></del></p>
 	              <span class="material-symbols-outlined" style="color:red">
 	                south
 	                </span>
-	              <p>할인 비용(일) : 8,000,000원</p>
+	              <p>할인 비용(일) : <fmt:formatNumber value="${ moto.price * 0.7 }" pattern="#,###" /> 원</p>
 	            </div>
+	              	</c:if>
+	              </c:forEach>
         	</li>
       		</ul>
       	</div>
@@ -79,66 +88,68 @@
 	        <div class="container">
 	          <div class="swiper-container" >
 	            <div class="swiper-wrapper">
+	              <c:forEach var="car" items="${carlist }">
 	              <div class="swiper-slide">
 	                <div class="month-sale-images">
 	                <a href="payment/reservation">
 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" style="width:350px;height:250px;" src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png"></a>
+	                  <img class="sale-image" style="width:350px;height:250px;" src="${ path }/resources/images/car/${car.brand}/${car.name}.png"></a>
 	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">롤스로이스<br>보트 테일</h4>
-	                    </div>
+	                    <h4 style="color:black; font-size: x-large;">${car.brand}<br>${car.name}</h4>
+	               	  </div>
 	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/람보르기니 세스토 엘레멘토.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">람보르기니<br>세스토 엘레멘토</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/마세라티 MC20.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">마세라티<br>MC20</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/아우디R8 V12.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">아우디<br>R8 V12</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/페라리 F8 스파이더.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">페라리<br>F8 스파이더</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/부가티 볼리드.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">부가티<br>볼리드</h4>
-	                    </div>
-	                </div>
-	              </div>
+	            </div>
+	             </c:forEach>
+<!-- 	              <div class="swiper-slide"> -->
+<!-- 	                <div class="month-sale-images"> -->
+<!-- 	                <a href=""> -->
+<!-- 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong> -->
+<%-- 	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/람보르기니 세스토 엘레멘토.png"></a> --%>
+<!-- 	                  <div class="add-information"><br> -->
+<!-- 	                    <h4 style="color:black; font-size: x-large;">람보르기니<br>세스토 엘레멘토</h4> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	              </div> -->
+<!-- 	              <div class="swiper-slide"> -->
+<!-- 	                <div class="month-sale-images"> -->
+<!-- 	                <a href=""> -->
+<!-- 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong> -->
+<%-- 	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/마세라티 MC20.png"></a> --%>
+<!-- 	                  <div class="add-information"><br> -->
+<!-- 	                    <h4 style="color:black; font-size: x-large;">마세라티<br>MC20</h4> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	              </div> -->
+<!-- 	              <div class="swiper-slide"> -->
+<!-- 	                <div class="month-sale-images"> -->
+<!-- 	                <a href=""> -->
+<!-- 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong> -->
+<%-- 	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/아우디R8 V12.png"></a> --%>
+<!-- 	                  <div class="add-information"><br> -->
+<!-- 	                    <h4 style="color:black; font-size: x-large;">아우디<br>R8 V12</h4> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	              </div> -->
+<!-- 	              <div class="swiper-slide"> -->
+<!-- 	                <div class="month-sale-images"> -->
+<!-- 	                <a href=""> -->
+<!-- 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong> -->
+<%-- 	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/페라리 F8 스파이더.png"></a> --%>
+<!-- 	                  <div class="add-information"><br> -->
+<!-- 	                    <h4 style="color:black; font-size: x-large;">페라리<br>F8 스파이더</h4> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	              </div> -->
+<!-- 	              <div class="swiper-slide"> -->
+<!-- 	                <div class="month-sale-images"> -->
+<!-- 	                <a href=""> -->
+<!-- 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong> -->
+<%-- 	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/부가티 볼리드.png"></a> --%>
+<!-- 	                  <div class="add-information"><br> -->
+<!-- 	                    <h4 style="color:black; font-size: x-large;">부가티<br>볼리드</h4> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	              </div> -->
 	            </div>
 	            <div class="swiper-button-next"><span class="material-symbols-outlined">
 	              arrow_forward_ios
@@ -154,66 +165,19 @@
 	        <div class="container">
 	          <div class="swiper-container" >
 	            <div class="swiper-wrapper">
+	              <c:forEach var="moto" items="${motolist }">
 	              <div class="swiper-slide">
 	                <div class="month-sale-images">
 	                <a href="">
 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/BMW_S1000RR.png"></a>
+	                  <img class="sale-image" src="${ path }/resources/images/motocycle/${moto.brand }/${moto.name}.png"></a>
 	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">BMW<br>S1000RR</h4>
+	                    <h4 style="color:black; font-size: x-large;">${moto.brand }<br>${moto.name }</h4>
 	                    </div>
 	                </div>
 	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Ducati_Panigale_V4_R.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">두가티<br>파니갈레 V4 R</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Honda_CBR1000RR-R.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">혼다<br>CBR1000RR-R</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Kawaski ZR1000K.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">가와사키<br>ZR1000K</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Yamaha_FJR-1300AS.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">야마하<br>FJR-1300AS</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Suzuki HAYABUSA.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">스즈키<br>하야부사</h4>
-	                    </div>
-	                </div>
-	              </div>
+	              </c:forEach>
+
 	            </div>
 	            <br>
 	            <br>

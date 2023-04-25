@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.ta.orderby.admin.model.vo.AdminMember;
+import com.ta.orderby.admin.model.vo.AdminPayment;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
@@ -80,7 +81,28 @@ public interface AdminMapper {
 
 	int allproductCount();
 
+	List<AdminProductMotocycle> productmotodiscylceselectAll(RowBounds rowbounds);
+
+	List<AdminProductCar> productcardisselectAll(RowBounds rowbounds);
+
+	int selectreservationCount();
+
+	List<AdminPayment> reservationSelectAll(RowBounds rowbounds);
+
+	AdminPayment selectAdminPaymentByNo(@Param("no") int no);
+
+	int updatePayment(@Param("no")int no, @Param("status") String string);
+
+	int updatePoint(@Param("point")int point, @Param("mno")int mno);
+
+
+}
+
+
+
+
+
 
 
 	
-}
+

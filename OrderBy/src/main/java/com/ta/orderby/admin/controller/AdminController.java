@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ta.orderby.admin.model.service.AdminService;
 import com.ta.orderby.admin.model.vo.AdminMember;
+import com.ta.orderby.admin.model.vo.AdminPayment;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
@@ -58,7 +57,7 @@ public class AdminController {
 		log.info("Admin Member 페이지");
 		log.info("list : {}", listCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 500, listCount, 500);
 		List<AdminMember> member = service.getAdminMemberCount(pageInfo);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
@@ -77,7 +76,7 @@ public class AdminController {
 		log.info("Page : {}", page);
 		log.info("ListCount : {}", poplistCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, poplistCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 500, poplistCount, 500);
 		List<AdminPopqna> popqna = service.getPopqnaCount(pageInfo);
 		
 		
@@ -97,7 +96,7 @@ public class AdminController {
 		log.info("Admin carProduct 페이지");
 		log.info("Car Product Count : {}", carCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, carCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 2000, carCount, 2000);
 		List<AdminProductCar> productcar = service.getCarCount(pageInfo);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
@@ -114,9 +113,9 @@ public class AdminController {
 		int motocycleCount = service.getMotocylceCount();
 		
 		log.info("Admin carProduct 페이지");
-		log.info("Car Product Count : {}", motocycleCount);
+		log.info("Motocycle Product Count : {}", motocycleCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, motocycleCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 500, motocycleCount, 500);
 		List<AdminProductMotocycle> productmotocycle = service.getMotocylceCount(pageInfo);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
@@ -902,9 +901,9 @@ public class AdminController {
 		log.info("Admin carProduct 페이지");
 		log.info("Car Product Count : {}", motocycleCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, motocycleCount, 10);
-		List<AdminProductMotocycle> promoto = service.getMotocylceCount(pageInfo);
-		List<AdminProductCar> procar = service.getCarCount(pageInfo);
+		PageInfo pageInfo = new PageInfo(page, 1500, motocycleCount, 1500);
+		List<AdminProductMotocycle> promoto = service.getdisMotocylceCount(pageInfo);
+		List<AdminProductCar> procar = service.getdisCarCount(pageInfo);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("procar", procar);
@@ -938,4 +937,83 @@ public class AdminController {
 		
 		return modelAndView;
 	}
+	
+	// 결제 내역 확인
+	@GetMapping("/admin/reservation")
+	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+		int paymentlistCount = service.getAdminReservationCount();
+		
+		log.info("Admin Reservation 페이지");
+		log.info("page {}", page);
+		log.info("ListCount {}", paymentlistCount);
+		
+		
+		PageInfo pageInfo = new PageInfo(page, 10, paymentlistCount, 10);
+		List<AdminPayment> reservation = service.getAdminReservationCount(pageInfo);
+		
+		System.out.println(reservation);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", reservation);
+		modelAndView.setViewName("admin/reservation");
+		
+		return modelAndView;
+	}
+	
+	// 결제 취소
+	@GetMapping("/admin/paymentcancle")
+	public ModelAndView paymentcancle(ModelAndView modelAndView, @RequestParam int no) {
+		int result = 0;
+		AdminPayment payment = null;
+		int point = 0;
+		AdminMember member = null;
+		int pointresult = 0;
+		
+		payment = service.findPaymentByNo(no);
+		result = service.paymentcancle(no);
+		
+		member = service.modifyMemberByNo(payment.getMno());
+		point = member.getPoint() + payment.getFinprice();
+		
+		
+		System.out.println(point);
+		
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "결제를 취소하였습니다.");
+			modelAndView.addObject("location", "/admin/reservation");
+			pointresult = service.pricepoint(point, payment.getMno());
+		} else {
+			modelAndView.addObject("msg", "결제 취소를 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/reservation");
+		}
+		
+		System.out.println(pointresult);
+		System.out.println(member);
+		System.out.println(no);
+		System.out.println(payment);
+		
+
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+
+	//결제 내역 상세보기
+	@GetMapping("/admin/modifypayment")
+	public ModelAndView modifypayment(ModelAndView modelAndView, @RequestParam int no) {
+		AdminPayment payment = null;
+		
+		log.info("Admin ModifyPayment 페이지");
+		
+		log.info("no : {}", no);
+		
+		payment = service.findPaymentByNo(no);
+		
+		modelAndView.addObject("reservation", payment);
+		modelAndView.setViewName("admin/modifypayment");
+		
+		return modelAndView;
+	}
+
 }

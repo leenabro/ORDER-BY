@@ -142,8 +142,8 @@
         <table class="cartableclass">
           <thead>
             <tr>
-              <th style="vertical-align: middle; font-size:22px; font-weight:bold">브랜드</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">차량 이름</th>
+              <th style="vertical-align: middle; font-size:22px; font-weight:bold">브랜드</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">차량 년식</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">차량 배기</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">차량 금액(일)<br />VAT 별도</th>
@@ -160,8 +160,8 @@
             <c:if test="${ not empty procar }">
             	<c:forEach var="procar" items="${procar }">
             <tr>
-              <td style="vertical-align: middle;">${procar.brand }</td>
               <td style="vertical-align: middle;">${procar.name }</td>
+              <td style="vertical-align: middle;">${procar.brand }</td>
               <td style="vertical-align: middle;">${procar.year }<span> 년식</span></td>
               <td style="vertical-align: middle;">${procar.cc } <span> CC</span></td>
               <td style="vertical-align: middle;"><fmt:formatNumber value="${procar.price }" pattern="#,###"/><span>원</span></td>
@@ -179,8 +179,8 @@
         <table class="motocycletableclass" >
           <thead >
             <tr >
-              <th style="vertical-align: middle; font-size:22px; font-weight:bold">브랜드</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">오토바이 이름</th>
+              <th style="vertical-align: middle; font-size:22px; font-weight:bold">브랜드</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">오토바이 년식</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">오토바이 배기</th>
               <th style="vertical-align: middle; font-size:22px; font-weight:bold">오토바이 금액(일)<br />VAT 별도</th>
@@ -198,8 +198,8 @@
             <c:if test="${ not empty promoto }">
              <c:forEach var="promoto" items="${promoto }">
             <tr>
-              <td style="vertical-align: middle;">${promoto.brand }</td>
               <td style="vertical-align: middle;">${promoto.name }</td>
+              <td style="vertical-align: middle;">${promoto.brand }</td>
               <td style="vertical-align: middle;">${promoto.year }<span> 년식</span></td>
               <td style="vertical-align: middle;">${promoto.cc }<span> CC</span></td>
               <td style="vertical-align: middle;"><fmt:formatNumber value="${promoto.price }" pattern="#,###"/><span>원</span></td>

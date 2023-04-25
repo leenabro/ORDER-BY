@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.ta.orderby.admin.model.vo.AdminMember;
+import com.ta.orderby.admin.model.vo.AdminPayment;
 import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
@@ -71,6 +72,26 @@ public interface AdminService {
 	int active(int no);
 
 	int allproductcount();
+
+	List<AdminProductMotocycle> getdisMotocylceCount(PageInfo pageInfo);
+
+	List<AdminProductCar> getdisCarCount(PageInfo pageInfo);
+
+	List<AdminPayment> getAdminReservationCount(PageInfo pageInfo);
+
+	int getAdminReservationCount();
+
+	AdminPayment findPaymentByNo(int no);
+
+	int paymentcancle(int no);
+
+	int pricepoint(int point, int mno);
+
+
+
+
+
+
 
 
 

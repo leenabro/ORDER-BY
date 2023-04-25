@@ -27,7 +27,7 @@
     <link href="${ path }/resources/static/assets/css/admin2.css" rel="stylesheet">
     <style>
       .dataTables_filter {
-        margin-left: 55%;
+        margin-left: 65%;
       }
 
       .col-sm-12 .dataTables_info {

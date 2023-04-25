@@ -18,7 +18,7 @@
 
     <title>Order By</title>
 
-<!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template-->
     <link href="${ path }/resources/static/assets/css/admin.all.min.css" rel="stylesheet" type="text/css">
     <link
         href="${ path }/resources/static/assets/css/admin.font.css" rel="stylesheet">
@@ -27,22 +27,22 @@
     <link href="${ path }/resources/static/assets/css/admin2.css" rel="stylesheet">
     <style>
       .dataTables_filter {
-        margin-left: 55%;
+        margin-left: 65%;
       }
 
       .col-sm-12 .dataTables_info {
         display: none;
       }
     </style>
-</head>
+    </head>
 <%@ include file="/WEB-INF/views/common/adminheader.jsp" %>
 
 
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">자동차 현황</h1>
-            <p class="mb-4">Order By에서 보유한 자동차 현황</p>
+            <h1 class="h3 mb-2 text-gray-800">결제 내역 관리</h1>
+            <p class="mb-4">Order By의 결제 내역 관리</p>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -57,40 +57,36 @@
                   >
                     <thead>
                       <tr>
-                        <th>세일 현황</th>
-                        <th>차종 브랜드</th>
-                        <th>차종 이름</th>
-                        <th>배기</th>
-                        <th>차량 위치</th>
-                        <th>입고 날자</th>
-                        <th>대여 비용(일)</th>
-                        <th>상태</th>
+<!--                       	<th>결제 번호</th> -->
+                      	<th>회원 이름</th>
+                        <th>상품 이름</th>
+                        <th>결제 방법</th>
+                        <th>결제 날짜</th>                      
+                        <th>결제 상태</th>
                       </tr>
                     </thead>
-
                     <tbody>
                     <c:if test="${ empty list }">
                     	<tr>
-							<td colspan="6" style="text-align:center">
-                    			조회되는 자동차가 없습니다.
+                    		<td colspan="7" style="text-align:center">
+                    			결제 내역이 없습니다.
                     		</td>
                     	</tr>
                     </c:if>
                     <c:if test="${ not empty list }">
-                    	<c:forEach var="car" items="${list }">
+                    	<c:forEach var="reservation" items="${list }">
                       <tr>
-                        <td>${car.sale }</td>
-                        <td>${car.brand }</td>
-                        <td><a href="${path }/admin/modifycarproduct?no=${car.no}">${car.name}</a></td>
-                        <td>${car.cc } CC</td>
-                        <td>${car.position }</td>
-                        <td>${car.enrolldate }</td>
-                        <td><fmt:formatNumber value="${car.price }" pattern="#,###"/> 원</td>
-                        <td  style="width:50px; text-align:center;">${car.status }</td>
+                      	<td style="width:100px; display:none;">${reservation.no}</td>
+                      	<td>${reservation.username }</td>
+                      	<td><a href="${path }/admin/modifypayment?no=${reservation.no}">${reservation.name}</a></td>
+                      	<td>${reservation.method}</td>
+                      	<td>${reservation.enrollDate }</td>
+                      	<td>${reservation.status}</td>
                       </tr>
-                    	</c:forEach>
+                       </c:forEach>
                     </c:if>
                     </tbody>
+ 
                   </table>
                 </div>
               </div>
@@ -103,12 +99,13 @@
       <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
 
-        <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->
     <script src="${ path }/resources/static/assets/js/admin/jquery.min.js"></script>
     <script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
 
@@ -124,8 +121,8 @@
 
     <!-- Page level custom scripts -->
     <script src="${ path }/resources/static/assets/js/admin/datatables-demo.js"></script>
+    
 
 
 </body>
-
 </html>

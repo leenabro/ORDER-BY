@@ -38,9 +38,9 @@ public class AdminProductMotocycle {
 	
 	private String sale;
 	
-	private int s_no;
+	private int sno;
 	
-	private int pf_no;
+	private int pfno;
 	
 	private int count;
 	

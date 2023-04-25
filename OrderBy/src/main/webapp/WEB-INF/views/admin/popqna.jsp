@@ -28,7 +28,7 @@
         <script src="${path }/resources/js/jquery-3.6.3.js"></script>
     <style>
       .dataTables_filter {
-        margin-left: 55%;
+        margin-left: 65%;
       }
 
       .col-sm-12 .dataTables_info {

@@ -126,7 +126,10 @@
 
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=00be5712acaed1c7ea1e3d8899cba967&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
+  <!-- Custom scripts for all pages-->
+    <script src="${ path }/resources/static/assets/js/admin/sb-admin-2.min.js"></script>
+    
+        <script src="${ path }/resources/static/assets/js/admin/bootstrap.bundle.min.js"></script>
 
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
