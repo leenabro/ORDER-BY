@@ -1,8 +1,10 @@
 package com.ta.orderby.car.model.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ta.orderby.car.model.vo.Car;
@@ -19,5 +21,10 @@ public interface CarMapper {
 
 
 	Car findCarByNo(int carNo);
+	
+	List<Car> selectCarAll();
+
+	List<Car> selectAllByDateStore(@Param("rentDate") Date rentDate, @Param("returnDate")Date returnDate, @Param("sNo") String sNo);
+
 
 }

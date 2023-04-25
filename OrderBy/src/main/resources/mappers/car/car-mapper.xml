@@ -89,6 +89,83 @@
         FROM CAR
         WHERE C_NO = #{carNo}
     </select>
+    
+    <!-- 소현 메퍼 -->
+    <select id="selectCarAll" resultMap="carResultMap">
+		SELECT C_NO,
+		       C_NAME,
+		       C_MILE,
+		       C_KM,
+		       C_CC,
+		       C_YEAR,
+		       C_ENGINE,
+		       C_BRAND,
+		       C_FUEL,
+		       C_PRICE,
+		       C_POSITION,
+		       C_STATUS,
+		       C_SALE,
+		       S_NO,
+		       PF_NO,
+		       C_COUNT,
+		       C_ENROLL_DATE
+		FROM CAR C
+		WHERE C_STATUS = 'Y'
+	</select>
+	
+	<select id="selectAllByDateStore" parameterType="map" resultMap="carResultMap">
+		SELECT  C_NO,
+		        C_NAME,
+		        C_MILE,
+		        C_KM,
+		        C_CC,
+		        C_YEAR,
+		        C_ENGINE,
+		        C_BRAND,
+		        C_FUEL,
+		        C_PRICE,
+		        C_POSITION,
+		        C_STATUS,
+		        C_SALE,
+		        S_NO,
+		        PF_NO,
+		        C_COUNT,
+		        C_ENROLL_DATE
+		FROM CAR
+		WHERE C_STATUS = 'Y' AND S_NO = #{sNo}
+		    
+		MINUS
+		
+		SELECT  C_NO,
+		        C_NAME,
+		        C_MILE,
+		        C_KM,
+		        C_CC,
+		        C_YEAR,
+		        C_ENGINE,
+		        C_BRAND,
+		        C_FUEL,
+		        C_PRICE,
+		        C_POSITION,
+		        C_STATUS,
+		        C_SALE,
+		        S_NO,
+		        PF_NO,
+		        C_COUNT,
+		        C_ENROLL_DATE
+		FROM CAR
+		WHERE C_STATUS = 'Y'
+		    AND S_NO = #{sNo}
+		    AND C_NO IN (
+		        SELECT C_NO
+		        FROM RESERVATION
+		        WHERE (RENT_DATE, RETURN_DATE, C_NO) IN (
+		            SELECT RENT_DATE, RETURN_DATE, C_NO
+		            FROM RESERVATION
+					<![CDATA[WHERE RENT_DATE < #{returnDate} AND RETURN_DATE > #{rentDate}]]>
+					)
+				)
+	</select>
 	
 	<resultMap id="motoResultMap" type="AdminProductMotocycle">
 		<id property="no" column="MC_NO"/>

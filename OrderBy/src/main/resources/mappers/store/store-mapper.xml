@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ta.orderby.store.model.mapper.StoreMapper">
+	<sql id="storeListSql">
+		SELECT S_NO,
+			   S_NAME,
+			   S_COUNT,
+			   S_LOCATION,
+			   S_ADDRESS,
+			   S_LAT,
+			   S_LONG,
+			   S_STATUS
+		FROM STORE
+		WHERE S_STATUS = 'Y'
+	</sql>
+
+	<resultMap id="storeListResultMap" type="Store">
+		<id property="no" column="S_NO"/>
+		<result property="name" column="S_NAME"/>
+		<result property="count" column="S_COUNT"/>
+		<result property="location" column="S_LOCATION"/>
+		<result property="address" column="S_ADDRESS"/>
+		<result property="lat" column="S_LAT"/>
+		<result property="lng" column="S_LONG"/>
+		<result property="status" column="S_STATUS"/>
+	</resultMap>
+	
+	<select id="selectStoreAll" resultMap="storeListResultMap">
+		<include refid="storeListSql"/>
+	</select>
+	
+	<select id="selectStoreByLocation" parameterType="string" resultMap="storeListResultMap">
+		<include refid="storeListSql"/>
+		AND S_LOCATION = #{location}
+	</select>
+</mapper>

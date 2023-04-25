@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div id="successContainer1" class="success-container">
-			<h2 style="text-align: center;">예약이 완료되었습니다.</h2>
+			<h2>예약이 완료되었습니다.</h2>
         </div>	
         
         <div id="successContainer2" class="success-container">
@@ -58,7 +58,7 @@
 		            <div id="productName">
 		                <p>${ motocycle.brand } ${ motocycle.name }</p>
 		            </div>
-		            <div>
+		            <div id="productImg">
 		                <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png" alt="차량 이미지">
 		            </div>
         		</c:when>
@@ -71,19 +71,30 @@
                 <p>대여정보</p>
             </div>
             <div>
-            	<table>
+            	<table class="rent-info-table">
             		<tr>
-            			<th>차 종</th>
-            			<td>람보르기뉘</td>
+            			<th>예약 차종</th>
+            			<c:choose>
+            				<c:when test="${ not empty car }">
+		            			<td>${ car.name }</td>
+            				</c:when>
+            				<c:when test="${ not empty motocycle }">
+		            			<td>${ motocycle.name }</td>
+            				</c:when>
+            			</c:choose>
             		</tr>
             		<tr>
-            			<th>코드</th>
-            			<td>8574561554</td>
+            			<th>예약 코드</th>
+            			<td>${ payment.uid }</td>
             		</tr>
             	</table>
             </div>
             <div>
-            	<table>
+            	<table class="rent-info-table">
+            		<tr>
+            			<th>대여 및 반납 지점</th>
+            			<td>서울 강남지점</td>
+            		</tr>
             		<tr>
             			<th>대여일</th>
             			<td>2023.04.25</td>

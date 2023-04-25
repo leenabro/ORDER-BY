@@ -1,5 +1,6 @@
 package com.ta.orderby.motocycle.model.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ta.orderby.motocycle.model.vo.Motocycle;
@@ -11,8 +12,13 @@ public interface MotocycleService {
 	Motocycle findMotocycleByName(String name);
 
 	Motocycle findMotocycleByNo(int motocycleNo);
-
-	List<Motocycle> bestMotoList();
 	
-	List<Motocycle> findMotoBySale();
+	// 소현
+	List<Motocycle> findAllByBrand(String brand);
+
+	List<Motocycle> getMotocycleList();
+
+	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo);
+
+	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand);
 }
