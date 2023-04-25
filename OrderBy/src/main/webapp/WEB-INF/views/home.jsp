@@ -54,10 +54,10 @@
 		                  </div>
 		            </li>
           		</c:forEach>
-	              <c:forEach var="moto" items="${moto}">
+	              <c:forEach var="moto" items="${ moto}">
 	          	<li>
 	              	<c:if test="${ moto.sale == 'S' }">
-	            <a href="" class="hover-test">
+	              <a href="payment/reservation?name=${ moto.name }&price=<fmt:parseNumber var="price" value="${ moto.price * 0.7 }" integerOnly="true" />${ price }" class="hover-test">
 	              <div class="month-sale-images">
 	                <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
 	                <img class="sale-image" src="${ path }/resources/images/motocycle/${ moto.brand }/${moto.name }.png">
@@ -76,8 +76,8 @@
 	              <p>할인 비용(일) : <fmt:formatNumber value="${ moto.price * 0.7 }" pattern="#,###" /> 원</p>
 	            </div>
 	              	</c:if>
-	              </c:forEach>
-        	</li>
+	        	</li>
+              </c:forEach>
       		</ul>
       	</div>
       </section>

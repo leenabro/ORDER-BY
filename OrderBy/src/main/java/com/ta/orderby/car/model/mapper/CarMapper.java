@@ -18,4 +18,6 @@ public interface CarMapper {
 
 
 
+	Car findCarByNo(int carNo);
+
 }

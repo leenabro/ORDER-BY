@@ -15,4 +15,6 @@ public interface CarService {
 
 
 
+	Car findCarByNo(int carNo);
+
 }
