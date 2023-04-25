@@ -26,11 +26,7 @@ public class CarServiceImpl implements CarService {
 		return mapper.findCarBySale();
 	}
 
-	@Override
-	public List<AdminProductMotocycle> findMotoBySale() {
-		
-		return mapper.findMotoBySale();
-	}
+
 
 	@Override
 	public List<Car> bestCarList() {
@@ -38,10 +34,6 @@ public class CarServiceImpl implements CarService {
 		return mapper.bestCarfind();
 	}
 
-	@Override
-	public List<AdminProductMotocycle> bestMotoList() {
-		return mapper.bestMotofind();
-	}
 
 
 }

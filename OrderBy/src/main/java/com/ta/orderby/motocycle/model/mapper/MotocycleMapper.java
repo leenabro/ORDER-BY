@@ -13,4 +13,8 @@ public interface MotocycleMapper {
 	Motocycle findMotocycleByName(String name);
 
 	Motocycle findMotocycleByNo(int motocycleNo);
+	
+	List<Motocycle> bestMotofind();
+
+	List<Motocycle> findMotoBySale();
 }

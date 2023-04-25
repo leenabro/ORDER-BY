@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.car.model.vo.Car;
 
 @Mapper
@@ -14,10 +13,9 @@ public interface CarMapper {
 	
 	List<Car> findCarBySale();
 
-	List<AdminProductMotocycle> findMotoBySale();
 
 	List<Car> bestCarfind();
 
-	List<AdminProductMotocycle> bestMotofind();
+
 
 }

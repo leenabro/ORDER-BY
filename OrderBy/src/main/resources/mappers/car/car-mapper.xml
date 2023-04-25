@@ -68,61 +68,6 @@
 		WHERE C_SALE = 'S'
 	</select>
 	
-
-	
-	<resultMap id="motoResultMap" type="AdminProductMotocycle">
-		<id property="no" column="MC_NO"/>
-		<result property="name" column="MC_NAME"/>
-		<result property="brand" column="MC_BRAND"/>
-		<result property="engine" column="MC_ENGINE"/>
-		<result property="cc" column="MC_CC"/>
-		<result property="output" column="MC_OUTPUT"/>
-		<result property="torque" column="MC_TORQUE"/>
-		<result property="fuel" column="MC_FUEL"/>
-		<result property="year" column="MC_YEAR"/>
-		<result property="km" column="MC_KM"/>
-		<result property="price" column="MC_PRICE"/>
-		<result property="position" column="MC_POSITION"/>
-		<result property="status" column="MC_STATUS"/>
-		<result property="sale" column="MC_SALE"/>
-		<result property="sno" column="S_NO"/>
-		<result property="pfno" column="PF_NO"/>
-		<result property="count" column="MC_COUNT"/>
-		<result property="enrolldate" column="MC_ENROLL_DATE"/>
-	</resultMap>
-	
-		<select id="findMotoBySale" resultMap="motoResultMap">
-		SELECT  MC_NO,
-				MC_NAME,
-				MC_BRAND,
-				MC_ENGINE,
-				MC_CC,
-				MC_OUTPUT,
-				MC_TORQUE,
-				MC_FUEL,
-				MC_YEAR,
-				MC_KM,
-				MC_PRICE,
-				MC_POSITION,
-				MC_STATUS,
-				MC_SALE,
-				S_NO,
-				PF_NO,
-				MC_COUNT,
-				MC_ENROLL_DATE
-		FROM MOTOCYCLE
-		WHERE MC_SALE = 'S'
-	</select>
-	
-	<select id="bestMotofind" resultMap="motoResultMap">
-		SELECT * FROM 
-		(
-		SELECT * FROM MOTOCYCLE
-		ORDER BY MC_COUNT DESC 
-		)
-		WHERE ROWNUM <![CDATA[<=]]> 6
-	</select>
-	
 	<select id="bestCarfind" resultMap="carResultMap">
 		SELECT * FROM 
 		(
@@ -131,4 +76,6 @@
 		)
 		WHERE ROWNUM <![CDATA[<=]]> 6
 	</select>
+	
+
 </mapper>

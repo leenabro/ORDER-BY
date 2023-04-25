@@ -12,4 +12,7 @@ public interface MotocycleService {
 
 	Motocycle findMotocycleByNo(int motocycleNo);
 
+	List<Motocycle> bestMotoList();
+	
+	List<Motocycle> findMotoBySale();
 }
