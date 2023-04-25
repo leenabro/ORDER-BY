@@ -15,6 +15,12 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
+	<style>
+		.brand-image {
+			width:100px;
+			height:50px;
+		}
+	</style>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
 	<body class="homepage is-preload">
@@ -41,8 +47,19 @@
 		                  </div>
 		                </a>
 		                  <div class="add-information"><br>
+<%-- 						<img class="brand-image" src="${ path }/resources/images/brand/${ car.brand }.png"> --%>
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
-		                    <h4 style="color:black; font-size: x-large;"> ${ car.brand } <br> ${ car.name }</h4> 
+		                  <div >
+		                  	<div style="display: flex; ">
+		                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ car.brand }.png">
+		                  		<div >
+			                  		<h4 style="color:black; font-size: x-large;"> ${ car.brand }</h4>
+			                  		<h4 style="color:black; font-size: x-large;"> ${ car.name }</h4>
+		                  		</div>
+		                  	</div>
+		                  </div>
+		              
+
 		                    
 		                    <br>
 		                    <p class="postionstyle" style="font-size:small;"> ${car.position } </p>
@@ -64,8 +81,16 @@
 	              </div>
 	            </a>
 	            <div class="add-information"><br>
-	            <% pageContext.setAttribute("emptyChar", " "); %>
-	              <h4 style="color:black; font-size: x-large;">${moto.brand } <br> ${moto.name }</h4>
+		                  <% pageContext.setAttribute("emptyChar", " "); %>
+		                  <div >
+		                  	<div style="display: flex; ">
+		                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ moto.brand }.png">
+		                  		<div >
+			                  		<h4 style="color:black; font-size: x-large;"> ${ moto.brand }</h4>
+			                  		<h4 style="color:black; font-size: x-large;"> ${ moto.name }</h4>
+		                  		</div>
+		                  	</div>
+		                  </div>
 	                
 	              <br>
 	              <p class="postionstyle" style="font-size:small;"> ${moto.position } </p>
@@ -95,7 +120,15 @@
 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
 	                  <img class="sale-image" style="width:350px;height:250px;" src="${ path }/resources/images/car/${car.brand}/${car.name}.png"></a>
 	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">${car.brand}<br>${car.name}</h4>
+	                      <div >
+		                  	<div style="display: flex; ">
+		                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ car.brand }.png">
+		                  		<div >
+			                  		<h4 style="color:black; font-size: x-large;"> ${ car.brand }</h4>
+			                  		<h4 style="color:black; font-size: x-large;"> ${ car.name }</h4>
+		                  		</div>
+		                  	</div>
+		                  </div>
 	               	  </div>
 	                </div>
 	            </div>
@@ -172,7 +205,15 @@
 	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
 	                  <img class="sale-image" src="${ path }/resources/images/motocycle/${moto.brand }/${moto.name}.png"></a>
 	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">${moto.brand }<br>${moto.name }</h4>
+	                      <div >
+		                  	<div style="display: flex; ">
+		                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ moto.brand }.png">
+		                  		<div >
+			                  		<h4 style="color:black; font-size: x-large;"> ${ moto.brand }</h4>
+			                  		<h4 style="color:black; font-size: x-large;"> ${ moto.name }</h4>
+		                  		</div>
+		                  	</div>
+		                  </div>
 	                    </div>
 	                </div>
 	              </div>

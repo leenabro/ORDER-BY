@@ -14,7 +14,6 @@ public interface CarService {
 	List<Car> bestCarList();
 
 
-
 	Car findCarByNo(int carNo);
 
 }

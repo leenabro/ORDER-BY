@@ -85,7 +85,7 @@ public interface AdminService {
 
 	int paymentcancle(int no);
 
-	int pricepoint(int point, int mno);
+	int pricepoint(double point, int mno);
 
 
 

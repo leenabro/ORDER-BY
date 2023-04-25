@@ -93,7 +93,7 @@ public interface AdminMapper {
 
 	int updatePayment(@Param("no")int no, @Param("status") String string);
 
-	int updatePoint(@Param("point")int point, @Param("mno")int mno);
+	int updatePoint(@Param("point")double point, @Param("mno")int mno);
 
 
 }

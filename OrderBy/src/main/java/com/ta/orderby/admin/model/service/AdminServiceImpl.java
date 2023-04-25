@@ -307,7 +307,7 @@ public class AdminServiceImpl  implements AdminService{
 	}
 
 	@Override
-	public int pricepoint(int point, int mno) {
+	public int pricepoint(double point, int mno) {
 		
 		return mapper.updatePoint(point, mno);
 	}

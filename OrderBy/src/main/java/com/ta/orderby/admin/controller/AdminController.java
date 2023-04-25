@@ -965,7 +965,7 @@ public class AdminController {
 	public ModelAndView paymentcancle(ModelAndView modelAndView, @RequestParam int no) {
 		int result = 0;
 		AdminPayment payment = null;
-		int point = 0;
+		double point = 0;
 		AdminMember member = null;
 		int pointresult = 0;
 		
@@ -973,10 +973,10 @@ public class AdminController {
 		result = service.paymentcancle(no);
 		
 		member = service.modifyMemberByNo(payment.getMno());
-		point = member.getPoint() + payment.getFinprice();
+		point = member.getPoint() + (double)(payment.getFinprice() * 0.8);
 		
 		
-		System.out.println(point);
+		
 		
 		
 		if(result > 0) {
@@ -988,6 +988,7 @@ public class AdminController {
 			modelAndView.addObject("location", "/admin/reservation");
 		}
 		
+		System.out.println(point);
 		System.out.println(pointresult);
 		System.out.println(member);
 		System.out.println(no);
