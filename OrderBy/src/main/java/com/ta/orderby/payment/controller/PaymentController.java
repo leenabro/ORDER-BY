@@ -1,5 +1,6 @@
 package com.ta.orderby.payment.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -8,9 +9,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -39,7 +40,6 @@ public class PaymentController {
 	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price, 
 									@AuthenticationPrincipal Member loginMember) {
 		
-		
 		if(loginMember != null) {
 			Member member = memberService.findMemberById(loginMember.getId()); 
 			Car car = carService.findCarByName(name);
@@ -64,9 +64,9 @@ public class PaymentController {
 	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price,
 								@AuthenticationPrincipal Member loginMember) {
 		
-		Member member = memberService.findMemberById(loginMember.getId()); 
 		
-		if(loginMember != null && loginMember.getNo() == member.getNo()) {
+		if(loginMember != null) {
+			Member member = memberService.findMemberById(loginMember.getId()); 
 			// 자동차 정보 불러오기
 			Car car = carService.findCarByName(name);
 			
@@ -128,16 +128,24 @@ public class PaymentController {
 	}
 	
 	@ResponseBody
-	@PostMapping("payment/success")
-	public ModelAndView success(ModelAndView modelAndView, @RequestParam("method") String method, @RequestParam("merchant_uid") String productId) {
+	@PostMapping("payment/pay")
+	public HashMap<String, Object> pay(@RequestBody HashMap<String, Object> map ) {
 		
-		System.out.println(productId);
+		System.out.println(map);
+		System.out.println(map.values());
+		
+		
+		return map;
+	}
+	
+	@GetMapping("payment/success")
+	public ModelAndView success (ModelAndView modelAndView) {
+		
 		
 		modelAndView.setViewName("payment/success");
 		
 		return modelAndView;
 	}
-	
 	
 	
 	

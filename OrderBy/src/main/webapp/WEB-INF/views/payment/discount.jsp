@@ -11,6 +11,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- ajax 통신을 위한 meta tag -->
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<security:csrfMetaTags/>
 <title>할인 / 결제</title>
 	<link rel="stylesheet" href="${ path }/resources/css/payment/discount.css">
 	<!-- iamport.payment.js -->
@@ -73,6 +77,8 @@
 						<p id="dicPrice" class="car-spec-price">- 0 원</p>
 						<div>
 							<ul id="dicContent">
+								<li id="couponList"></li>
+								<li></li>
 							</ul>
 						</div>
 					</li>
@@ -95,16 +101,16 @@
 							<span>회원 등급</span>
 							<c:choose>
 								<c:when test="${ member.role eq 'B' }">
-									<div id="memberRole">브론즈(0 %)</div>
+									<div id="memberRole">브론즈</div>
 								</c:when>
 								<c:when test="${ member.role eq 'S' }">
-									<div id="memberRole" style="color: mintcream">실버(5 %)</div>
+									<div id="memberRole" style="color: mintcream">실버</div>
 								</c:when>
 								<c:when test="${ member.role eq 'G' }">
-									<div id="memberRole" style="color: gold">골드(10 %)</div>
+									<div id="memberRole" style="color: gold">골드</div>
 								</c:when>
 								<c:when test="${ member.role eq 'D' }">
-									<div id="memberRole" style="color: cadetblue;">다이아(20 %)</div>
+									<div id="memberRole" style="color: cadetblue;">다이아</div>
 								</c:when>
 							</c:choose>
 						</div>
@@ -144,8 +150,9 @@
 						<div class="scriptRow">
 							<span style="padding-top: 20px;">사용할 포인트</span>
 							<div>
-								<input id="usePoint" type="text" class="script-point" value="0"> p <input
-									type="button" id="pointButton" value="모두 사용">
+								<input id="usePoint" type="text" class="script-point" value="0"> p
+								<input type="button" id="pointButton" value="모두 사용">
+								<input type="button" id="applyButton" value="적용">
 								<div>
 									<p id="pointMsg" style="font-size: 0.5em; color: red; vertical-align: top;">누적 포인트 50,000 포인트 이상이어야 사용 가능</p>
 								</div>
@@ -206,39 +213,69 @@
 					merchant_uid: productId,   // 주문번호
 					name: "${ car.brand } ${ car. name } 1일",
 					amount: 100,                         // 숫자 타입
-					buyer_email: "leenabro.be@gmail.com",
-					buyer_name: "홍길동",
-					buyer_tel: "010-4242-4242",
-					buyer_addr: "서울특별시 강남구 신사동",
+					buyer_email: "${member.email}",
+					buyer_name: "${member.name}",
+					buyer_tel: "${member.phone}",
+					buyer_addr: "${member.address}",
 					buyer_postcode: "01181"
 				}, function (rsp) { // callback
 					if (rsp.success) {
 					  // 결제 성공 시 로직
 					  console.log(rsp);
+					  var paymentData = {
+							  method: rsp.pay_method,
+						      uid: rsp.merchant_uid,
+						      productName: rsp.name,
+						      amount: rsp.amount,
+						      email: rsp.buyer_email,
+						      name: rsp.buyer_name,
+						      tel: rsp.buyer_tel
+						      };
+					  
+					  $.ajax({
+					        url: "${path}/payment/success",
+					        method: "POST",
+					        beforeSend: function(xhr) {
+			            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+			            	},
+					        data: JSON.stringify(paymentData),
+					        contentType: "application/json; charset=utf-8",
+					        success: function (response) {
+					          console.log(response);
+					          // 성공적으로 처리된 경우
+					        },
+					        error: function (xhr, status, error) {
+					          console.error(xhr);
+					          // 에러 발생 시 처리할 로직
+					        }
+					  });
 					  // 회원 검증 필요, 포인트 차감 필요
 					} else {
 					  // 결제 실패 시 로직
 					  alert("결제가 취소 되었습니다.");
+					  console.log(rsp);
+					  let data = {
+						  uid: rsp.merchant_uid,
+						  method: rsp.pay_method
+					  };
+					  
 					  $.ajax({
-						 type: 'POST',
-						 url: '${ path }/payment/success',
-						 dataType: 'json',
-						 data: {
-							method: rsp.pay_method,
-							merchant_uid: rsp.merchant_uid,
-							name: rsp.name,
-							amount: rsp.amount,
-							buyer_email: rsp.buyer_email,
-							buyer_name: rsp.buyer_name,
-							buyer_tel: rsp.buyer_tel,
-							buyer_addr: rsp.buyer_addr,
-							buyer_postcode: rsp.buyer_postcode
-						 },
-						 success: (obj) => {
-							 console.log("success");
-							 location.replace("${ path }/payment/success");
-						 }
+						  url: "${path}/payment/pay",
+						  method: "POST",
+						  beforeSend: function(xhr) {
+					            		xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+					            		},
+						  data: JSON.stringify(data),
+						  contentType: "application/json; charset=UTF-8",
+						  success: function(response) {
+							  console.log(response);
+// 							  location.href = "${ path }/payment/success";
+						  },
+						  error: (error) => {
+							  console.log(error);
+						  }
 					  });
+					  
 					}
 				});
 		};
@@ -255,30 +292,21 @@
 			
 			// 멤버십 할인 및 쿠폰 할인 스크립트 문
 			let price = ${ car.price };
-			let role = document.getElementById('memberRole').innerText;
-			let discount = 0;
-			let ulNode = document.getElementById('dicContent');
-			let liNode = document.createElement('li');
-			
-			console.log(role);
-			if(role === '실버(5 %)') {
-				discount = price * 0.05;
-				price = price * 0.95;
-				liNode.textContent = role + " 할인";
-				ulNode.appendChild(liNode);
-				
-				$('#dicPrice').html('- '+ comma(discount) +' 원');
-				$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
-			}
-			
-			
+			let discount = Number(0);
 			$('#disCoupone').change(function() {
+				price = ${ car.price };
+				discount = Number(0);
+				let ulNode = document.getElementById('dicContent');
+				let liNode = document.createElement('li');
 				let disPercent = 1;
 				
-				if($(this).val() === '' && $(this).val() === null) {
+				if($(this).val() === '' || $(this).val() === null) {
+					discount = Number(0);
+					price = ${ car.price };
+					console.log(discount);
 					
-					$('#dicPrice').html('- '+ comma(discount) +' 원');
-					$('#dicContent').html('');
+					$('#dicPrice').html('- '+ discount +' 원');
+					$('#couponList').html('');
 					$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 				}; 
 				
@@ -292,9 +320,8 @@
 						
 						$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 						$('#dicPrice').html('- ' + comma(discount) + ' 원');
-						
-						liNode.textContent = ${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)';
-						ulNode.appendChild(liNode);
+
+						$('#couponList').html(${coupons}[i].name + '('+${coupons}[i].percent+' % 할인)');
 						
 					};
 				};
@@ -307,6 +334,8 @@
 				
 				document.getElementById("usePoint").value = toPoint;
 			})
+			
+			
 			
 			$('#usePoint').keyup((event) => {
 				let point = 0;
@@ -324,6 +353,36 @@
 				}
 				
 			});
+
+			
+			$('#applyButton').on('click', () => {
+				if(document.getElementById("usePoint").value >= 50000) {
+					if(confirm("정말 적용 하시겠습니까? 한 번 적용되면 변경하실 수 없습니다.")) {
+						let point = document.getElementById("usePoint").value;
+						
+						price = price - point; 
+						discount = discount + Number(point);
+						
+						document.getElementById('usePoint').disabled = true;
+						document.getElementById('applyButton').disabled = true;
+						console.log(discount);
+						console.log(price);		
+						
+						$('#dicPrice').html('- ' + comma(discount) + ' 원');
+						$('#couponList+li').html(point + ' 포인트 사용');
+						$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
+					} else {
+						alert("취소 되었습니다.");
+					}
+					
+				} else {
+					alert("누적 포인트가 50000 포인트가 아닙니다.");
+				}
+				
+				
+				
+				
+			})
 			
 			
 		});
