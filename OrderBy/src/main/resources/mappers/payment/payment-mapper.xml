@@ -18,9 +18,9 @@
 	
 	<resultMap type="Payment" id="paymentResultMap">
 		<id property="no" column="P_NO" />
-		<result property="method" column="P_UID" />
-		<result property="uid" column="P_NAME" />
-		<result property="productName" column="P_METHOD" />
+		<result property="uid" column="P_UID" />
+		<result property="productName" column="P_NAME" />
+		<result property="method" column="P_METHOD" />
 		<result property="date" column="P_DATE" />
 		<result property="totPrice" column="P_TOT_PRICE" />
 		<result property="finPrice" column="P_FIN_PRICE" />

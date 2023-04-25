@@ -70,6 +70,7 @@
 }
 
 #successContainer1>h2 {
+	text-align: center;
 	padding-top: 25px;
 	font-size: 2em;
 }
@@ -80,7 +81,12 @@
 	background-color: #304050;
 	height: 40px;
 	padding-top: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
+}
+
+#productImg {
+	background-color: white;
 	border-radius: 10px;
 }
 
@@ -109,5 +115,12 @@
 	margin: auto;
 }
 
+.rent-info-table {
+	height: 100px;
+}
+
+.rent-info-table tr th {
+	width: 300px;
+}
 
 
