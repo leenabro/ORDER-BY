@@ -312,6 +312,33 @@ public class AdminServiceImpl  implements AdminService{
 		return mapper.updatePoint(point, mno);
 	}
 
+	@Override
+	public int findStoreNo(String position) {
+		
+		return mapper.findstoreNo(position);
+	}
+
+	@Override
+	public int findPfileNo(String name) {
+		
+		return mapper.findpfileNo(name);
+	}
+
+	@Override
+	public int findStoreMotoNo(String position) {
+		
+		return mapper.findstoreMotoNo(position);
+	}
+
+	@Override
+	public int findPfileMotoNo(String name) {
+		
+		return mapper.findpfileMotoNo(name);
+	}
+
+
+
+
 
 
 

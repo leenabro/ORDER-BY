@@ -88,6 +88,7 @@
             C_ENROLL_DATE 
         FROM CAR
         WHERE C_NO = #{carNo}
+        
     </select>
     
     <!-- 소현 메퍼 -->

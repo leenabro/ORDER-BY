@@ -87,11 +87,13 @@ public interface AdminService {
 
 	int pricepoint(double point, int mno);
 
+	int findStoreNo(String position);
 
+	int findPfileNo(String name);
 
+	int findStoreMotoNo(String position);
 
-
-
+	int findPfileMotoNo(String name);
 
 
 

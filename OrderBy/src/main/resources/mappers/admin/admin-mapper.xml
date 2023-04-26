@@ -223,20 +223,20 @@
 		)
 		VALUES(
 				SEQ_CAR_C_NO.NEXTVAL,
-				#{name},
-				#{mile},
-				#{km},
-				#{cc},
-				#{year},
-				#{engine},
-				#{brand},
-				#{fuel},
-				#{price},
-				#{position},
+				#{procar.name},
+				#{procar.mile},
+				#{procar.km},
+				#{procar.cc},
+				#{procar.year},
+				#{procar.engine},
+				#{procar.brand},
+				#{procar.fuel},
+				#{procar.price},
+				#{procar.position},
 				DEFAULT,
 				DEFAULT,
-				NULL,
-				NULL,
+				#{procar.sno},
+				#{procar.pfno},
 				0,
 				DEFAULT
 		)
@@ -350,26 +350,41 @@
 		)
 		VALUES(
 				SEQ_MOTOCYCLE_MC_NO.NEXTVAL,
-				#{name},
-				#{brand},
-				#{engine},
-				#{cc},
-				#{output},
-				#{torque},
-				#{fuel},
-				#{year},
-				#{km},
-				#{price},
-				#{position},
+				#{promoto.name},
+				#{promoto.brand},
+				#{promoto.engine},
+				#{promoto.cc},
+				#{promoto.output},
+				#{promoto.torque},
+				#{promoto.fuel},
+				#{promoto.year},
+				#{promoto.km},
+				#{promoto.price},
+				#{promoto.position},
 				DEFAULT,
 				DEFAULT,
-				NULL,
-				NULL,
+				#{promoto.sno},
+				#{promoto.pfno},
 				0,
 				DEFAULT
 		)
 	</insert>
 	
+	<select id="findstoreNo" parameterType="string" resultType="_int">
+		SELECT S_NO FROM STORE WHERE S_NAME = #{position}
+	</select>
+	
+	<select id="findstoreMotoNo" parameterType="string" resultType="_int">
+		SELECT S_NO FROM STORE WHERE S_NAME = #{position}
+	</select>
+	
+	<select id="findpfileNo" parameterType="string" resultType="_int">
+		SELECT PF_NO FROM PFILE WHERE PF_NAME = #{name}
+	</select>
+	
+	<select id="findpfileMotoNo" parameterType="string" resultType="_int">
+		SELECT PF_NO FROM PFILE WHERE PF_NAME = #{name}
+	</select>
 	<sql id="selectlocationsql">
 		SELECT  S_NO,
 			    S_NAME,

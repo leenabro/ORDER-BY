@@ -139,8 +139,9 @@ public class AdminController {
 	public ModelAndView insertcar( @ModelAttribute AdminProductCar procar,
 			ModelAndView modelAndView, @RequestParam("upfile") MultipartFile upfile) {
 
-		
 		int result = 0;
+		int store = 0;
+		int pfile = 0;
 		
 		log.info("upfile.isEmpty() : {}", upfile.isEmpty());
 		
@@ -159,13 +160,21 @@ public class AdminController {
 			}
 			
 		}
-
 		
-
+//		name = procar.getPosition();
+		store = service.findStoreNo(procar.getPosition());
+		
+		pfile = service.findPfileNo(procar.getName() + ".png");
+		
+		System.out.println(pfile);
+		System.out.println(store);
 		System.out.println(procar);
 		
-		result = service.save(procar);
+		procar.setSno(store);
+		procar.setPfno(pfile);
 		
+		result = service.save(procar);
+
 		
 		
 		if(result > 0) {
@@ -195,12 +204,15 @@ public class AdminController {
 			ModelAndView modelAndView, @RequestParam("upfile") MultipartFile upfile) {
 		
 		int result = 0;
+		int store = 0;
+		int pfile = 0;
 		
 		log.info("upfile.isEmpty() : {}", upfile.isEmpty());
 		
 		if(upfile != null && !upfile.isEmpty()) {
 			String location = null;
 			String FileName =null;
+
 			
 			try {
 				location = resourceLoader.getResource("resources/images/motocycle/" + promoto.getBrand()).getFile().getPath();
@@ -213,8 +225,16 @@ public class AdminController {
 			}
 			
 		}
+		store = service.findStoreMotoNo(promoto.getPosition());
 		
+		pfile = service.findPfileMotoNo(promoto.getName() + ".png");
+		
+		System.out.println(pfile);
+		System.out.println(store);
 		System.out.println(promoto);
+
+		promoto.setSno(store);
+		promoto.setPfno(pfile);
 		
 		result = service.save(promoto);
 		
@@ -233,19 +253,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-//	// 매장정보 불러오기
-//	@GetMapping("/admin/location")
-//	public ModelAndView location(ModelAndView modelAndView) {
-//		List<AdminStore> store = service.storefindAll();
-//		
-//		log.info("매장 정보 불러오기");
-//		log.info("store : {}", store);
-//		
-//		modelAndView.addObject("store", store);
-//		modelAndView.setViewName("admin/location");
-//		
-//		return modelAndView;
-//	}
+
 
 	
 	// 회원관리 수정view 데이터불러오기
@@ -265,13 +273,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-//	// 상품관리 수정view 데이터불러오기
-//	@GetMapping("/admin/modifyproduct")
-//	public String modifyproduct() {
-//		log.info("Admin ModifyProduct페이지");
-//		
-//		return "admin/modifyproduct";
-//	}
+
 	
 	// 자동차 정보 상세페이지 불러오기
 	@GetMapping("/admin/modifycarproduct")

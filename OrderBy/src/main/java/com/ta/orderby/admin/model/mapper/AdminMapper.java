@@ -55,9 +55,9 @@ public interface AdminMapper {
 
 	int updateProductMotocycle(AdminProductMotocycle promoto);
 
-	int insertProductCar(AdminProductCar procar);
+	int insertProductCar(@Param("procar")AdminProductCar procar);
 
-	int insertProductMotocycle(AdminProductMotocycle promoto);
+	int insertProductMotocycle(@Param("promoto")AdminProductMotocycle promoto);
 
 	int selectStoreCount();
 
@@ -94,6 +94,17 @@ public interface AdminMapper {
 	int updatePayment(@Param("no")int no, @Param("status") String string);
 
 	int updatePoint(@Param("point")double point, @Param("mno")int mno);
+
+	int findSnoCar(@Param("no") int no);
+
+	int findstoreNo(@Param("position")String position);
+
+	int findpfileNo(@Param("name")String name);
+
+	int findstoreMotoNo(@Param("position")String position);
+
+	int findpfileMotoNo(@Param("name")String name);
+
 
 
 }
