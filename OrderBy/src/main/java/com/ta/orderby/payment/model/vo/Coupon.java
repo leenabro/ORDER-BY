@@ -16,7 +16,9 @@ public class Coupon {
 	
 	private int memberNo;
 	
-	private String status;
+	private String coStatus;
+	
+	private String ciStatus;
 	
 	private Date regiDate;
 	
@@ -26,7 +28,7 @@ public class Coupon {
 	
 	private Date createDate;
 	
-	private String period;
+	private int period;
 	
 	
 }

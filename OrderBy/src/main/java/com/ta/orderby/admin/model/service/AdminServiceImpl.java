@@ -17,6 +17,7 @@ import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.PageInfo;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 @Service
 public class AdminServiceImpl  implements AdminService{
@@ -93,7 +94,7 @@ public class AdminServiceImpl  implements AdminService{
 	@Override
 	public int popcheck(int no) {
 		
-		return mapper.checkPopqnaStatus(no, "Y");
+		return mapper.checkPopqnaStatus(no, "답변완료");
 	}
 
 	@Override
@@ -311,6 +312,52 @@ public class AdminServiceImpl  implements AdminService{
 		
 		return mapper.updatePoint(point, mno);
 	}
+
+	@Override
+	public int findStoreNo(String position) {
+		
+		return mapper.findstoreNo(position);
+	}
+
+	@Override
+	public int findPfileNo(String name) {
+		
+		return mapper.findpfileNo(name);
+	}
+
+	@Override
+	public int findStoreMotoNo(String position) {
+		
+		return mapper.findstoreMotoNo(position);
+	}
+
+	@Override
+	public int findPfileMotoNo(String name) {
+		
+		return mapper.findpfileMotoNo(name);
+	}
+
+	@Override
+	public List<Coupon> findAllCoupon() {
+
+		return mapper.findAllCoupon();
+	}
+
+	@Override
+	public int insertCoupon(Coupon coupon) {
+		
+		return mapper.insertCoupon(coupon);
+	}
+
+	@Override
+	public List<Coupon> findCouponIssueByCoNo(int coNumber) {
+
+		return mapper.findCouponIssueByCoNo(coNumber);
+	}
+
+
+
+
 
 
 

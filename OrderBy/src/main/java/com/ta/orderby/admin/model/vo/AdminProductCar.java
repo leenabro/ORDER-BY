@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminProductCar {
 
+		
 		private int no;
 		
 		private String name;
@@ -39,9 +40,10 @@ public class AdminProductCar {
 		
 		private int sno;
 		
-		private int pfno;
-		
 		private int count;
 		
 		private Date enrolldate;
+		
+		private int pfno;
+		
 }
