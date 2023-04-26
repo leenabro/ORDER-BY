@@ -76,10 +76,10 @@
             			<th>예약 차종</th>
             			<c:choose>
             				<c:when test="${ not empty car }">
-		            			<td>${ car.name }</td>
+		            			<td>${ car.brand } ${ car.name }</td>
             				</c:when>
             				<c:when test="${ not empty motocycle }">
-		            			<td>${ motocycle.name }</td>
+		            			<td>${ motocycle.brand } ${ motocycle.name }</td>
             				</c:when>
             			</c:choose>
             		</tr>
@@ -93,21 +93,63 @@
             	<table class="rent-info-table">
             		<tr>
             			<th>대여 및 반납 지점</th>
-            			<td>서울 강남지점</td>
+            			<td>${ storeName }</td>
             		</tr>
             		<tr>
             			<th>대여일</th>
-            			<td>2023.04.25</td>
+            			<td id="rentDate">2023.04.25</td>
             		</tr>
             		<tr>
             			<th>반납일</th>
-            			<td>2023.04.26</td>
+            			<td id="returnDate">2023.04.26</td>
+            		</tr>
+            		<tr>
+            			<th>총 대여 일수</th>
+            			<td id="rentalDate"></td>
             		</tr>
             	</table>
             </div>
         </div>
+		<div id="button-div">
+        	<ul>
+        		<li class="button-list">
+		            <button id="myPageButton" class="button button--aylen button--border-thin button--round-s"><span>마이페이지로</span></button>
+        		</li>
+        		<li class="button-list">
+        			<button id="homeButton" class="button button--aylen button--border-thin button--round-s"><span>홈으로</span></button>
+        		</li>
+        	</ul>
+        </div>
 	</section>
 	
+	<script>
+		$(document).ready(function() {
+			let day = ['일', '월', '화', '수', '목', '금', '토'];
+			
+			let rentDate = new Date('${rentDate}')
+			let returnDate = new Date('${returnDate}')
+			
+			let rentDateFormat = rentDate.getFullYear() + '년 ' + (rentDate.getMonth() + 1) + '월 ' + rentDate.getDate() + '일 ' + day[rentDate.getDay()] + '요일';
+			let returnDateFormat = returnDate.getFullYear() + '년 ' + (returnDate.getMonth() + 1) + '월 ' + returnDate.getDate() + '일 ' + day[returnDate.getDay()] + '요일';
+			let rentalDate = returnDate.getDate() - rentDate.getDate()
+			
+			$('#rentDate').html(rentDateFormat);
+			$('#returnDate').html(returnDateFormat);
+			$('#rentalDate').html(rentalDate + ' 일');
+			
+			$('#myPageButton').on('click', function() {
+				alert('마이페이지를 불러오는 중입니다.');
+			});
+			
+			$('#homeButton').on('click', function() {
+				location.href = "/";
+			});
+			
+			
+			
+		});
+	
+	</script>
 	
 	
 

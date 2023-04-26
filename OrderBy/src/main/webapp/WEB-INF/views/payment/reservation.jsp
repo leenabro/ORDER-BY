@@ -45,20 +45,20 @@
 		        <div id="sectionImg" class="res-section-div">
 		            <div id="productName">
 		            	<c:choose>
-		            		<c:when test="${ not empty car.brand }">
+		            		<c:when test="${ not empty car.no }">
 				                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
 		            		</c:when>
-		            		<c:when test="${ not empty motocycle.brand }">
+		            		<c:when test="${ not empty motocycle.no }">
 				                <p style="padding: 25px 0px; margin: 0;">${ motocycle.brand } ${ motocycle.name }</p>
 		            		</c:when>
 		            	</c:choose>
 		            </div>
 		            <div id="productImg">
 		            	<c:choose>
-		            		<c:when test="${ not empty car.brand }">
+		            		<c:when test="${ not empty car.no }">
 				                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
 		            		</c:when>
-		            		<c:when test="${ not empty motocycle.brand }">
+		            		<c:when test="${ not empty motocycle.no }">
 				                <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png">
 		            		</c:when>
 		            	</c:choose>
@@ -66,23 +66,25 @@
 		            
 		            <ul>
 		                <li class="car-spec-li">
-		                    <p class="car-spec-title">대여 정보</p>
-		                    <span>강남 지점</span> <br>
-		                    <span>2023년 3월 29일 (수) 15:00</span>
-		                </li>
-		                <li class="car-spec-li">
-		                    <p class="car-spec-title">반납 정보</p>
-		                    <span>강남 지점</span> <br>
-		                    <span>2023년 3월 30일 (목) 15:00</span>
-		                </li>
+							<p class="car-spec-title">대여 정보</p>
+							<span>${ store.name }</span> 
+							<br><br>
+							<span id="rentDate1">${ rentDate }</span>
+						</li>
+						<li class="car-spec-li">
+							<p class="car-spec-title">반납 정보</p> 
+							<span>${ store.name }</span> 
+							<br><br> 
+							<span id="returnDate1">${ returnDate }</span>
+						</li>
 		                <li class="car-spec-li">
 		                    <p class="car-spec-title">차량 대여 요금</p>
 		                    <c:choose>
-		                    	<c:when test="${ not empty car.brand }">
-		                    		<p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>	
+		                    	<c:when test="${ not empty car.no }">
+		                    		<p id="firstPrice" class="car-spec-price"> 원</p>	
 		                    	</c:when>
-		                    	<c:when test="${ not empty motocycle.brand }">
-		                    		<p class="car-spec-price"><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</p>
+		                    	<c:when test="${ not empty motocycle.no }">
+		                    		<p id="firstPrice" class="car-spec-price"> 원</p>
 		                    	</c:when>
 		                    </c:choose>
 		                </li>
@@ -93,11 +95,11 @@
 		                <li id="totalPrice" class="car-spec-li">
 		                    <p class="car-spec-title">총 금액</p>
 		                    <c:choose>
-		                    	<c:when test="${ not empty car.brand }">
-		                    		<p class="car-spec-price"><strong><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</strong></p>	
+		                    	<c:when test="${ not empty car.no }">
+		                    		<p class="car-spec-price"><strong id="finalPrice"> 원</strong></p>	
 		                    	</c:when>
-		                    	<c:when test="${ not empty motocycle.brand }">
-		                    		<p class="car-spec-price"><strong><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</strong></p>
+		                    	<c:when test="${ not empty motocycle.no }">
+		                    		<p class="car-spec-price"><strong id="finalPrice"> 원</strong></p>
 		                    	</c:when>
 		                    </c:choose>
 		                    
@@ -107,36 +109,36 @@
 	        <div id="sectionScript" class="res-section-div">
 	        	<section>
 		        	<div class="scriptHeader">
-		        		<h3 style="color: black;">예약 상세 내역</h3>
+		        		<h3 style="color: white;">예약 상세 내역</h3>
 		        	</div>
 		        	<div class="scriptCon">
 			        	<div class="scriptRow">
 			        		<span>대여 일시 / 지점</span>
 			        		<div>
-			        			2023년 3월 29일 (수) 15:00 / 강남 지점
+			        			${ rentDate } / ${ store.name }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>반납 일시 / 지점</span>
 			        		<div>
-			        			2023년 3월 29일 (수) 15:00 / 강남 지점
+			        			${ returnDate } / ${ store.name }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>차량 상세 정보</span>
 			        		<div>
-			        			${ car.name }
+			        			${ car.brand } ${ car.name }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>총 대여 기간</span>
-			                <div id="rentalDate">1 일 0 시간 0 분</div>	
+			                <div id="rentalDate">1 일</div>	
 			        	</div>
 		        	</div>
 	        	</section>
 	        	<section>
-	        		<div class="scriptHeader">
-	        			<h3 style="color: black;">예약자 정보</h3>
+	        		<div id="lastScriptHeader" class="scriptHeader">
+	        			<h3 style="color: white;">예약자 정보</h3>
 	        		</div>
 	        		<div class="scriptCon">
 	        			<div class="scriptRow">
@@ -185,6 +187,17 @@
 			let productName = "";
 			let productFullName = "";
 			let productPrice = 0;
+			let day = ['일', '월', '화', '수', '목', '금', '토'];
+			let rentDate = new Date('${rentDate}')
+			let returnDate = new Date('${returnDate}')
+			let rentDateFormat = rentDate.getFullYear() + '년 ' + (rentDate.getMonth() + 1) + '월 ' + rentDate.getDate() + '일 ' + day[rentDate.getDay()] + '요일';
+			let returnDateFormat = returnDate.getFullYear() + '년 ' + (returnDate.getMonth() + 1) + '월 ' + returnDate.getDate() + '일 ' + day[returnDate.getDay()] + '요일';
+			let rentalDate = returnDate.getDate() - rentDate.getDate()
+			
+			function comma(num) {
+			    num = String(num);
+			    return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+			};		
 			
 			if('${car.no}' === null || '${car.no}' === '') {
 				productNo = '${ motocycle.no }';
@@ -197,17 +210,21 @@
 				productFullName = '${ car.brand } ${ car.name }';
 				productPrice = '${ car.price }';
 			}
+			productPrice = productPrice * rentalDate;
 			
 			$('#prevButton').on('click', () => {
 				location.href = "${ path }";
 			})
 			
 			$('#nextButton').on('click', () => {
-				location.href = "${ path }/payment/discount?name="+productName+"&price=" + productPrice;
+				location.href = "${ path }/payment/discount?rentDate=${rentDate}&returnDate=${returnDate}&sNo=${store.no}&pNo=${car.no}";
 			})
 			
-		
-			
+			$('#rentDate1').html(rentDateFormat);
+			$('#returnDate1').html(returnDateFormat);
+			$('#rentalDate').html(rentalDate + ' 일');
+			$('#firstPrice').html(comma(productPrice) + ' 원')
+			$('#finalPrice').html(comma(productPrice) + ' 원')
 		});
 	
 	</script>	

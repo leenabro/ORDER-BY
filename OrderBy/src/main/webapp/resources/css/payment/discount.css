@@ -80,18 +80,19 @@
     margin-left: 20px;
     width: 420px;
     height: auto;
-    border: 1px solid lightgrey;
+    border: 1px solid #304050;
     border-radius: 10px;
 }
 
 #productName {
     text-align: center;
     font-size: 1.5em;
+    font-weight: bold;
+    color: white;
     height: 80px;
-    background-color: darkgrey;
+    background-color: #304050;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    color: black;
 }
 
 #productImg {
@@ -102,7 +103,8 @@
 }
 
 #productImg>img {
-	width: 100%;
+	width: 350px;
+	height: 250px;
 }
 
 #carSpec {
@@ -123,10 +125,10 @@
 
 .car-spec-li {
     list-style: none;
-    background-color: rgb(189, 189, 189);
+    background-color: #304050;
     padding-top: 10px;
     padding-bottom: 40px;
-    border-bottom: 1px solid darkgray;
+    border-bottom: 1px solid #304050;
 }
 
 .car-spec-title {
@@ -139,6 +141,7 @@
 	float: right;
     font-size: 1.2em;
     padding-right: 20px;
+    color: white;
 }
 
 .car-spec-price {
@@ -147,6 +150,11 @@
 	font-size: 2.0em;
     margin: 0px;
     text-align: right;
+    color: white;
+}
+
+.car-spec-price>strong {
+    color: white;
 }
 
 #dicContent {
@@ -157,28 +165,35 @@
 }
 
 #totalPrice {
-	background-color: rgb(129, 129, 129);
+	background-color: #304050;
 }
 
 /* 할인 내역 및 포인트 사용 */
 #sectionScript {
-    margin-left: 20px;
-    width: 730px;
+    margin-left: 50px;
+    width: 700px;
 }
 
 .scriptHeader {
 	display: flex;
 	height: 80px;
-	background-color: rgba(255, 255, 255, 0.50);
+	background-color: #304050;
 	border-radius: 10px;
 	align-items: center;
 	padding-left: 20px;
 	font-size: 1.3em;
 }
 
+#lastScriptHeader {
+	margin-top: 20px;
+}
+
 .scriptCon {
-	padding-top: 10px;	
-	padding-bottom: 70px;
+	background-color: white;
+	padding-top: 40px;	
+	padding-bottom: 50px;
+	border-radius: 10px;
+	margin-top: 10px;
 }
 
 .scriptRow {
@@ -194,6 +209,23 @@
 .scriptRow>span {
 	display: flex;
 	flex-basis: 170px;
+	height: 60px;
+}
+
+#couponeContainer {
+	margin-block: auto;
+}
+
+#couponeTitle {
+	display: inline-block;
+	transform: translate(0px, 15px);
+}
+
+#disCoupone {
+	width: 200px;
+    height: 39px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 #memberPoint {

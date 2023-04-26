@@ -15,4 +15,10 @@ public interface StoreMapper {
 
 	List<Store> selectStoreByLocation(String location);
 
+
+	Store findStoreByNo(int storeNo);
+
+
+	Store findStoreByName(String storeName);
+
 }

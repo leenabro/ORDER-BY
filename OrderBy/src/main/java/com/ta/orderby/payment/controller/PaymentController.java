@@ -1,5 +1,6 @@
 package com.ta.orderby.payment.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +26,9 @@ import com.ta.orderby.motocycle.model.vo.Motocycle;
 import com.ta.orderby.payment.model.service.PaymentService;
 import com.ta.orderby.payment.model.vo.Coupon;
 import com.ta.orderby.payment.model.vo.Payment;
+import com.ta.orderby.payment.model.vo.Reservation;
+import com.ta.orderby.store.model.service.StoreService;
+import com.ta.orderby.store.model.vo.Store;
 
 @Controller
 public class PaymentController {
@@ -41,27 +45,26 @@ public class PaymentController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private StoreService storeService;
+	
 	// 예약 페이지로 이동
 	@GetMapping("/payment/reservation")
-	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price, 
-									@AuthenticationPrincipal Member loginMember) {
+	public ModelAndView reservation(ModelAndView modelAndView, @RequestParam("rentDate") Date rentDate, @RequestParam("returnDate") Date returnDate,
+			@RequestParam("sNo") int storeNo, @RequestParam("pNo") int productNo, @AuthenticationPrincipal Member loginMember) {
 		
 		if(loginMember != null) {
 			Member member = memberService.findMemberById(loginMember.getId()); 
-			Car car = carService.findCarByName(name);
+			Store store = storeService.findStoreByNo(storeNo);
+			Car car = carService.findCarByNo(productNo);
 			
-			if( car == null) {
-				Motocycle motocycle = motoService.findMotocycleByName(name);
-				
-				motocycle.setPrice(Integer.parseInt(price));
-				
-				modelAndView.addObject("motocycle", motocycle);
-			} else {
-				car.setPrice(Integer.parseInt(price));
-				
-				modelAndView.addObject("car", car);
-			}
-				
+			System.out.println(store);
+			System.out.println(car);
+			
+			modelAndView.addObject("rentDate", rentDate);
+			modelAndView.addObject("returnDate", returnDate);
+			modelAndView.addObject("store", store);
+			modelAndView.addObject("car", car);
 			modelAndView.addObject("member", member);
 			modelAndView.setViewName("payment/reservation");
 		} else {
@@ -76,34 +79,40 @@ public class PaymentController {
 	
 	// 할인 페이지로 이동
 	@GetMapping("/payment/discount")
-	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("price") String price,
-								@AuthenticationPrincipal Member loginMember) {
+	public ModelAndView discount(ModelAndView modelAndView, @RequestParam("rentDate") Date rentDate, @RequestParam("returnDate") Date returnDate,
+			@RequestParam("sNo") int storeNo, @RequestParam("pNo") int productNo, @AuthenticationPrincipal Member loginMember) {
 		
 		
 		if(loginMember != null) {
 			Member member = memberService.findMemberById(loginMember.getId()); 
 			// 자동차 정보 불러오기
-			Car car = carService.findCarByName(name);
+			Car car = carService.findCarByNo(productNo);
 			
 			// 쿠폰 정보 불러오기
-			List<Coupon> list = service.findCouponByMemberNo(1);
+			List<Coupon> list = service.findCouponByMemberNo(loginMember.getNo());
 			Gson gson = new GsonBuilder().create();
 			String coupons = gson.toJson(list);
 			
+			// 매장 정보 불러오기
+			Store store = storeService.findStoreByNo(storeNo);
+			
 			if(car == null) {
-				Motocycle motocycle = motoService.findMotocycleByName(name);
+//				Motocycle motocycle = motoService.findMotocycleByName(productNo);
 				
 				// 특가일 경우 할인된 가격 다시 set
-				motocycle.setPrice(Integer.parseInt(price));
+//				motocycle.setPrice(Integer.parseInt(price));
 				
-				modelAndView.addObject("motocycle", motocycle);
+//				modelAndView.addObject("motocycle", motocycle);
 			} else {
 				// 특가일 경우 할인된 가격 다시 set
-				car.setPrice(Integer.parseInt(price));
+//				car.setPrice(Integer.parseInt(price));
 				
 				modelAndView.addObject("car", car);
 			}
 			
+			modelAndView.addObject("store", store);
+			modelAndView.addObject("rentDate", rentDate);
+			modelAndView.addObject("returnDate", returnDate);
 			modelAndView.addObject("member", member);
 			modelAndView.addObject("coupons", coupons);
 			modelAndView.addObject("coupon", list);
@@ -187,27 +196,61 @@ public class PaymentController {
 	@PostMapping("/payment/success")
 	public ModelAndView success (ModelAndView modelAndView, 
 			@RequestParam("uid") String uid, @RequestParam("finPrice") String finPrice, @RequestParam("buyerName") String buyerName,
+			@RequestParam("storeName") String storeName, @RequestParam("rentDate") Date rentDate, @RequestParam("returnDate") Date returnDate, 
 			@AuthenticationPrincipal Member loginMember) {
+		int result = 0;
 		
 		if(loginMember != null) {
 			Payment payment = service.selectPaymentByUid(uid);
+			Reservation reservation = new Reservation();
+			Store store = storeService.findStoreByName(storeName);
 			
 			System.out.println(payment);
 			
+			reservation.setRentdate(rentDate);
+			reservation.setReturndate(returnDate);
+			reservation.setSno(store.getNo());
+			reservation.setPuid(uid);
+			reservation.setMno(loginMember.getNo());
+			
 			if(uid.charAt(0) == 'C') {
 				Car car = carService.findCarByNo(payment.getCarNo());
+				reservation.setCno(car.getNo());
+				reservation.setMcno(0);
 				
 				modelAndView.addObject("car", car);
 			}
 			
 			if(uid.charAt(0) == 'M') {
 				Motocycle motocycle = motoService.findMotocycleByNo(payment.getMotocycleNo());
+				reservation.setCno(0);
+				reservation.setMcno(motocycle.getNo());
 				
 				modelAndView.addObject("motocycle", motocycle);
 			}
+			Reservation resCheck = service.findReservationByUid(uid);
+			if(resCheck != null) {
+				result = service.insertReservation(reservation);
+				if(result > 0) {
+					System.out.println(result);
+					System.out.println(reservation);
+					
+					modelAndView.addObject("storeName", storeName);
+					modelAndView.addObject("rentDate", rentDate);
+					modelAndView.addObject("returnDate", returnDate);
+					modelAndView.addObject("payment", payment);
+					modelAndView.setViewName("/payment/success");
+				} else {
+					modelAndView.addObject("msg", "이미 처리된 페이지입니다.");
+					modelAndView.addObject("location", "/");
+					modelAndView.setViewName("/common/msg");
+				}
+			} else {
+				modelAndView.addObject("msg", "예약에 실패하였습니다.");
+				modelAndView.addObject("location", "/");
+				modelAndView.setViewName("/common/msg");
+			}
 			
-			modelAndView.addObject("payment", payment);
-			modelAndView.setViewName("/payment/success");
 		} else {
 			modelAndView.addObject("msg", "잘못된 접근입니다.");
 			modelAndView.addObject("location", "/");

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ta.orderby.payment.model.vo.Coupon;
 import com.ta.orderby.payment.model.vo.Payment;
+import com.ta.orderby.payment.model.vo.Reservation;
 
 @Mapper
 public interface PaymentMapper {
@@ -15,5 +16,9 @@ public interface PaymentMapper {
 	int insertPayment(Payment payment);
 
 	Payment selectPaymentByUid(String uid);
+
+	int insertReservation(Reservation reservation);
+
+	Reservation findReservationByUid(String uid);
 	
 }

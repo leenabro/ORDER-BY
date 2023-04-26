@@ -420,7 +420,7 @@
 
 	                    	<td id="storehover" style="height:40px">
 		                    	<label for="${store.no }">${ store.name }</label>
-		                    	<input type="radio" id="${store.no }" name="storeName" value=${ store.no } onclick="selectStore(this)" style="opacity:0">
+		                    	<input type="radio" id="${ store.no }" name="storeName" value=${ store.no } onclick="selectStore(this)" style="opacity:0">
 	                    	</td>
 	                    	<td>${ store.address }</td>
 	                </tr>
@@ -468,61 +468,62 @@
                     </select>
                     
 	                <ul id="car-list" class="vehicle-list" style="display: block;">
-                    <c:if test="${ not empty carList }">
-					<c:forEach var="car" items="${ carList }">
-	                    <li>
-	                    <label  for="cCode" class="vehicle-element" >
-	                        <input id="cCode" type="radio" name="cCode" value="${ car.no }">
-	                        
-	                        <div class="vehicle-div">
-	                            <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png"
-	                             onclick="modalOn(${car.no},'${car.brand}', '${car.name }', '${car.mile }', ${car.cc }, ${car.year }, '${car.fuel }', '${car.engine }', ${car.price });">
-	                        </div>
-	                        <div class="textBox">
-	                            <b>${ car.name }</b>
-	                            <c:if test="${ car.sale eq 'C'}">
-	                            	<p>${ car.price }원
-	                            </c:if>
-	                            <c:if test="${ car.sale eq 'S'}">
-		                            <p>2원
-		                                <s>${ car.price }</s> <span>(30% 할인)</span>
-		                            </p>
-	                            </c:if>
-	                            
-	                        </div>
-	                        <div class="showBrand">
-	                            <em>${ car.brand } | ${ car.fuel }<span></span></em>
-	                        </div>
-	                    </label>
-	                    </li>
+                    <c:if test="${ not empty cars }">
+						<c:forEach var="car" items="${ cars }">
+		                    <li>
+			                    <label  for="cCode" class="vehicle-element" >
+			                        <input id="cCode" type="radio" name="cCode" value="${ car.no }">
+			                        
+			                        <div class="vehicle-div">
+			                            <img id="vehicleImg" src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png"
+			                             onclick="modalOn(${car.no},'${car.brand}', '${car.name }', '${car.mile }', ${car.cc }, ${car.year }, '${car.fuel }', '${car.engine }', ${car.price });">
+			                        </div>
+			                        <div id="text-box" class="textBox">
+			                            <b>${ car.name }</b>
+			                            <c:if test="${ car.sale eq 'C'}">
+			                            	<p>${ car.price }원
+			                            </c:if>
+			                            <c:if test="${ car.sale eq 'S'}">
+				                            <p>2원
+				                                <s>${ car.price }</s> <span>(30% 할인)</span>
+				                            </p>
+			                            </c:if>
+			                            
+			                        </div>
+			                        <div id="show-brand" class="showBrand">
+			                            <em>${ car.brand } | ${ car.fuel }<span></span></em>
+			                        </div>
+			                    </label>
+		                    </li>
 	                    </c:forEach>
 					</c:if>
 	      			</ul>
 	
 	                <div id="modal" class="modal-overlay" style="display: none;">
-                    <div class="modal-window">
-                        <div class="title">
-                            <h3>${car.brand } ${car.name }</h3>
-                        </div>
-                        <div class="close-area" onclick="modalOff();">X</div>
-                        <label  for="modal-cCode" class="vehicle-element" >
-                            <input id="modal-cCode" type="radio" name="cCode" value="${ car.no }">
-                            <div id="modal-content">
-                                <div id="modal-image">
-                                    <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png" style="width: 380px; height: 300px;">
-                                </div>
-                                <div id="modal-info">
-                                    <div style="padding-top: 30px;">연비 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-1">${ car.mile }</span></div>
-                                    <div>배기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-2">${ car.cc }</span>cc</div>
-                                    <div>연식 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-3">${ car.year }</span>년</div>
-                                    <div>연료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-4">${ car.fuel }</span></div>
-                                    <div>엔진형식 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-5">${ car.engine }</span></div>
-                                    <div>1일 비용 &nbsp;&nbsp;<span id="modal-info-6">${ car.price }</span>원 </div>
-                                	<button type="button" id="modal-button" style="float: right;" onclick="modalOff(); selectCar();">선택</button>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
+	                    <div class="modal-window">
+	                        <div class="title">
+	                            <h3>${ car.brand } ${ car.name }</h3>
+	                        </div>
+	                        <div class="close-area" onclick="modalOff();">X</div>
+	                        <label  for="modal-cCode" class="vehicle-element" >
+	                            <input id="modal-cCode" type="radio" name="cCode" value="${ car.no }">
+	                            <div id="modal-content">
+		                                <div id="modal-image">
+		                                    <img src="#" style="width: 380px; height: 300px;">
+		                                </div>
+	                                <div id="modal-info">
+	                                    <div style="padding-top: 30px;">연비 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-1">${ car.mile }</span></div>
+	                                    <div>배기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-2">${ car.cc }</span>cc</div>
+	                                    <div>연식 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-3">${ car.year }</span>년</div>
+	                                    <div>연료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-4">${ car.fuel }</span></div>
+	                                    <div>엔진형식 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-5">${ car.engine }</span></div>
+	                                    <div>1일 비용 &nbsp;&nbsp;<span id="modal-info-6">${ car.price }</span>원 </div>
+	                                	<button type="button" id="modal-button" style="float: right;" onclick="modalOff(); selectCar();">선택</button>
+	                                </div>
+	                            </div>
+	                        </label>
+	                    </div>
+                    
                 </div>
 					
 <%-- 					<c:if test="${ empty carList }"> --%>
@@ -563,11 +564,11 @@
 <!--                 <button class="tab-next" id="tab-next3">다음</button> -->
             </div>
             
-            <form action="${ path }/payment" method="GET">
+            <form action="${ path }/payment/reservation" method="GET">
             	<input type="hidden" id="rentDate" name="rentDate" value="">
                 <input type="hidden" id="returnDate" name="returnDate" value="">
                 <input type="hidden" id="sNo" name="sNo" value="">
-                <input type="hidden" id="cNo" name="cNo" value="">
+                <input type="hidden" id="pNo" name="pNo" value="">
                 
                 <input type="submit" class="tab-next" id="tab-next3" value="다음" >
             </form>
@@ -1004,15 +1005,15 @@
     
     </script>
 
-<script>
-
-    let modal = document.getElementById("modal");
-
-	function modalOn(no, brand, name, mile, cc, year, fuel, engine, price) {
+	<script>
 	
+	
+	
+	function modalOn(no, brand, name, mile, cc, year, fuel, engine, price) {
+		
         modal.style.display = "flex";
         
-        document.getElementById('modal-cCode').value=no;
+        document.getElementById('modal-cCode').value = no;
         $('#modal h3').text(brand + " " + name);
         $('#modal-info-1').text(mile);
         $('#modal-info-2').text(cc);
@@ -1038,7 +1039,7 @@
     function selectCar() {
     	let rentCarText = $('#modal h3').text();
     	document.getElementById('rentCarText').value = rentCarText;
-    	document.getElementById('cNo').value = document.getElementById('modal-cCode').value;
+    	document.getElementById('pNo').value = document.getElementById('modal-cCode').value;
     	document.getElementById('tab-next3').style.display="flex";
     }
     
@@ -1081,7 +1082,7 @@
     })
         </script>
     
-<script>
+	<script>
     $(document).ready(function() {
         $('#content-vehicle').hide();
         $('#content-map').hide();
@@ -1234,25 +1235,29 @@
         		success: (cars) => {
                     
                     console.log(cars);
-                    console.log('z');
                     
                     if(cars==""){
                     	$('#car-list').append('<p style="padding-left:300px; padding-top: 30px;"><i class="bi bi-chat-right-dots-fill"></i><b> 검색된 차량이 없습니다. </b></p>');
                     }
                     for(let i = 0; i < cars.length; i++) {
                     	if(cars[i].sale=='C'){
-                    	
-                        $('#car-list').append('<li><label for="cCode" class="vehicle-element" ><input id="cCode" type="radio" name="cCode" value='+cars[i].no+'>'
-                          +'<div class="vehicle-div"><img src="${ path }/resources/images/car/'+cars[i].brand+'/'+cars[i].name+'.png" onclick=modalOn('+cars[i].no + ",'"+cars[i].brand+"','"
-                          +cars[i].name+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+cars[i].engine+"',"+cars[i].price
-                          +');></div><div class="textBox"><b>'+cars[i].name+'</b><p>'+cars[i].price+'원</p></div><div class="showBrand"><em>'+cars[i].brand+' | '+cars[i].fuel+'<span></span></em></div></label></li>'
+                    		
+							let trimCarsName = cars[i].name.replace(/\s+/g, '&nbsp');
+							let trimCarsEngine = cars[i].engine.replace(/\s+/g, '&nbsp'); 
+                    		
+							console.log(trimCarsName);
+							
+	                        $('#car-list').append('<li><label for="cCode" class="vehicle-element" ><input id="cCode" type="radio" name="cCode" value='+cars[i].no+'>'
+	                          +'<div class="vehicle-div"><img src="${ path }/resources/images/car/'+cars[i].brand+'/'+cars[i].name+'.png" onclick=modalOn('+cars[i].no + ",'"+cars[i].brand+"','"
+	                          +trimCarsName+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+trimCarsEngine+"',"+cars[i].price
+	                          +');></div><div class="textBox"><b>'+cars[i].name+'</b><p>'+cars[i].price+'원</p></div><div class="showBrand"><em>'+cars[i].brand+' | '+cars[i].fuel+'<span></span></em></div></label></li>'
+	                        );
 
-                        );
                         
                     	} else if(cars[i].sale=='S'){
                     		$('#car-list').append('<li><label for="cCode" class="vehicle-element" ><input id="cCode" type="radio" name="cCode" value='+cars[i].no+'>'
                                     +'<div class="vehicle-div"><img src="${ path }/resources/images/car/'+cars[i].brand+'/'+cars[i].name+'.png" onclick=modalOn('+cars[i].no + ",'"+cars[i].brand+"','"
-                                    +cars[i].name+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+cars[i].engine+"',"+cars[i].price
+                                    +trimCarsName+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+trimCarsEngine+"',"+cars[i].price
                                     +');></div><div class="textBox"><b>'+cars[i].name+'</b><p>'+cars[i].price*0.7+'원<s>'+cars[i].price+'</s><span>(30% 할인)</span></p></div><div class="showBrand"><em>'+cars[i].brand+' | '+cars[i].fuel+'<span></span></em></div></label></li>'
 
                                   );
@@ -1264,21 +1269,12 @@
         })
         
         
-
-
-        
-        
-        
-        
-        
-        
-        
         
         
         
        
     });
 
-</script>
+	</script>
 </body>
 </html>

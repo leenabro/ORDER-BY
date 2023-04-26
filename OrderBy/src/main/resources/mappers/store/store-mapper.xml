@@ -34,4 +34,15 @@
 		<include refid="storeListSql"/>
 		AND S_LOCATION = #{location}
 	</select>
+	
+	<select id="findStoreByNo" parameterType="_int" resultMap="storeListResultMap">
+		<include refid="storeListSql"/>
+		AND S_NO = #{storeNo}
+	</select>
+	
+	<select id="findStoreByName" parameterType="string" resultMap="storeListResultMap">
+		<include refid="storeListSql"/>
+		AND S_NAME = #{storeName}
+	</select>
+	
 </mapper>

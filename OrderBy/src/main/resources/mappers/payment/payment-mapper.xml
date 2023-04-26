@@ -30,6 +30,18 @@
 		<result property="motocycleNo" column="MC_NO" />
 	</resultMap>
 	
+	<resultMap type="Reservation" id="reservationResultMap">
+		<id property="no" column="R_NO" />
+		<result property="rentdate" column="RENT_DATE" />	
+		<result property="returndate" column="RETURN_DATE" />	
+		<result property="sno" column="S_NO" />	
+		<result property="cno" column="C_NO" />	
+		<result property="mcno" column="MC_NO" />	
+		<result property="status" column="R_STATUS" />	
+		<result property="puid" column="P_UID" />	
+		<result property="mno" column="M_NO" />	
+	</resultMap>
+	
 	<select id="findCouponByMemberNo" parameterType="_int" resultMap="couponResultMap">
 		SELECT 
 		    I.CI_NUMBER,
@@ -90,11 +102,76 @@
 	</insert>
 	
 	<select id="selectPaymentByUid" parameterType="string" resultMap="paymentResultMap">
-		SELECT *
+		SELECT 
+			P_NO,
+			P_UID,
+			P_NAME,
+			P_METHOD,
+			P_DATE,
+			P_TOT_PRICE,
+			P_FIN_PRICE,
+			P_STATUS,
+			M_NO,
+			C_NO,
+			MC_NO
 		FROM PAYMENT
 		WHERE P_UID = #{uid}
 	</select>
 	
+	<insert id="insertReservation" parameterType="Reservation" useGeneratedKeys="true" keyProperty="no" keyColumn="R_NO">
+		INSERT INTO RESERVATION (
+			R_NO,
+			RENT_DATE,
+			RETURN_DATE,
+			S_NO,
+			C_NO,
+			MC_NO,
+			R_STATUS,
+			P_UID,
+			M_NO
+		) VALUES(
+			SEQ_RESERVATION_R_NO.NEXTVAL,
+			#{rentdate},
+			#{returndate},
+			#{sno},
+			<choose>
+				<when test="cno != 0">
+					#{cno},
+				</when>
+				<when test="cno == 0">
+					NULL,
+				</when>
+			</choose>
+			<choose>
+				<when test="mcno != 0">
+					#{mcno},
+				</when>
+				<when test="mcno == 0">
+					NULL,
+				</when>
+			</choose>
+			DEFAULT,
+			#{puid},
+			#{mno}
+		)
+		
+	</insert>
+	
+	<select id="findReservationByUid" parameterType="string" resultMap="reservationResultMap">
+		SELECT
+			R_NO,
+			RENT_DATE,
+			RETURN_DATE,
+			S_NO,
+			C_NO,
+			MC_NO,
+			R_STATUS,
+			P_UID,
+			M_NO
+		FROM RESERVATION
+		WHERE P_UID = #{uid}
+	
+	</select>
 	
 	
 	

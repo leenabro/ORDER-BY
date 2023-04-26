@@ -8,7 +8,10 @@ public interface StoreService {
 
 	List<Store> getStoreList();
 
-
 	List<Store> finStoredByLocation(String location);
+
+	Store findStoreByNo(int storeNo);
+
+	Store findStoreByName(String storeName);
 
 }

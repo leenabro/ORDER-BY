@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ta.orderby.payment.model.vo.Coupon;
 import com.ta.orderby.payment.model.vo.Payment;
+import com.ta.orderby.payment.model.vo.Reservation;
 
 public interface PaymentService {
 
@@ -12,5 +13,9 @@ public interface PaymentService {
 	int save(Payment payment);
 
 	Payment selectPaymentByUid(String uid);
+
+	int insertReservation(Reservation reservation);
+
+	Reservation findReservationByUid(String uid);
 
 }

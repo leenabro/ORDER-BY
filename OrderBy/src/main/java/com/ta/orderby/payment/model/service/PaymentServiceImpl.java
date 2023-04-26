@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ta.orderby.payment.model.mapper.PaymentMapper;
 import com.ta.orderby.payment.model.vo.Coupon;
 import com.ta.orderby.payment.model.vo.Payment;
+import com.ta.orderby.payment.model.vo.Reservation;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -37,6 +38,20 @@ public class PaymentServiceImpl implements PaymentService {
 	public Payment selectPaymentByUid(String uid) {
 
 		return mapper.selectPaymentByUid(uid);
+	}
+
+
+	@Override
+	public int insertReservation(Reservation reservation) {
+
+		return mapper.insertReservation(reservation);
+	}
+
+
+	@Override
+	public Reservation findReservationByUid(String uid) {
+
+		return mapper.findReservationByUid(uid);
 	}
 
 }

@@ -51,41 +51,45 @@
 			<div id="sectionImg" class="res-section-div">
 				<div id="productName">
 					<c:choose>
-	            		<c:when test="${ not empty car.brand }">
+	            		<c:when test="${ not empty car.no }">
 			                <p style="padding: 25px 0px; margin: 0;">${ car.brand } ${ car.name }</p>
 	            		</c:when>
-	            		<c:when test="${ not empty motocycle.brand }">
+	            		<c:when test="${ not empty motocycle.no }">
 			                <p style="padding: 25px 0px; margin: 0;">${ motocycle.brand } ${ motocycle.name }</p>
 	            		</c:when>
 	            	</c:choose>
 				</div>
 				<div id="productImg">
 					<c:choose>
-	            		<c:when test="${ not empty car.brand }">
+	            		<c:when test="${ not empty car.no }">
 			                <img src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
 	            		</c:when>
-	            		<c:when test="${ not empty motocycle.brand }">
+	            		<c:when test="${ not empty motocycle.no }">
 			                <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png">
 	            		</c:when>
 	            	</c:choose>
 				</div>
 				<ul>
 					<li class="car-spec-li">
-						<p class="car-spec-title">대여 정보</p> <span>강남 지점</span> <br> <span>2023년
-							3월 29일 (수) 15:00</span>
+						<p class="car-spec-title">대여 정보</p>
+						<span>${ store.name }</span> 
+						<br><br>
+						<span id="rentDate2">${ rentDate }</span>
 					</li>
 					<li class="car-spec-li">
-						<p class="car-spec-title">반납 정보</p> <span>강남 지점</span> <br> <span>2023년
-							3월 30일 (목) 15:00</span>
+						<p class="car-spec-title">반납 정보</p> 
+						<span>${ store.name }</span> 
+						<br><br>
+						<span id="returnDate2">${ returnDate }</span>
 					</li>
 					<li class="car-spec-li">
 						<p class="car-spec-title">차량 대여 요금</p>
 						<c:choose>
-	                    	<c:when test="${ not empty car.brand }">
-	                    		<p class="car-spec-price"><fmt:formatNumber value="${ car.price }" pattern="#,###"/> 원</p>	
+	                    	<c:when test="${ not empty car.no }">
+	                    		<p id="firstPrice" class="car-spec-price"> 원</p>	
 	                    	</c:when>
-	                    	<c:when test="${ not empty motocycle.brand }">
-	                    		<p class="car-spec-price"><fmt:formatNumber value="${ motocycle.price }" pattern="#,###"/> 원</p>
+	                    	<c:when test="${ not empty motocycle.no }">
+	                    		<p id="firstPrice" class="car-spec-price"> 원</p>
 	                    	</c:when>
 	                    </c:choose>
 					</li>
@@ -115,7 +119,7 @@
 			<div id="sectionScript" class="res-section-div">
 				<section>
 					<div class="scriptHeader">
-						<h3 style="color: black;">기본 할인</h3>
+						<h3 style="color: white;">기본 할인</h3>
 					</div>
 					<div class="scriptCon">
 						<div class="scriptRow">
@@ -140,8 +144,8 @@
 							<div>해당 지점 이벤트 없음</div>
 						</div>
 						<div class="scriptRow">
-							<span>할인 쿠폰</span>
-							<div>
+							<span id="couponeTitle">할인 쿠폰</span>
+							<div id="couponeContainer">
 								<select name="coupone" id="disCoupone">
 									<option value="">--------------</option>
 									<c:forEach var="coupon" items="${ coupon }">
@@ -149,17 +153,17 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div>
+							<div style="margin-block: auto;">
 								<p
-									style="font-size: 0.5em; color: red; vertical-align: top; margin-left: 10px">쿠폰
+									style="font-size: 0.5em; color: red; vertical-align: top; margin-left: 10px;">쿠폰
 									최대 사용 매수는 1 매입니다.</p>
 							</div>
 						</div>
 					</div>
 				</section>
 				<section>
-					<div class="scriptHeader">
-						<h3 style="color: black;">포인트</h3>
+					<div id="lastScriptHeader" class="scriptHeader">
+						<h3 style="color: white;">포인트</h3>
 					</div>
 					<div class="scriptCon">
 						<div class="scriptRow">
@@ -208,6 +212,9 @@
 			<input type="hidden" id="uid" name="uid"/>
 			<input type="hidden" id="finPrice" name="finPrice"/>
 			<input type="hidden" id="buyerName" name="buyerName"/>
+			<input type="hidden" id="storeName" name="storeName" value="${ store.name }"/>
+			<input type="hidden" id="inputRentDate" name="rentDate" value="${ rentDate }"/>
+			<input type="hidden" id="inputReturnDate" name="returnDate" value="${ returnDate }"/>
 		</form>
 	</section>
 
@@ -224,6 +231,15 @@
 		let productId = "";
 		let productCate = "";
 		let memberPoint = '${ member.point }';
+		let day = ['일', '월', '화', '수', '목', '금', '토'];
+		let rentDate = new Date('${rentDate}')
+		let returnDate = new Date('${returnDate}')
+		let rentDateFormat = rentDate.getFullYear() + '년 ' + (rentDate.getMonth() + 1) + '월 ' + rentDate.getDate() + '일 ' + day[rentDate.getDay()] + '요일';
+		let returnDateFormat = returnDate.getFullYear() + '년 ' + (returnDate.getMonth() + 1) + '월 ' + returnDate.getDate() + '일 ' + day[returnDate.getDay()] + '요일';
+		let rentalDate = returnDate.getDate() - rentDate.getDate()
+		
+		$('#rentDate2').html(rentDateFormat);
+		$('#returnDate2').html(returnDateFormat);
 		
 		const character = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F',
 			'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
@@ -248,13 +264,15 @@
 			productCate = 'C';
 		}
 		
+		productPrice = productPrice * rentalDate;
 		
+		console.log(productPrice);
 		productId = productCate + productId + year + month + date + 0 + productNo;
 		
-		$(document).ready(() => {
+		$(document).ready(function() {
 			
 			$('#prevButton').on('click', () => {
-				location.href = "${ path }/payment/reservation?name="+productName+"&price="+productPrice;
+				location.href = "${ path }/payment/reservation?rentDate=${rentDate}&returnDate=${returnDate}&sNo=${store.no}&pNo=${car.no}";
 			});
 			
 			
@@ -266,6 +284,8 @@
 			// 멤버십 할인 및 쿠폰 할인 스크립트 문
 			let price = productPrice;
 			let discount = Number(0);
+			$('#firstPrice').html(comma(price) + ' 원');
+			$('#finalPrice').html('<strong>' + comma(price) + ' 원</strong>');
 			$('#disCoupone').change(function() {
 				price = productPrice;
 				discount = Number(0);
@@ -354,6 +374,8 @@
 			
 		});
 		
+		
+		
 		// 결제 로직
 		// 결제 사전 검증
 // 		$.ajax({
@@ -386,7 +408,7 @@
 					pg: "danal_tpay.9810030929",
 					pay_method: "card",
 					merchant_uid: productId,   // 주문번호
-					name: productFullName + " 1일",
+					name: productFullName + " " + rentalDate,
 					amount: 100,                         // 숫자 타입
 					buyer_email: "${member.email}",
 					buyer_name: "${member.name}",

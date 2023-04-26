@@ -102,6 +102,7 @@
     height: 40px;
     font-size: 1.3em;
     padding-top: 20px;
+    color: white;
 }
 
 #successContainer3>div>ul {
@@ -115,12 +116,101 @@
 	margin: auto;
 }
 
-.rent-info-table {
-	height: 100px;
+.rent-info-table tr {
+	height: 70px;
 }
 
 .rent-info-table tr th {
 	width: 300px;
 }
 
+/* 버튼 CSS */
+#button-div {
+    display: flex;
+    margin-top: 100px;
+    justify-content: space-around;
+}
+
+#button-div>ul {
+	list-style: none;
+}
+
+.button-list {
+	float: left;
+	padding: 0px 15px;
+}
+
+/* Common button styles */
+.button {
+    float: left;
+    min-width: 400px;
+    max-width: 500px;
+    display: block;
+    padding: 1em 2em;
+    border: none;
+    background: none;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+    -moz-osx-font-smoothing: grayscale;
+}
+.button:focus {
+    outline: none;
+}
+.button > span {
+    vertical-align: middle;
+    font-size: 1.5em;
+}
+
+.button--round-s {
+    border-radius: 5px;
+}
+
+.button--border-thin {
+    border: 1px solid;
+}
+
+.button.button--aylen {
+    background: #fff;
+    color: #37474f;
+    overflow: hidden;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+.button--aylen.button--inverted {
+    background: none;
+    color: #fff;
+}
+.button--aylen::before,
+.button--aylen::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    bottom: 100%;
+    left: 0;
+    z-index: -1;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+.button--aylen::before {
+    background: #a7a7a7;
+}
+.button--aylen::after {
+    background: #1b1b1b;
+}
+.button--aylen:hover {
+    color: #fff;
+}
+.button--aylen:hover::before,
+.button--aylen:hover::after {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+}
+.button--aylen:hover::after {
+    -webkit-transition-delay: 0.175s;
+    transition-delay: 0.175s;
+}
 
