@@ -10,6 +10,7 @@ import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.PageInfo;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 public interface AdminService {
 
@@ -94,6 +95,13 @@ public interface AdminService {
 	int findStoreMotoNo(String position);
 
 	int findPfileMotoNo(String name);
+
+	List<Coupon> findAllCoupon();
+
+	int insertCoupon(Coupon coupon);
+
+	List<Coupon> findCouponIssueByCoNo(int coNumber);
+
 
 
 

@@ -8,7 +8,8 @@
 		<id property="ciNumber" column="CI_NUMBER"/>
 		<result property="coNumber" column="CO_NUMBER" />
 		<result property="memberNo" column="M_NO" />
-		<result property="status" column="CI_STATUS" />
+		<result property="coStatus" column="CO_STATUS" />
+		<result property="ciStatus" column="CI_STATUS" />
 		<result property="regiDate" column="CI_REGI" />
 		<result property="name" column="CO_NAME" />
 		<result property="percent" column="CO_PERCENT" />
@@ -35,6 +36,7 @@
 		    I.CI_NUMBER,
 		    C.CO_NUMBER,
 		    I.M_NO,
+		    C.CO_STATUS,
 		    I.CI_STATUS,
 		    I.CI_REGI,
 		    C.CO_NAME,

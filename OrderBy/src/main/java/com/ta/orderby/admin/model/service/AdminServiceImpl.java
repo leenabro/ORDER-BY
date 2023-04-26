@@ -17,6 +17,7 @@ import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.PageInfo;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 @Service
 public class AdminServiceImpl  implements AdminService{
@@ -335,6 +336,25 @@ public class AdminServiceImpl  implements AdminService{
 		
 		return mapper.findpfileMotoNo(name);
 	}
+
+	@Override
+	public List<Coupon> findAllCoupon() {
+
+		return mapper.findAllCoupon();
+	}
+
+	@Override
+	public int insertCoupon(Coupon coupon) {
+		
+		return mapper.insertCoupon(coupon);
+	}
+
+	@Override
+	public List<Coupon> findCouponIssueByCoNo(int coNumber) {
+
+		return mapper.findCouponIssueByCoNo(coNumber);
+	}
+
 
 
 

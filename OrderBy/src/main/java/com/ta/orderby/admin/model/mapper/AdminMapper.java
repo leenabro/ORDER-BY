@@ -13,6 +13,7 @@ import com.ta.orderby.admin.model.vo.AdminPopqna;
 import com.ta.orderby.admin.model.vo.AdminProductCar;
 import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.admin.model.vo.AdminStore;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 @Mapper
 public interface AdminMapper {
@@ -104,6 +105,13 @@ public interface AdminMapper {
 	int findstoreMotoNo(@Param("position")String position);
 
 	int findpfileMotoNo(@Param("name")String name);
+
+	List<Coupon> findAllCoupon();
+
+	int insertCoupon(Coupon coupon);
+
+	List<Coupon> findCouponIssueByCoNo(int coNumber);
+
 
 
 

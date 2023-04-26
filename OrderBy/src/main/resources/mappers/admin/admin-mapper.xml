@@ -548,4 +548,65 @@
 		M_POINT = #{point}
 		WHERE M_NO = #{mno}
 	</update>
+	
+	<resultMap id="couponResultMap" type="Coupon" >
+		<id property="ciNumber" column="CI_NUMBER"/>
+		<result property="coNumber" column="CO_NUMBER" />
+		<result property="memberNo" column="M_NO" />
+		<result property="coStatus" column="CO_STATUS" />
+		<result property="ciStatus" column="CI_STATUS" />
+		<result property="regiDate" column="CI_REGI" />
+		<result property="name" column="CO_NAME" />
+		<result property="percent" column="CO_PERCENT" />
+		<result property="createDate" column="CO_CDATE" />
+		<result property="period" column="CO_PERIOD" />
+	</resultMap>
+	
+	<select id="findAllCoupon" resultMap="couponResultMap">
+		SELECT 
+			CO_NUMBER,
+			CO_NAME,
+			CO_STATUS,
+			CO_PERCENT,
+			CO_CDATE,
+			CO_PERIOD
+		FROM COUPON
+		WHERE CO_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertCoupon" parameterType="Coupon">
+		INSERT INTO COUPON (
+			CO_NUMBER,
+			CO_NAME,
+			CO_STATUS,
+			CO_PERCENT,
+			CO_CDATE,
+			CO_PERIOD
+		) VALUES (
+			SEQ_COUPON_CO_NUMBER.NEXTVAL,
+			#{name},
+			DEFAULT,
+			#{percent},
+			SYSDATE,
+			#{period}
+		)
+	</insert>
+	
+	<select id="findCouponIssueByCoNo" parameterType="_int" resultMap="couponResultMap">
+		SELECT 
+		    I.CI_NUMBER,
+		    C.CO_NUMBER,
+		    I.M_NO,
+		    C.CO_STATUS,
+		    I.CI_STATUS,
+		    I.CI_REGI,
+		    C.CO_NAME,
+		    C.CO_PERCENT,
+		    C.CO_CDATE,
+		    C.CO_PERIOD
+		FROM COUPON_ISSUE I
+		JOIN COUPON C ON (I.CO_NUMBER = C.CO_NUMBER)
+		WHERE C.CO_NUMBER = #{coNumber}
+	</select>
+	
 </mapper>

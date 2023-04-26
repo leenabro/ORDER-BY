@@ -1,11 +1,15 @@
 package com.ta.orderby.admin.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
-
+import org.apache.ibatis.javassist.Loader.Simple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +27,7 @@ import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.admin.model.vo.AdminStore;
 import com.ta.orderby.common.util.MultipartFileUtil;
 import com.ta.orderby.common.util.PageInfo;
+import com.ta.orderby.payment.model.vo.Coupon;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -937,7 +942,86 @@ public class AdminController {
 	@GetMapping("/admin/coupon")
 	public ModelAndView coupon(ModelAndView modelAndView) {
 		
+		List<Coupon> list = service.findAllCoupon();
+		
+		modelAndView.addObject("coupon", list);
+		modelAndView.setViewName("/admin/coupon");
+		
 		return modelAndView;
+	}
+	
+	@GetMapping("/admin/createCoupon")
+	public ModelAndView createCoupon(ModelAndView modelAndView) {
+		
+		return modelAndView;
+	}
+	
+	@PostMapping("/admin/createCoupon")
+	public ModelAndView insertCoupon(ModelAndView modelAndView, @ModelAttribute Coupon coupon) {
+		
+		System.out.println(coupon);
+		int result = 0;
+		
+		result = service.insertCoupon(coupon);
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "쿠폰이 정상적으로 생성 되었습니다.");
+			modelAndView.addObject("location", "/admin/coupon");
+			
+		} else {
+			modelAndView.addObject("msg", "쿠폰 생성에 실패하였습니다.");
+			modelAndView.addObject("location", "/admin/createCoupon");
+			
+		}
+		modelAndView.setViewName("common/msg");
+		
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/admin/injectCoupon")
+	public ModelAndView injectCoupon(ModelAndView modelAndView) {
+
+		List<Coupon> couponList = service.findAllCoupon();
+		Date today = new Date(0);
+		
+		System.out.println(today);
+		
+		Calendar cal = Calendar.getInstance();
+	
+		
+		for (Coupon coupon : couponList) {
+			System.out.println(coupon);
+			System.out.println(coupon.getPeriod());
+			List<Coupon> couponIssueList = service.findCouponIssueByCoNo(coupon.getCoNumber());
+			
+			for (Coupon coupon2 : couponIssueList) {
+				System.out.println(coupon2.getRegiDate());
+				cal.setTime(coupon2.getRegiDate());
+				cal.add(Calendar.DATE, coupon.getPeriod());
+				
+				System.out.println(cal.getTime());
+				System.out.println();
+				System.out.println(coupon.getCreateDate());
+				System.out.println(coupon2.getRegiDate().equals(coupon.getCreateDate()));
+			}
+		}
+		
+		modelAndView.setViewName("/admin/coupon");
+		
+		return modelAndView;
+	}
+	
+	@Scheduled(cron = "59 59 23 * * *")
+	public void couponCheck() {
+		
+		List<Coupon> couponList = service.findAllCoupon();
+		
+		for (Coupon coupon : couponList) {
+			System.out.println(coupon);
+		}
+		
+		
 	}
 	
 	// 결제 내역 확인
