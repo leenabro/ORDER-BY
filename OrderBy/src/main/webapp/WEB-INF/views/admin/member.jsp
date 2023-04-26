@@ -69,7 +69,7 @@
                     <c:if test="${ empty list }">
                     	<tr>
                     		<td colspan="7" style="text-align:center">
-                    			조회되는 매장이 없습니다.
+                    			조회되는 회원이 없습니다.
                     		</td>
                     	</tr>
                     </c:if>

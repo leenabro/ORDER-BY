@@ -115,7 +115,7 @@
                       <option value="Honda">Honda</option>
                       <option value="Kawasaki">Kawasaki</option>
                       <option value="Suzuki">Suzuki</option>
-                      <option value="Ymaha">Ymaha</option>
+                      <option value="Yamaha">Yamaha</option>
                       </select>
                       </span>
 <!--                     <span class="input_area"><input type="text"  name="brand"></span> -->

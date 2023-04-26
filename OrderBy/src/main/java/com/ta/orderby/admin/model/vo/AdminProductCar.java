@@ -40,9 +40,10 @@ public class AdminProductCar {
 		
 		private int sno;
 		
-		private int pfno;
-		
 		private int count;
 		
 		private Date enrolldate;
+		
+		private int pfno;
+		
 }

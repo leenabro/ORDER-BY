@@ -85,31 +85,33 @@
 	</update>
 	
 		<sql id="selectpopqnasql">
-		SELECT POP_NO,
-       		   POP_TITLE,
-		       POP_CONTENT,
-		       POP_DATE,
-		       POP_STATUS,
-		       POP_PHONE
+		 SELECT POP_NO,
+				POP_NAME,
+				POP_EMAIL,
+				POP_PHONE,
+				POP_CONTENT,
+				POP_DATE,
+				POP_STATUS
 		FROM POPQNA
 	</sql>
 	
 	<resultMap id="popqnaResultMap" type="AdminPopqna">
 		<id property="no" column="POP_NO"/>
-		<result property="title" column="POP_TITLE"/>
+		<result property="name" column="POP_NAME"/>
+		<result property="email" column="POP_EMAIL"/>
+		<result property="phone" column="POP_PHONE"/>
 		<result property="content" column="POP_CONTENT"/>
 		<result property="enrolldate" column="POP_DATE"/>
 		<result property="status" column="POP_STATUS"/>
-		<result property="phone" column="POP_PHONE"/>
 	</resultMap>
 	
 	<select id="selectPopqnaCount" resultType="_int">
-		SELECT COUNT(*) FROM POPQNA WHERE POP_STATUS = 'N' OR POP_STATUS = 'Y'
+		SELECT COUNT(*) FROM POPQNA WHERE POP_STATUS = '답변대기' OR POP_STATUS = '답변완료'
 	</select>
 	
 	<select id="popqnaselectAll" resultMap="popqnaResultMap">
 		<include refid="selectpopqnasql"/>
-			 WHERE POP_STATUS = 'N' OR POP_STATUS = 'Y' ORDER BY POP_NO DESC
+			 WHERE POP_STATUS = '답변대기' OR POP_STATUS = '답변완료' ORDER BY POP_NO DESC
 	</select>
 	
 	<select id="selectPopqnaByNo" parameterType="_int" resultMap="popqnaResultMap">
@@ -135,9 +137,9 @@
 				C_STATUS,
 				C_SALE,
 				S_NO,
-				PF_NO,
 				C_COUNT,
-				C_ENROLL_DATE
+				C_ENROLL_DATE,
+				PF_NO
 		FROM CAR
 	</sql>
 	
@@ -156,9 +158,9 @@
 		<result property="status" column="C_STATUS"/>
 		<result property="sale" column="C_SALE"/>
 		<result property="sno" column="S_NO"/>
-		<result property="pfno" column="PF_NO"/>
 		<result property="count" column="C_COUNT"/>
 		<result property="enrolldate" column="C_ENROLL_DATE"/>
+		<result property="pfno" column="PF_NO"/>
 	</resultMap>
 	
 	<select id="selectAdminCarCount" resultType="_int">
@@ -217,9 +219,9 @@
 				C_STATUS,
 				C_SALE,
 				S_NO,
-				PF_NO,
 				C_COUNT,
-				C_ENROLL_DATE
+				C_ENROLL_DATE,
+				PF_NO
 		)
 		VALUES(
 				SEQ_CAR_C_NO.NEXTVAL,
@@ -236,9 +238,9 @@
 				DEFAULT,
 				DEFAULT,
 				#{procar.sno},
-				#{procar.pfno},
 				0,
-				DEFAULT
+				DEFAULT,
+				#{procar.pfno}
 		)
 	</insert>
 	

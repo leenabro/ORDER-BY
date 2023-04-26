@@ -58,9 +58,8 @@
                      <thead>
                       <tr>
                       	<th>상담 번호</th>
-                        <th>상담 제목</th>
-                        <th>전화 번호</th>
-                        <th>상담 내용</th>
+                        <th>상담자 이름</th>
+                        <th>전화번호</th>
                         <th>상담 여부 확인</th>
                         <th>상담 등록 날짜</th>
                       </tr>
@@ -79,14 +78,9 @@
                     	<c:forEach var="popqna" items="${list }">
                       <tr>
                       	<td>${popqna.no }</td>
-                        <td>${popqna.title }</td>
+                        <td><a href="${path }/admin/viewpopqna?no=${popqna.no}"
+                            >${popqna.name }</a></td>
                         <td>${popqna.phone }</td>
-                        <td style="display:none">${popqna.no }</td>
-                        <td>
-                          <a href="${path }/admin/viewpopqna?no=${popqna.no}"
-                            >${popqna.content }</a
-                          >
-                        </td>
                         <td style="color: green">${popqna.status }</td>
                         <td>${popqna.enrolldate }</td>
                       </tr>

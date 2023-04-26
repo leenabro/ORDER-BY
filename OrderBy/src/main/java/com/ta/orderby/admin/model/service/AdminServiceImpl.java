@@ -93,7 +93,7 @@ public class AdminServiceImpl  implements AdminService{
 	@Override
 	public int popcheck(int no) {
 		
-		return mapper.checkPopqnaStatus(no, "Y");
+		return mapper.checkPopqnaStatus(no, "답변완료");
 	}
 
 	@Override

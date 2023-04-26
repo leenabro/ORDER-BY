@@ -168,25 +168,25 @@ textarea.textarea01 {
                             </colgroup>
                             <tbody id="tbody">
                               <tr>
-                                <th>상담 제목</th>
+                                <th>상담자 이름</th>
                                 <td style="display:none">${popqna.no }</td>
                                 <td>
                                   <input
                                     id="board_subject"
                                     name="board_subject"
-                                    value="${popqna.title} "
+                                    value="${popqna.name} "
                                     class="tbox01"
                                     readonly
                                   />
                                 </td>
                               </tr>
                               <tr>
-                                <th>전화번호</th>
+                                <th>이메일</th>
                                 <td>
                                   <input
                                     id="board_writer"
                                     name="board_writer"
-                                    value="${popqna.phone}"
+                                    value="${popqna.email}"
                                     class="tbox01"
                                     readonly
                                   />
@@ -205,6 +205,19 @@ textarea.textarea01 {
                                 </td>
                               </tr>
                               <tr>
+                                <th>전화번호</th>
+                                <td>
+                                  <input
+                                    id="board_writer"
+                                    name="board_writer"
+                                    value="${popqna.phone}"
+                                    class="tbox01"
+                                    readonly
+                                    style="width:250px"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
                                 <th>상담 여부 확인</th>
                                 <td>
                                   <input
@@ -213,7 +226,7 @@ textarea.textarea01 {
                                     value="${popqna.status}"
                                     class="tbox01"
                                     readonly
-                                    style="width:55px"
+                                    style="width:250px; color:green;"
                                   />
                                 </td>
                               </tr>
