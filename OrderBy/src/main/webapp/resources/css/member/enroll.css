@@ -2,12 +2,9 @@
     /* border: 1px solid; */
 }
 
-input:disabled {
-    background: #F0F0F0;
-}
-
-button:disabled {
-	background: #F0F0F0;
+.signup_btn_wrap button[disabled] {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
 }
 
 body {

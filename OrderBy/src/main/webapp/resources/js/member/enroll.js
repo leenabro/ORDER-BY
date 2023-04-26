@@ -1,89 +1,6 @@
 
 
-
-// ajax 통신을 위한 csrf 설정
-//var token = $("meta[name='_csrf']").attr("content");
-//var header = $("meta[name='_csrf_header']").attr("content");
-//$(document).ajaxSend(function(e, xhr, options) {
-//    xhr.setRequestHeader(header, token);
-//});
-
-
-
-//-------------------------------------------------------------------------------
-
-// function checkAll() {
-//     if (!checkUserId(form.userId.value)) {
-//         return false;
-//     } else if (!checkPassword(form.userId.value, form.password1.value,
-//             form.password2.value)) {
-//         return false;
-//     } else if (!checkMail(form.mail.value)) {
-//         return false;
-//     } else if (!checkName(form.name.value)) {
-//         return false;
-//     } else if (!checkBirth(form.identi1.value, form.identi2.value)) {
-//         return false;
-//     } else if (!checkFavorite()) {
-//         return false;
-//     } else if (!checkIntro()) {
-//         return false;
-//     }
-//     return true;
-// }
-
-$(function() { // 윈도우가 열리면
-
-	var $ = jQuery;
-
-
-
-
-
-    // 년도
-// var $regYear = /^[1-2]{1}[0-9]{0,4}$/;
-
-    // 폼태그도 담아둠
-const form = $('#signupForm'),
-    // 입력 변수
-    $memberId  = $('#memberId'), // 아이디
-    $memberPwd1 = $('#memberPwd1'), // 비밀번호
-    $memberPwd2 = $('#memberPwd2'), // 비밀번호 재확인
-    // $memberName = $('#memberName'), // 이름
-    $memberBirthYY = $('#memberBirthYY'), // 생년
-    $memberBirthMM = $('#memberBirthMM'), // 월
-    $memberBirthDD = $('#memberBirthDD'), // 일
-    // $genderSelectBox = $("#genderSelectBox option:selected").val(), // 성별
-    $genderSelect = $('#genderSelectBox'), // 성별
-    // $memberPhone = $('#memberPhone'), // 휴대전화
-    $memberEmail = $('#memberEmail'), // 이메일
-    $memberCnum = $('#memberCnum'), // 인증번호
-
-    // 메시지 변수
-    $idFocusMsg  = $('#idFocusMsg'), // 아이디 체크 메시지 포커스
-    $idCheckMsg1 = $('#idCheckMsg1'), // 아이디 체크 메시지 실패
-    $idCheckMsg2 = $('#idCheckMsg2'), // 아이디 체크 메시지 성공
-    $password1FocusMsg = $('#password1FocusMsg'), // 패스워드 체크1 메시지 포커스
-    $password2FocusMsg = $('#password2FocusMsg'), // 패스워드 체크2 메시지 포커스
-    $password1warningMsg = $('#password1warningMsg'), // 패스워드 체크1 메시지 별로다!
-    $password2warningMsg = $('#password2warningMsg'), // 패스워드 체크2 메시지 별로다!
-    $password1goodMsg = $('#password1goodMsg'), // 패스워드 체크1 메시지 굳이다!
-    $password2goodMsg = $('#password2goodMsg'), // 패스워드 체크2 메시지 굳이다!
-    $memberNameMsg = $('#memberNameMsg'), // 이름 메시지
-    $memberBirthMsg = $('#memberBirthMsg'), // 생년월일 메시지
-    $memberPhoneMsg = $('#memberPhoneMsg'), // 휴대전화 메시지
-    $memberEmailMsg = $('#memberEmailMsg')  // 이메일 메시지
-    ;
-
-            // 정규식 패턴 (참고용...)
-    // 아이디 영문 숫자 '_' 포함 (대소문자 구분안함)
-const $regId = /[^a-z0-9\_]/gi,
-    // 한글만 가능 (ㄱㄴㄷ... 형식으로는 입력 불가능, 띄어쓰기 불가능)
-    $regName = /^[가-힣]{2,6}$/,
-    // 비밀번호 (최소 대문자, 소문자, 숫자 1개씩 8~16자)
-    $regPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}/g,
-    // 이메일
-    $regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+// window.onkeydown = (e) => console.log(e);
 
 /*
     확인해야할 사항
@@ -122,182 +39,79 @@ const $regId = /[^a-z0-9\_]/gi,
 
 
     
+$(document).ready(function() {
+	var $ = jQuery;
+	var form = $('#signupForm');
 
+	// 엔터 처리(없어도될듯)
+	form
+	.on('keydown', 'input[type="text"], input[type="email"], input[type="password"], input[type="number"]', function () {
+		// console.log('엔터눌렀지 뿌우');
+	})
 
-// 엔터 처리(없어도될듯)
-form
-.on('keydown', 'input[type="text"], input[type="email"], input[type="password"], input[type="number"]', function () {
-	// console.log('엔터눌렀지 뿌우');
-})
+// ======================================== 포커스 시 텍스트 시작 ========================================
+	// 포커스 시 텍스트
+	form
+	.on('focus', '#memberId', function() {
+	  $('#idFocusMsg').show().text("아이디는 필수 입력 정보 입니다.").css({color:"red"});
+	})
 
-// ======================================== 생년월일 유효성검사 시작 ========================================
-
-$('select[name=memberBirthYY]')
-.on({
-    "change":function() {
-        $('#memberBirthYY option:selected').text();
-        console.log($(this).val()); //value값
-        console.log($('select[name=memberBirthYY] option:selected').text()); //text값
-
-        if($('select[name=memberBirthYY]') == '') {
-            console.log(false);
-            $('#signup_btn').attr('disabled', true);
-        }
-        
-        console.log(true);
-    }
-});
-$('select[name=memberBirthMM]')
-.on({
-    "change":function() {
-        $('#memberBirthMM option:selected').text();
-        console.log($(this).val()); //value값
-        console.log($('select[name=memberBirthMM] option:selected').text()); //text값
-
-        if($('select[name=memberBirthMM]') == '') {
-            console.log(false);
-            $('#signup_btn').attr('disabled', true);
-        }
-        
-        console.log(true);
-    }
-});
-$('select[name=memberBirthDD]')
-.on({
-    "change":function() {
-        $('#memberBirthDD option:selected').text();
-        console.log($(this).val()); //value값
-        console.log($('select[name=memberBirthDD] option:selected').text()); //text값
-
-        if($('select[name=memberBirthDD]') == '') {
-            console.log(false);
-            $('#signup_btn').attr('disabled', true);
-        }
-        
-        console.log(true);
-    }
-});
+	.on('focus', '.YYMMDD', function() {
+	  $('#memberBirthMsg').show().text('생년월일은 필수 입력 정보 입니다.').css({color:"red"});
+	})
+	.on('focus', '#memberPhone', function() {
+	  $('#memberPhoneMsg').show().text('ORDER BY의 다양한 혜택문자를 받아보세요.').css({color:"gray"});
+	});
+}); // 첫번째 함수 종료
 
 
 // ======================================== 성별 유효성검사 시작 ========================================
-// 성별값 가져오기
-$('select[name=genderSelectBox]')
-.on({
-    "change":function() {
-        $('#genderSelectBox option:selected').text();
-        console.log($(this).val()); //value값
-        console.log($('select[name=genderSelectBox] option:selected').text()); //text값
-    }
-})
-;
-    
-// ======================================== 포커스 시 텍스트 시작 ========================================
-// 포커스 시 텍스트
-form
-.on('focus', '#memberId', function() {
-  $('#idFocusMsg').show().text("아이디는 필수 입력 정보 입니다.").css({color:"red"});
-})
-.on('focus', '#memberPwd1', function() {
-  $('#password1FocusMsg').show().text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.");
-})
-.on('focus', '#memberPwd2', function() {
-  $('#password2FocusMsg').show().text("위 비밀번호와 동일해야 합니다.");
-})
-.on('focus', '.YYMMDD', function() {
-  $('#memberBirthMsg').show().text('생년월일은 필수 입력 정보 입니다.').css({color:"red"});
-})
-.on('focus', '#memberPhone', function() {
-  $('#memberPhoneMsg').show().text('ORDER BY의 다양한 혜택문자를 받아보세요.').css({color:"gray"});
-});
-
-
-// ======================================== 생년월일 셀렉트 박스 시작 ========================================
-
-    // '출생 연도' 셀렉트 박스 option 목록 동적 생성
-    var birthYearEl = document.querySelector('#memberBirthYY')
-    // option 목록 생성 여부 확인
-    isYearOptionExisted = false;
-    birthYearEl.addEventListener('focus', function () {
-    // year 목록 생성되지 않았을 때 (최초 클릭 시)
-        if(!isYearOptionExisted) {
-            isYearOptionExisted = true
-            for(var i = 1950; i <= 2022; i++) {
-            // option element 생성
-            const YearOption = document.createElement('option')
-            YearOption.setAttribute('value', i)
-            YearOption.innerText = i
-            // birthYearEl의 자식 요소로 추가
-            this.appendChild(YearOption);
-        }
-    }
-    });
-    // '월' 셀렉트 박스 option 목록 동적 생성
-    var birthMonthEl = document.querySelector('#memberBirthMM')
-    // option 목록 생성 여부 확인
-    isMonthOptionExisted = false;
-    birthMonthEl.addEventListener('focus', function () {
-    // month 목록 생성되지 않았을 때 (최초 클릭 시)
-        if(!isMonthOptionExisted) {
-            isMonthOptionExisted = true
-            for(var i = 1; i <= 12; i++) {
-            // option element 생성
-            const MonthOption = document.createElement('option')
-            MonthOption.setAttribute('value', i)
-            MonthOption.innerText = i
-            // birthMonthEl의 자식 요소로 추가 
-            this.appendChild(MonthOption);
-            }
-        }
-    });
-    // '일' 셀렉트 박스 option 목록 동적 생성
-    var birthDayEl = document.querySelector('#memberBirthDD')
-    // option 목록 생성 여부 확인
-    isDayOptionExisted = false;
-    birthDayEl.addEventListener('focus', function () {
-    // month 목록 생성되지 않았을 때 (최초 클릭 시)
-        if(!isDayOptionExisted) {
-            isDayOptionExisted = true
-            for(var i = 1; i <= 31; i++) {
-            // option element 생성
-            const DayOption = document.createElement('option')
-            DayOption.setAttribute('value', i)
-            DayOption.innerText = i
-            // birthDayEl의 자식 요소로 추가
-            this.appendChild(DayOption);
-            }
-        }
-    });
-
-});
+	// 성별값 가져오기
+	$('select[name=genderSelectBox]')
+	.on({
+	    "change":function() {
+	        $('#genderSelectBox option:selected').text();
+	        console.log($(this).val()); //value값
+	        console.log($('select[name=genderSelectBox] option:selected').text()); //text값
+	    }
+	});
 
 // ======================================== id 유효성검사 시작 ========================================
 // 아이디 문자열 치환(변경)
-var memberIdch = (target) => {
-    target.value = target.value
-    .replace(/[^a-z0-9\_]/gi, '');
-    // .replace();
-    
-    console.log(target.value);
-};	
+	var memberIdch = (target) => {
+    var memberId = target.value
+        .replace(/[^a-z0-9\_]/gi, '');
+	    target.value = memberId;
+	    console.log(memberId);
+};
 
-var idCheck = 0;
-var pwdCheck = 0;
-var phoneCheck = 0;
-var nameCheck = 0;
-var pwCheck = 0;
-var authCheck = 0;
 
 // 아이디 중복확인 ajax포함
 function checkId() {
+    var memberId = $('#memberId').val().trim(); // #memberId에 입력되는 값
     $('#memberId').trigger('input');
 }
 
 $('#memberId')
 	.on("propertychange change keyup paste input", function(){
 		var memberId = $(this).val().trim(); // #memberId에 입력되는 값
+	    var $idFocusMsg  = $('#idFocusMsg'), // 아이디 체크 메시지 포커스
+	        $idCheckMsg1 = $('#idCheckMsg1'), // 아이디 체크 메시지 실패
+	        $idCheckMsg2 = $('#idCheckMsg2'); // 아이디 체크 메시지 성공
+        
 		if(memberId === '') { // memberId가 빈 문자열인 경우 중복 체크를 하지 않음
+			
 			return;
-	}
+		}
+		
+	    if(memberId.length < 4) { // 아이디가 4자 미만인 경우 중복 체크를 하지 않음
+	        $('#idFocusMsg').show().text("아이디는 필수 입력 정보 입니다.").css({color:"red"});
+	        $idCheckMsg2.hide();
+	        $idFocusMsg.hide();
+        
+        	return;
+    	}
+
 	var data = {id : memberId}; // '컨트롤에 넘길 데이터 이름' : '데이터(#memberId에 입력되는 값)'
 	var header = $("meta[name='_csrf_header']").attr('content'); // 토큰
 	var token = $("meta[name='_csrf']").attr('content'); // 토큰
@@ -313,11 +127,13 @@ $('#memberId')
         beforeSend : function(xhr) {
             xhr.setRequestHeader(header, token);
         },
-        success:function(result) { //컨트롤러에서 넘어온 result값을 받는다 
+        success:function(result) { //컨트롤러에서 넘어온 result값을 받는다
+
             if(result == 0){ //result가 1이 아니면(= 0일 경우) -> 사용 가능한 아이디
                 $idFocusMsg.text("아이디는 필수 입력 정보 입니다.").css({color:"red"}).hide();
                 $idCheckMsg2.text("사용가능한 아이디 입니다.").show();
                 $idCheckMsg1.hide();
+                
             } else { // result가 1일 경우 -> 이미 존재하는 아이디
                 $idCheckMsg2.hide();
                 $idCheckMsg1.text("이미 존재하는 아이디입니다.").show();
@@ -337,66 +153,59 @@ $('#memberId')
     var $idFocusMsg  = $('#idFocusMsg'),
         $idCheckMsg1 = $('#idCheckMsg1'),
         $idCheckMsg2 = $('#idCheckMsg2');
-    $idCheckMsg1.hide();
-    $idCheckMsg2.hide();
-    $idFocusMsg.show();
+	    $idCheckMsg1.hide();
+	    $idCheckMsg2.hide();
+	    $idFocusMsg.show();
 }).on('blur', function() {
     var $idFocusMsg  = $('#idFocusMsg'),
         $idCheckMsg1 = $('#idCheckMsg1'),
         $idCheckMsg2 = $('#idCheckMsg2');
-    $idFocusMsg.hide();
-});
+    	$idFocusMsg.hide();
+}); // 두번째 함수 종료
+
+
 
 
 // ======================================== password 유효성검사 시작 ========================================
-function memberPwd1ch() {
-
-    var pw = $("#memberPwd1").val();
-    var id = $("#memberId").val();
-        
-    var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-    var hangulcheck = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-
-    var $password1FocusMsg = $('#password1FocusMsg'), // 패스워드 체크1 메시지  포커스
-        $password2FocusMsg = $('#password2FocusMsg'), // 패스워드 체크2 메시지 포커스
-        $password1warningMsg = $('#password1warningMsg'), // 패스워드 체크1 메시지 별로다!
-        $password2warningMsg = $('#password2warningMsg'), // 패스워드 체크2 메시지 별로다!
-        $password1goodMsg = $('#password1goodMsg'), // 패스워드 체크1 메시지 굳이다!
-        $password2goodMsg = $('#password2goodMsg'); // 패스워드 체크2 메시지 굳이다!
-
-    if(false === reg.test(pw)) {
-        // alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
-        $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").show();
-    
-    } else if(/(\w)\1\1\1/.test(pw)) {
-        // alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
-        $password1warningMsg.text("같은 문자를 4번 이상 사용할 수 없습니다.").show();
-        
-        return false;
-    } else if(pw.search(id) > -1) {
-        alert("비밀번호에 아이디가 포함되었습니다.");
-        $password1warningMsg.text("비밀번호에 아이디가 포함되었습니다.").show();
-
-        return false;
-    } else if(pw.search(/\s/) != -1) {
-        alert("비밀번호는 공백 없이 입력해주세요.");
-    
-        return false;
-    } else if(hangulcheck.test(pw)) {
-        alert("비밀번호에 한글을 사용 할 수 없습니다."); 
-
-        return false;
-    } else {
-        $password1FocusMsg.hide();
-        $password1goodMsg.text("사용가능한 비밀번호 입니다.").show();
-        console.log("비밀번호 통과");
-
-        return true;
-    }
+function validatePassword() {
+	var pw1 = $("#memberPwd1").val();
+	var pw2 = $("#memberPwd2").val();
+	var id = $("#memberId").val();
+	    
+	var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+	var hangulcheck = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	
+	var $password1FocusMsg = $('#password1FocusMsg'), // 패스워드 체크1 메시지  포커스
+	    $password2FocusMsg = $('#password2FocusMsg'), // 패스워드 체크2 메시지 포커스
+	    $password1warningMsg = $('#password1warningMsg'), // 패스워드 체크1 메시지 별로다!
+	    $password2warningMsg = $('#password2warningMsg'), // 패스워드 체크2 메시지 별로다!
+	    $password1goodMsg = $('#password1goodMsg'), // 패스워드 체크1 메시지 굳이다!
+	    $password2goodMsg = $('#password2goodMsg'); // 패스워드 체크2 메시지 굳이다!
+	
+	// 비밀번호 체크1
+	if(false === reg.test(pw1)) {
+	    $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").show();
+	    return false;
+	} else if(/(\w)\1\1\1/.test(pw1)) {
+	    $password1warningMsg.text("같은 문자를 4번 이상 사용할 수 없습니다.").show();
+	    return false;
+	} else if(pw1.search(id) > -1) {
+	    $password1warningMsg.text("비밀번호에 아이디가 포함되었습니다.").show();
+	    return false;
+	} else if(pw1.search(/\s/) != -1) {
+	    alert("비밀번호는 공백 없이 입력해주세요.");
+	    return false;
+	} else if(hangulcheck.test(pw1)) {
+	    alert("비밀번호에 한글을 사용 할 수 없습니다."); 
+	    return false;
+	} else {
+	    $password1FocusMsg.hide();
+	    $password1goodMsg.text("사용가능한 비밀번호 입니다.").show();
+	}
+	
 }
-
-// 비밀번호 재확인 체크
-function memberPwd2ch() {
+	// 비밀번호 재확인 체크
+	function memberPwd2ch() {
     var pw1 = $("#memberPwd1").val();
     var pw2 = $("#memberPwd2").val();
 
@@ -406,20 +215,25 @@ function memberPwd2ch() {
         $password2warningMsg = $('#password2warningMsg'), // 패스워드 체크2 메시지 별로다!
         $password1goodMsg = $('#password1goodMsg'), // 패스워드 체크1 메시지 굳이다!
         $password2goodMsg = $('#password2goodMsg'); // 패스워드 체크2 메시지 굳이다!
-
-    if(pw1 == pw2) {
-        $password2FocusMsg.text("위 비밀번호와 동일해야 합니다.").hide();
-        $password2goodMsg.text("비밀번호가 동일합니다.").show();
-        console.log("비밀번호 재확인 통과");
-        
-        return true;
-    } else {
-        $password2FocusMsg.text("위 비밀번호와 동일해야 합니다.").css({color:"red"}).show();
-        $password2goodMsg.text("비밀번호가 동일합니다.").hide();
-        console.log("비밀번호 재확인 불햅격");
-
-        return false;
-    }
+		
+	if(pw1 == pw2) {
+	    $password1FocusMsg.hide();
+	    $password2warningMsg.hide();
+	    $password2FocusMsg.text("동일한 비밀번호가 입력되었습니다.").show().css({color:"green"});
+	    console.log("비밀번호 재확인 통과");
+	    
+	    return true;
+	} else {
+		$password1FocusMsg.hide();
+	    $password2warningMsg.hide();
+	    $password2FocusMsg.text("위 비밀번호와 동일해야 합니다.").show().css({color:"red"});
+	    console.log("비밀번호 재확인 불햅격");
+	
+		console.log(pw1);
+	
+	    return false;
+	}
+    
 }
 // ======================================== 휴대전화 유효성검사 시작 ========================================
 var $memberPhone = (target) => {
@@ -447,7 +261,6 @@ $("input:checkbox[name='chk1']").prop("checked", true);
 $("input:checkbox[name='chk2']").prop("checked", true);
 $("input:checkbox[name='chk3']").prop("checked", true);
 $("input:checkbox[name='chk4']").prop("checked", true);
-// console.log($("input:checkbox[name='chk1']").val());
 
 
 
@@ -476,6 +289,14 @@ $(".join_box")
 ;
 
 // ======================================== 주소 api 시작 ========================================
+$("#sample6_detailAddress, #sample6_address").on("input", function() {
+  console.log($(this).val());
+});
+
+var address = '';
+var detailAdd = '';
+
+
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -515,33 +336,45 @@ function sample6_execDaumPostcode() {
                 document.getElementById("sample6_extraAddress").value = '';
             }
 
+
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById("sample6_address").value = addr;
+			document.getElementById('sample6_postcode').value = data.zonecode;
+			address = document.getElementById("sample6_address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("sample6_detailAddress").focus();
+			detailAdd = document.getElementById("sample6_detailAddress");
+			detailAdd.focus();
+			
+			console.log("주소: " + address + ", 상세 주소: " + detailAdd.value);
         }
+        
     }).open();
+
 } // 주소 api종료
 
 
 // ======================================== 이메일 시작 ========================================
 
-    $(document).ready(function() {
-        $(".successEmailChk").text("이메일 입력은 필수입니다.").hide();
-        $("#memberEmail").focus(function() {
-            $(".successEmailChk").text("이메일 입력은 필수입니다.").show();
-        });
+$(document).ready(function() {
+    $(".successEmailChk").text("이메일 입력은 필수입니다.").hide();
+    
+    $("#memberEmail").focus(function() {
+        $(".successEmailChk").text("이메일 입력은 필수입니다.").css("color", "red").show();
     });
+    
+    $("#memberEmail").off("keyup").on("keyup", function() {
+        //console.log($(this).val());
+    });
+});
+
 
 
 // 인증 메일 발송 버튼 클릭 시
-var code = "";
+
 $("#cnum_btn").click(function(){
-    var emailVal = $("#memberEmail").val();
+	const emailVal = $("#memberEmail").val();
 
     // 한글 제거
-    var email = emailVal.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "");
+    var email = emailVal.replace(/[^a-zA-Z0-9@._-]/g, "");
 
     // 이메일 검증
     var regEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
@@ -563,36 +396,38 @@ $("#cnum_btn").click(function(){
         success: function(data) {
             if(data == "error"){
                 console.log("이메일 주소가 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.");
-                $("#memberEmail").attr("autofocus",true);
+                $("#memberEmail").attr("autofocus", true);
                 $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.").show();
                 $(".successEmailChk").css("color","red");
             }else{                    
                 alert("인증번호 발송이 완료되었습니다.\n입력한 이메일에서 인증번호 확인을 해주십시오.");
                 $('#memberCnum').focus();
                 console.log("인증번호 발송됐대!!");
-		        $("#memberCnum").attr("disabled",false);
-		        $("#cnum_btn2").css("display","inline-block");
+		        $("#memberCnum").attr("readonly", false);
+		        $("#cnum_btn2").css("display", "inline-block");
 		        $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").show();
-		        $(".successEmailChk").css("color","green");
+		        $(".successEmailChk").css("color", "green");
                 code = data;
+                
+                console.log(data); // 인증번호 뭔지 콘솔 찍음!
             }
         }
     });
 });
 
-// 이메일 인증버튼 클릭 시
+// 이메일 인증하기 버튼 클릭 시
 $("#cnum_btn2").click(function(){
     var memberCnum = $("#memberCnum").val();
     if (memberCnum === code) {
     
     	$(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").hide();
         alert("이메일 인증이 완료되었습니다.");
-        $("#memberEmail").attr("disabled", true);
-        $("#memberCnum").attr("disabled", true);
-        $("#cnum_btn").attr("disabled", true);
-        $("#cnum_btn2").attr("disabled", true);
-    } else {
-    
+        $("#memberEmail").attr("readonly", true);
+        $("#memberCnum").attr("readonly", true);
+        $("#cnum_btn").attr("readonly", true);
+        $("#cnum_btn2").attr("readonly", true);
+	} else {
+	
     alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
 	}
 });
@@ -611,27 +446,87 @@ $('#eye').on('click', function() {
 	}
 });
 
-// 회원 가입 버튼 클릭 시
-$("#signup_btn").click(function() {
-    var name = $("#memberName").val();
-    var id = $("#memberId").val();
-    var pw1 = $("#memberPwd1").val();
-    var pw2 = $("#memberPwd2").val();
-    var phone = $("#memberPhone").val();
-    var email = $("#memberEmail").val();
-    var addr = $("#sample6_postcode").val();
-    var code = $("#memberCnum").val();
-    var chk1 = $("#chk1").val();
-    var chk2 = $("#chk2").val();
 
-    // 입력 데이터 검증
-    if (name == "" || id == "" || pw1 == "" || pw2 == "" || phone == "" || email == "" || addr == "" || code == "" || chk1 == "" || chk2 == "") {
-        alert("입력하지 않은 항목이 있거나 필수 동의항목에 체크되지 않았습니다. 모든 항목을 입력해주세요.");
-        
-        return;
+
+
+// ======================================== 생년월일 셀렉트 박스 시작 ========================================
+
+$(document).ready(function(){            
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = (currentDate.getMonth() + 1) > 9 ? ''+(currentDate.getMonth() + 1) : '0'+(currentDate.getMonth() + 1); 
+    var currentDay = (currentDate.getDate()) > 9 ? ''+(currentDate.getDate()) : '0'+(currentDate.getDate());           
+    // 출생 연도 selectbox 만들기
+    for(var i = 1950 ; i <= currentYear ; i++) {
+        $('#memberBirthYY').append('<option value="' + i + '">' + i + '년</option>');
     }
 
-    insertMember(name, id, pw1, pw2, phone, email, addr, code, chk1, chk2);
+    // 출생 월 selectbox 만들기            
+    for(var i=1; i <= 12; i++) {
+        var month = i > 9 ? i : "0"+i ;            
+        $('#memberBirthMM').append('<option value="' + month + '">' + month + '월</option>');
+    }
+    
+    // 출생 일 selectbox 만들기
+    for(var i=1; i <= 31; i++) {
+        var day = i > 9 ? i : "0"+i ;            
+        $('#memberBirthDD').append('<option value="' + day + '">' + day+ '일</option>');    
+    }
+    $("#memberBirthYY > option[value="+currentYear+"]").attr("selected", "true");        
+    $("#memberBirthMM > option[value="+currentMonth+"]").attr("selected", "true");    
+    $("#memberBirthDD > option[value="+currentDay+"]").attr("selected", "true");      
+    
 });
+
+
+
+
+
+
+// ======================================== 가입하기 버튼 시작 ========================================
+    // 가입하기 버튼 클릭 이벤트 핸들러
+	$("#signup_btn").on("click", function(e) {
+	    e.preventDefault();
+	    $("#signupForm").submit();
+	    
+	            console.log(address);
+        console.log(detailAdd);
+	}),
+
+
+
+	$(document).ready(function() {
+
+	    var id = $("#memberId").val();
+	    var rawPassword = $("#memberPwd2").val() || "";
+	    var email = $("#memberEmail").val();
+	    var birthYY = $("#memberBirthYY").val() || "Unknown";
+	    var birthMM = $("#memberBirthMM").val() || "Unknown";
+	    var birthDD = $("#memberBirthDD").val() || "Unknown";
+	    var birth = birthYY.slice(2) + "/" + birthMM + "/" + birthDD;
+		var gender = $('#genderSelectBox option:selected').text();
+		var $address = $("#sample6_address").val();
+		var $detailAdd = $("#sample6_detailAddress").val();
+	    
+	    var member = {
+	        id: id,
+	        password: rawPassword,
+	        name: $("#memberName").val(),
+	        birth: birth,
+	        email: email,
+	        phone: $("#memberPhone").val(),
+	        gender: gender,
+	        address: $address,
+	        detailAdd: $detailAdd,
+	        cnum: $("#memberCnum").val(),
+	        verified: 'Y'
+	    };
+
+
+    });
+
+
+
+
 
 

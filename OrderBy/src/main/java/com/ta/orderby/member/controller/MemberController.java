@@ -3,18 +3,30 @@ package com.ta.orderby.member.controller;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.ta.orderby.member.model.service.MemberService;
+import com.ta.orderby.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +41,148 @@ public class MemberController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	NaverLoginBO naverLoginBO;
+	
+	@Autowired
+	KakaoLoginBO kakaoLoginBO;
 
+	
+	// 로그인 페이지로 이동
+//	@GetMapping("/login")
+//	public String write() {
+//		log.info("로그인 페이지 입장!");
+//		
+//		return "member/login";
+//	}
+	
+	
+	// 로그인 화면
+	@RequestMapping(value = "/login")
+	public String login(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
+
+		String serverUrl = request.getScheme()+"://"+request.getServerName();
+		if(request.getServerPort() != 88) {
+			serverUrl = serverUrl + ":" + request.getServerPort();
+		}
+		
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session, serverUrl);
+		model.addAttribute("naverAuthUrl", naverAuthUrl);
+		
+		String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session, serverUrl);
+		model.addAttribute("kakaoAuthUrl", kakaoAuthUrl);
+
+		return "member/login";
+	}
+
+	// 네이버 로그인 성공시 callback
+	@RequestMapping(value = "/auth/naver/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String naverOauth2ClientCallback(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
+
+		String serverUrl = request.getScheme()+"://"+request.getServerName();
+		if(request.getServerPort() != 88) {
+			serverUrl = serverUrl + ":" + request.getServerPort();
+		}
+
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state, serverUrl);
+		if(oauthToken == null) {
+			model.addAttribute("msg", "네이버 로그인 access 토큰 발급 오류 입니다.");
+			model.addAttribute("url", "/");
+			
+			return "/common/redirect";
+//			return "home";
+		}
+		
+		// 로그인 사용자 정보를 읽어온다
+		String apiResult = naverLoginBO.getUserProfile(oauthToken, serverUrl);
+		
+		JSONParser jsonParser = new JSONParser();
+		Object obj = jsonParser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
+		
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+
+		// 프로필 조회
+		String id = (String) response_obj.get("id");
+		String gender = (String) response_obj.get("gender");
+		
+		// 세션에 사용자 정보 등록
+		session.setAttribute("islogin_r", "Y");
+		session.setAttribute("id", id);
+		session.setAttribute("gender", gender);
+		
+		return "redirect:/";
+	}
+	
+	// 카카오 로그인 성공시 callback
+	@RequestMapping(value = "/auth/kakao/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String kakaoOauth2ClientCallback(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
+
+		String serverUrl = request.getScheme() + "://" + request.getServerName();
+		if (request.getServerPort() != 88) {
+			serverUrl = serverUrl + ":" + request.getServerPort();
+		}
+
+		OAuth2AccessToken oauthToken;
+		oauthToken = kakaoLoginBO.getAccessToken(session, code, state, serverUrl);
+		if (oauthToken == null) {
+			model.addAttribute("msg", "카카오 로그인 access 토큰 발급 오류 입니다.");
+			model.addAttribute("url", "/");
+			
+			return "/common/redirect";
+//			return "home";
+		}
+
+		// 로그인 사용자 정보를 읽어온다
+		String apiResult = kakaoLoginBO.getUserProfile(oauthToken, serverUrl);
+
+		JSONParser jsonParser = new JSONParser();
+		Object obj = jsonParser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
+
+		JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
+		
+		// 프로필 조회
+		String id = (String) response_obj.get("id");
+		String gender = (String) response_obj.get("gender");
+		
+		// 세션에 사용자 정보 등록
+		session.setAttribute("islogin_r", "Y");
+		session.setAttribute("id", id);
+		session.setAttribute("gender", gender);	
+
+		return "redirect:/";
+	}
+
+	// 로그아웃
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		// 세션 삭제
+		session.invalidate();
+		
+		return "redirect:/";
+	}	
+
+    
+    
+	// 아이디찾기 페이지로 이동!
+    @GetMapping("/findId")
+    public String findId() {
+    	
+        return "member/findId"; // 아이디 찾기 화면을 나타내는 뷰 이름
+    }
+    
+	// 비번찾기 페이지로 이동!
+    @GetMapping("/findPwd")
+    public String findPwd() {
+    	
+        return "member/findPwd"; // 비밀번호 찾기 화면을 나타내는 뷰 이름
+    }
+    
+    
 
 //	
 //	// 관리자 전용 페이지 요청
@@ -59,16 +212,33 @@ public class MemberController {
 	
 	
 	
-	// 로그인 페이지로 이동
-	@GetMapping("/login")
-	public String write() {
-		log.info("로그인 페이지 입장!");
-		
-		return "member/login";
-	}
+
+//	@PostMapping("/login")
+//	public String loginPost(@RequestParam("id") String id,
+//	                        @RequestParam("password") String password,
+//	                        RedirectAttributes redirectAttributes,
+//	                        HttpSession session) {
+//
+//	    // 아이디와 비밀번호를 이용해 로그인 시도
+//	    Member member = service.login(id, password);
+//
+//	    if (member != null) {
+//	        // 로그인 성공 시 필요한 정보만 세션에 저장
+//	        session.setAttribute("loginMemberNo", member.getNo());
+//	        session.setAttribute("loginMemberName", member.getName());
+//	        return "redirect:/";
+//	    } else {
+//	        // 로그인 실패 시 에러 메시지를 리다이렉트 속성에 추가하여 로그인 페이지로 리다이렉트
+//	        redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
+//	        return "redirect:/member/login";
+//	    }
+//	}
 	
-//	// 로그인 정보 입력 후 처리(시큐리티 처리전에 여기로 로그인정보 받았었음..시큐리티 적용 후에는 detail(MemberServiceImpl로 받음)
-	
+
+
+    
+    
+    
 	// 회원가입 페이지로 이동
 	@GetMapping("/enroll")
 	public String enroll() {
@@ -76,6 +246,8 @@ public class MemberController {
 		
 		return "member/enroll"; // jsp 경로
 	}
+	
+
 		
 
 // ------------------------------ 회원가입 ------------------------------ //
@@ -89,7 +261,8 @@ public class MemberController {
 		
 		int result = service.checkId(id);
 		
-		log.info("결과값 = " + result);
+		log.info("아이디 중복 결과값 : (1이면 중복 0이면 안중복..) " + result);
+
 		
 		return result;
 		
@@ -126,175 +299,87 @@ public class MemberController {
 //		
 //		return "redirect:/";
 //	}
-//	
-//	//회원가입 버튼 눌렀을때 get 요청
-//	@GetMapping("/member/enroll")
-//	public String enroll() {
-//		log.info("회원가입 페이지요청!!!!!!!!!!!!!!!");
+
+	
+	
+	// 회원가입 완료버튼 눌렀을때 post 요청
+	@PostMapping("/enroll")
+	public ModelAndView enroll(ModelAndView modelAndView, @ModelAttribute Member member) {
+	    // 전달해야할 정보, 보여줘야할 뷰 둘다 한꺼번에 보내고싶을때 ModelAndView
+	    log.info(member.toString());
+	    
+		System.out.println(member.getNo());
+		System.out.println(member.getId());
+		System.out.println(member.getPassword());
+		System.out.println(member.getName());
+		System.out.println(member.getBirth());
+		System.out.println(member.getEmail());
+		System.out.println(member.getPhone());
+		System.out.println(member.getGender());
+		System.out.println(member.getAddress());
+		System.out.println(member.getDetailAdd());
+
+	    
+	    
+	    int result = service.save(member); // 서비스 세이브 가져옴
+	    System.out.println("컨트롤러 멤버 값" + member);	    
+	    if(result > 0) {
+	        modelAndView.addObject("msg", "회원가입이 정상적으로 완료되었습니다.");
+	        modelAndView.addObject("location", "/"); // 로케이션은 홈으로 보낸다.
+	    } else {
+	        modelAndView.addObject("msg", "회원가입을 실패하였습니다.");
+	        modelAndView.addObject("location", "/member/enroll"); // 로케이션은 회원가입페이지로 보낸다.
+	    }
+
+	    modelAndView.setViewName("common/msg");
+	    
+	    log.info("컨트롤러 모델엔뷰 값 : {}", modelAndView);
+	    System.out.println("컨트롤러 모델엔뷰 값" + modelAndView);
+	    
+	    System.out.println("컨트롤러 멤버 값" + member);	
+		System.out.println(member.getNo());
+		System.out.println(member.getId());
+		System.out.println(member.getPassword());
+		System.out.println(member.getName());
+		System.out.println(member.getBirth());
+		System.out.println(member.getEmail());
+		System.out.println(member.getPhone());
+		
+		System.out.println(member.getGender());
+		System.out.println(member.getAddress());
+		System.out.println(member.getDetailAdd());
+	    
+	    return modelAndView;
+	}
+	
+	// 회원가입 완료버튼 눌렀을때 post 요청
+//	@RequestMapping(value="/enroll", method=RequestMethod.POST)
+//	public String joinPOST(Member member) throws Exception{
 //		
-//		return "/member/enroll";
+//		log.info("join 진입");
+//		
+//		// 회원가입 서비스 실행
+//		service.join(member);
+//		
+//		log.info("join Service 성공하고 로그인화면으로 간다!");
+//		
+//		return "member/login";
+//		
 //	}
-//	
-//	// 회원가입 완료버튼 눌렀을때 post 요청
-//	@PostMapping("/member/enroll")
-//	public ModelAndView enroll(ModelAndView modelAndView, @ModelAttribute Member member) {
-////		log.info("회원가입 완료!!!!!!!!!!!!!!!");
-//		// 전달해야할 정보, 보여줘야할 뷰 둘다 한꺼번에 보내고싶을때 ModelAndView
-//		log.info(member.toString());
-//		
-//		int result = 0;
-//		
-//		result = service.save(member);
-//		
-//		if(result > 0) {
-//			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되었습니다.");
-//			modelAndView.addObject("location", "/"); // 로케이션은 홈으로 보낸다.
-//		} else {
-//			modelAndView.addObject("msg", "회원가입을 실패하였습니다.");
-//			modelAndView.addObject("location", "/member/enroll"); // 로케이션은 회원가입페이지로 보낸다.
-//		}
-//
-//		modelAndView.setViewName("common/msg");
-//		
-//		return modelAndView;
-//	}
-//	/*
-//	 * @ResponseBody
-//	 *   - 일반적으로 컨트롤러 메소드의 반환형이 String일 경우 뷰의 이름을 반환한다.
-//	 *   - @ResponseBody 붙은 메소드의 반환형이 String일 경우 해당 요청을 보낸 클라이언트에 전달할 데이터를 의미한다.
-//	 * 
-//	 * jackson 라이브러리
-//	 *   - 자바 객체를 JSON 문자열 형태의 데이터로 변화하는 라이브러리이다.
-//	 *   - 스프링에서 jackson 라이브러리를 추가하고 @ResponseBody을 사용하면 리턴되는 객체를 자동으로
-//	 *     JSON 문자열로 변경해서 반환한다.
-//	 * 
-//	 * @RestController
-//	 *   - 해당 어노테이션이 붙은 컨트롤러의 모든 메소드에서 데이터를 반환하는 경우에 사용한다.
-//	 *   - @Controller, @ResponseBody를 합쳐놓은 역할을 수행한다.
-//	 */
-//	@GetMapping("/jsonTest")
-//	@ResponseBody
-//	public Object jsonTest() {
-//		Map<String, Object> map = new HashMap<>();
-//		
-//		map.put("test1", null);
-//		map.put("test2", "hi");
-//		map.put("test3", 10);
-//		map.put("test4", false);
-//		
-////		return new Member("ismoon", "1234", "문인수");
-//
-//		return map;
-//	}
-//	
-////	// 아이디 중복체크
-////	@PostMapping("/member/idCheck")
-////	@ResponseBody
-////													// 사용자가 입력한 아이디 인풋에 값을 담는 변수명이 userId임
-////	public Map<String, Boolean> idCheck(@RequestParam("userId") String id) {
-////		Map<String, Boolean> map = new HashMap<>();
-////		
-////		map.put("duplicate", service.isDuplicateId(id));
-////		System.out.println(id);
-////		
-////		return map; // 값을 jsp가 아니라 데이터로 주고싶을때 @ResponseBody 어노테이션 주기!
-////	}
-//	
-//	
-//	
-//	/*
-//	 * @ResponseBody을 사용하지 않고 JSON 문자열을 반환하는 방법!
-//	 * SpringFramework에서 제공해주는 HttpEntity 클래스는 Header와 Body를 합쳐준다!
-//	 * 
-//	 * HttpEntity
-//	 *   - SpringFramework에서 제공하는 클래스로 HTTP 요청 또는 응답에 해당하는 HTTP Header와 HTTP Body를 포함하는 클래스이다.
-//	 *   
-//	 * ResponseEntity
-//	 *   - HttpEntity를 상속하는 클래스로 HTTP 응답 데이터를 포함하는 클래스이다.
-//	 *   - 개발자가 직접 HTTP Header, Body, Status Code를 세팅하여 반환할 수 있다.(헤더나 상태코드 변경해야할때는 http서블릿리스폰즈 다시 받아오고 쌩지랄해야됨)
-//	 */
-//	// 아이디 중복체크2
-//	@PostMapping("/member/idCheck")
-//													// 사용자가 입력한 아이디 인풋에 값을 담는 변수명이 userId임
-//	public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("userId") String id) {
-//		Map<String, Boolean> map = new HashMap<>();
-//		
-//		map.put("duplicate", service.isDuplicateId(id));
-//		
-////		return new ResponseEntity<Map<String, Boolean>>(map, HttpStatus.OK);
-////		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 인터널 서버에러 날려보기 (개발자모드에서 500에러뜸)
-//		return ResponseEntity.ok()
-//							 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-////							 .header(id, null) // 헤더값 여러개 설정 가능!!
-//							 .body(map); // 상태값, 헤더값, 바디값을 내가 지정함!!
-//	}
-//	
-//	// 마이페이지 들어가기
-//	@GetMapping("/member/myPage")
-//	public String myPage() {
-//		log.info("회원 정보 수정 페이지 요청!!!!!!!!!!	");
-//		
-//		return "/member/myPage";
-//	}
-//
-//	// 정보수정 완료버튼 누를때 (업데이트서블릿 참고)
-//	// 전달해야할 정보, 보여줘야할 뷰 둘다 한꺼번에 보내고싶을때 ModelAndView
-//	@PostMapping("/member/update")
-//	public ModelAndView update(
-//				ModelAndView modelAndView,
-//				@SessionAttribute("loginMember") Member loginMember,
-//				@ModelAttribute Member member) {
-//	
-//	int result = 0;
-//		
-//		System.out.println(loginMember);
-//		System.out.println(member);
-//		
-//		member.setNo(loginMember.getNo());
-//		
-//		log.info(member.toString());
-//		
-//		result = service.save(member);
-//		
-//		if(result > 0) {
-//			modelAndView.addObject("loginMember", service.findMemberById(loginMember.getId()));
-//			modelAndView.addObject("msg", "회원 정보 수정을 완료했습니다.");
-//		} else {
-//			modelAndView.addObject("msg", "회원 정보 수정을 실패했습니다.");			
-//		}
-//		
-////		modelAndView.addObject("msg", "업데이트 테스트");
-//		modelAndView.addObject("location", "/member/myPage");
-//		modelAndView.setViewName("common/msg");
-//		
-//		return modelAndView;
-//	}
-//	
-//	// 회원 탈퇴
-//	@GetMapping("/member/delete")
-//	public ModelAndView delete(
-//				ModelAndView modelAndView,
-//				@SessionAttribute("loginMember") Member loginMember) {
-//		
-//		int result = 0;
-//		
-//		result = service.delete(loginMember.getNo());
-//		
-//		if(result > 0) {
-//			modelAndView.addObject("msg", "정상적으로 탈퇴되었습니다.");
-//			modelAndView.addObject("location", "/logout");
-//		} else {
-//			modelAndView.addObject("msg", "회원 탈퇴를 실패하였습니다.");
-//			modelAndView.addObject("location", "/member/myPage");
-//		}
-//		
-//		modelAndView.setViewName("common/msg");
-//		
-//		return modelAndView;
-//	}
-//	
-//	
-//	
+	
+	
+
+	    
+
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	// 04-19 메일 테스트(완료)
 	// sendMail 코드

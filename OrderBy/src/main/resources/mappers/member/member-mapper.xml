@@ -74,6 +74,7 @@
 		WHERE M_ID = #{id}
 	</select>
 
+
 	<!-- 이메일 중복 체크 -->
 	<select id="selectOneMember" parameterType="String" resultType="string">
 		SELECT M_EMAIL
@@ -81,34 +82,36 @@
 		WHERE M_EMAIL = #{email}
 	</select>
 
-	
-	
+	<!-- 아이디 검색(로그인 시) -->
    <select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
-	  SELECT M_NO,
-      		 M_ID,
-	         M_PASSWORD,
-	         M_NAME,
-	         M_BIRTH,
-	         M_EMAIL,
-	         M_PHONE,
-	         M_GENDER,
-	         M_ADDRESS,
-	         M_DETAIL_ADD,
-	         M_POINT,
-	         M_ROLE,
-	         M_ENROLL_DATE,
-	         M_MODIFY_DATE,
-	         M_STATUS,
-	         M_CNUM,
-	         M_PCOUNT
+      SELECT M_NO,
+             M_ID,
+             M_PASSWORD,
+             M_NAME,
+             M_BIRTH,
+             M_EMAIL,
+             M_PHONE,
+             M_GENDER,
+             M_ADDRESS,
+             M_DETAIL_ADD,
+             M_POINT,
+             M_ROLE,
+             M_ENROLL_DATE,
+             M_MODIFY_DATE,
+             M_STATUS,
+             M_CNUM,
+             M_PCOUNT,
+             M_VERIFIED
       FROM MEMBER
       WHERE M_ID = #{id}
    </select>
 
+		<!--
+<insert id="insertMember" parameterType="Member"
+		useGeneratedKeys="true" keyColumn="M_NO" keyProperty="no">
+		프라이머리 키값을 외래키로 들어가게 하는거 -->
 
-
-	<insert id="insertMember" parameterType="Member"
-		useGeneratedKeys="true" keyColumn="NO" keyProperty="no"> <!-- 프라이머리 키값을 외래키로 들어가게 하는거 -->
+	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyColumn="M_NO" keyProperty="no">
 		INSERT INTO MEMBER (
 			M_NO,
 			M_ID,
@@ -144,6 +147,7 @@
 			DEFAULT,
 			DEFAULT,
 			DEFAULT,
+			#{cnum},
 			DEFAULT,
 			DEFAULT
 		)
@@ -194,7 +198,7 @@
         INNER JOIN TOKEN ON MEMBER.M_NO = TOKEN.M_NO
         SET TOKEN.TK_TOKEN=#{tkToken}
         WHERE TOKEN.TK_EMAIL=#{email}
-		AND MEMBER.M_ID=#{id};
+		AND MEMBER.M_ID=#{id}
     </update>
     
     <!-- 메일인증을 하면 tk_auth(메일인증여부) 컬럼을 기본값0에서 1로 바꿔 로그인을 허용 -->
@@ -212,6 +216,7 @@
 	    INNER JOIN TOKEN ON MEMBER.M_NO = TOKEN.M_NO
 	    WHERE MEMBER.M_ID=#{id} AND TOKEN.TK_AUTH=1
     </select>
+    	
     
     
 

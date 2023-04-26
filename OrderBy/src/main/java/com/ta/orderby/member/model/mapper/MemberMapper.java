@@ -12,6 +12,7 @@ public interface MemberMapper {
 	// 로그인 시
 	Member selectMemberById(String id);
 	
+	// 회원가입 시
 	int insertMember(Member member);
 	
 	int updateMember(Member member);
@@ -43,5 +44,11 @@ public interface MemberMapper {
 	
 	// (04-19) 이메일 인증 테스트
 	void insertToken(Member token);
+
+	
+	
+	
+	
+
 	
 }

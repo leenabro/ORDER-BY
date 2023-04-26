@@ -40,7 +40,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
 
-		request.getRequestDispatcher("/WEB-INF/views/login2.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/member/login.jsp").forward(request, response);
 	}
 
 }

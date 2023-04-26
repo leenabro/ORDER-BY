@@ -11,10 +11,7 @@
 	<bean id="bcryptPasswordEncoder"
 		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
 	/>
-	
-	
-	
-	
+
 	<!-- 멤버 디테일 서비스 == 멤버 서비스 임플리먼트 빈 생성 -->
 	<bean id="memberServiceImpl"
 		  class="com.ta.orderby.member.model.service.MemberServiceImpl"
@@ -36,6 +33,11 @@
 	<bean id="loginFailureHandler"
 		  class="com.ta.orderby.common.handler.LoginFailureHandler"
 	/>
+	
+	<bean id="logoutSuccessHandler"
+		  class="com.ta.orderby.common.handler.CustomLogoutSuccessHandler"
+	/>
+	
 	
 	<!--
 		resources 폴더 안에 있는 파일들은 security 대상이 아니라는 것을 나타낸다.
@@ -103,11 +105,15 @@
 		/>
 		
 		<!-- 로그아웃 페이지 커스텀 -->
+		<!--
 		<security:logout
 			logout-url="/member/logout"
 			logout-success-url="/"
 		/>
-
+		-->
+		<security:logout logout-url="/member/logout"
+			success-handler-ref="logoutSuccessHandler"
+			invalidate-session="false"/>
 		<!--
 			로그인유지 기억하기 기능 활성화
 			key="khweb" << 토큰 생성용 키값

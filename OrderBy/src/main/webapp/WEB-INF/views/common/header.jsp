@@ -57,20 +57,22 @@
 					  </li>
 					        <li><a href="no-sidebar.html">회사소개</a></li>
 					</ul>
+
 					<security:authorize access="isAnonymous()">
 					      	<a href="${ path }/member/login" class="button style4 small">Login</a>
 					</security:authorize>
-					
+					<security:authorize access="hasRole('ROLE_ADMIN')">
 					<button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
-					
-					<form action="${ path }/member/logout" method="POST">
-						<security:csrfInput/>
-						<button class="button style4 small">Logout</button>
-					</form>
-					
-					<security:authorize access="isAuthenticated()">
-					<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
 					</security:authorize>
+
+					<security:authorize access="isAuthenticated()">
+						<form action="${ path }/member/logout" method="POST">
+							<security:csrfInput/>
+							<button class="button style4 small">Logout</button>
+						</form>
+						<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
+					</security:authorize>
+					
 		        </nav>
 			</header>
 		</div>
