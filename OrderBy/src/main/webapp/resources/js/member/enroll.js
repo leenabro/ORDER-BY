@@ -167,43 +167,69 @@ $('#memberId')
 
 
 // ======================================== password 유효성검사 시작 ========================================
+
+
+
 function validatePassword() {
-	var pw1 = $("#memberPwd1").val();
-	var pw2 = $("#memberPwd2").val();
-	var id = $("#memberId").val();
-	    
-	var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-	var hangulcheck = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-	
-	var $password1FocusMsg = $('#password1FocusMsg'), // 패스워드 체크1 메시지  포커스
-	    $password2FocusMsg = $('#password2FocusMsg'), // 패스워드 체크2 메시지 포커스
-	    $password1warningMsg = $('#password1warningMsg'), // 패스워드 체크1 메시지 별로다!
-	    $password2warningMsg = $('#password2warningMsg'), // 패스워드 체크2 메시지 별로다!
-	    $password1goodMsg = $('#password1goodMsg'), // 패스워드 체크1 메시지 굳이다!
-	    $password2goodMsg = $('#password2goodMsg'); // 패스워드 체크2 메시지 굳이다!
-	
-	// 비밀번호 체크1
-	if(false === reg.test(pw1)) {
-	    $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").show();
-	    return false;
-	} else if(/(\w)\1\1\1/.test(pw1)) {
-	    $password1warningMsg.text("같은 문자를 4번 이상 사용할 수 없습니다.").show();
-	    return false;
-	} else if(pw1.search(id) > -1) {
-	    $password1warningMsg.text("비밀번호에 아이디가 포함되었습니다.").show();
-	    return false;
-	} else if(pw1.search(/\s/) != -1) {
-	    alert("비밀번호는 공백 없이 입력해주세요.");
-	    return false;
-	} else if(hangulcheck.test(pw1)) {
-	    alert("비밀번호에 한글을 사용 할 수 없습니다."); 
-	    return false;
-	} else {
-	    $password1FocusMsg.hide();
-	    $password1goodMsg.text("사용가능한 비밀번호 입니다.").show();
-	}
-	
+  var pw1 = $("#memberPwd1").val();
+  var pw2 = $("#memberPwd2").val();
+  var id = $("#memberId").val();
+
+  var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  var hangulcheck = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+  var $password1FocusMsg = $('#password1FocusMsg'), // 패스워드 체크1 메시지  포커스
+      $password1warningMsg = $('#password1warningMsg'), // 패스워드 체크1 메시지 별로다!
+      $password1goodMsg = $('#password1goodMsg'); // 패스워드 체크1 메시지 굳이다!
+
+  // 비밀번호 체크1
+  if (false === reg.test(pw1)) {
+    $password1FocusMsg.text("8자 이상 영문 대/소문자, 숫자와 특수문자를 모두 포함해야 합니다.").show().css({ color: "red" });
+    $password1warningMsg.hide();
+    $password1goodMsg.hide();
+
+    return false;
+  }
+
+  if (/(\w)\1\1\1/.test(pw1)) {
+    $password1FocusMsg.hide();
+    $password1warningMsg.text("같은 문자를 4번 이상 사용할 수 없습니다.").show();
+    $password1goodMsg.hide();
+
+    return false;
+  }
+
+  if (pw1.search(id) > -1) {
+    $password1FocusMsg.hide();
+    $password1warningMsg.text("비밀번호에 아이디가 포함되었습니다.").show();
+    $password1goodMsg.hide();
+
+    return false;
+  }
+
+  if (pw1.search(/\s/) != -1) {
+    $password1FocusMsg.hide();
+    alert("비밀번호는 공백 없이 입력해주세요.");
+    $password1goodMsg.hide();
+
+    return false;
+  }
+
+  if (hangulcheck.test(pw1)) {
+    $password1FocusMsg.hide();
+    alert("비밀번호에 한글을 사용 할 수 없습니다.");
+    $password1goodMsg.hide();
+
+    return false;
+  }
+
+  $password1FocusMsg.hide();
+  $password1warningMsg.hide();
+  $password1goodMsg.text("사용가능한 비밀번호 입니다.").show();
+
+  return true;
 }
+
 	// 비밀번호 재확인 체크
 	function memberPwd2ch() {
     var pw1 = $("#memberPwd1").val();
@@ -256,11 +282,7 @@ var $memberName = (target) => {
 };
 
 // ======================================== 체크박스 상태검사 시작 ========================================
-$("input:checkbox[name='chkAll']").prop("checked", true);
-$("input:checkbox[name='chk1']").prop("checked", true);
-$("input:checkbox[name='chk2']").prop("checked", true);
-$("input:checkbox[name='chk3']").prop("checked", true);
-$("input:checkbox[name='chk4']").prop("checked", true);
+
 
 
 
@@ -268,7 +290,7 @@ $("input:checkbox[name='chk4']").prop("checked", true);
 $(".join_box")
 .on("click", "#chkAll", function () {
     $(this).parents(".join_box").find('input').prop("checked", $(this).is(":checked"));
-
+    checkRequiredCheckboxes(); // 필수 체크항목 체크 확인
     return true;
 })
 // 체크박스 개별 선택
@@ -281,12 +303,9 @@ $(".join_box")
     
     $("#chkAll").prop("checked", is_checked);
 
+});
 
-    if($("#chkAll").is(":checked") == false) {
-    }
 
-})
-;
 
 // ======================================== 주소 api 시작 ========================================
 $("#sample6_detailAddress, #sample6_address").on("input", function() {
@@ -358,7 +377,9 @@ $(document).ready(function() {
     $(".successEmailChk").text("이메일 입력은 필수입니다.").hide();
     
     $("#memberEmail").focus(function() {
-        $(".successEmailChk").text("이메일 입력은 필수입니다.").css("color", "red").show();
+        if (!$("#cnum_btn").hasClass("disabled")) {
+            $(".successEmailChk").text("이메일 입력은 필수입니다.").css("color", "red").show();
+        }
     });
     
     $("#memberEmail").off("keyup").on("keyup", function() {
@@ -419,17 +440,24 @@ $("#cnum_btn").click(function(){
 $("#cnum_btn2").click(function(){
     var memberCnum = $("#memberCnum").val();
     if (memberCnum === code) {
-    
-    	$(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").hide();
-        alert("이메일 인증이 완료되었습니다.");
-        $("#memberEmail").attr("readonly", true);
-        $("#memberCnum").attr("readonly", true);
-        $("#cnum_btn").attr("readonly", true);
-        $("#cnum_btn2").attr("readonly", true);
-	} else {
-	
-    alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
-	}
+        $(".successEmailChk").text("이메일 인증 중입니다. 잠시만 기다려주세요.").show();
+        $("#cnum_btn2").attr("disabled", true);
+        
+        // 이메일 인증 로직 추가
+        setTimeout(function() {
+            $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.").hide();
+            alert("이메일 인증이 완료되었습니다.");
+            $("#memberEmail").attr("readonly", true);
+            $("#memberCnum").attr("readonly", true);
+            // 인증번호 인증 완료되면 받기 버튼 비활성화 및 스타일 변경
+        	$("#cnum_btn").prop("disabled", true).addClass("disabled");
+        	// 인증번호 인증 완료되면 받기 버튼 비활성화 및 스타일 변경2
+            $("#cnum_btn2").attr("readonly", true).addClass("disabled");
+        }, 5000); // 5초 후에 인증 완료 처리 및 로딩 표시 숨김
+        
+    } else {
+        alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+    }
 });
 
 
@@ -455,7 +483,8 @@ $(document).ready(function(){
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
     var currentMonth = (currentDate.getMonth() + 1) > 9 ? ''+(currentDate.getMonth() + 1) : '0'+(currentDate.getMonth() + 1); 
-    var currentDay = (currentDate.getDate()) > 9 ? ''+(currentDate.getDate()) : '0'+(currentDate.getDate());           
+    var currentDay = (currentDate.getDate()) > 9 ? ''+(currentDate.getDate()) : '0'+(currentDate.getDate());     
+          
     // 출생 연도 selectbox 만들기
     for(var i = 1950 ; i <= currentYear ; i++) {
         $('#memberBirthYY').append('<option value="' + i + '">' + i + '년</option>');
@@ -474,59 +503,184 @@ $(document).ready(function(){
     }
     $("#memberBirthYY > option[value="+currentYear+"]").attr("selected", "true");        
     $("#memberBirthMM > option[value="+currentMonth+"]").attr("selected", "true");    
-    $("#memberBirthDD > option[value="+currentDay+"]").attr("selected", "true");      
-    
+    $("#memberBirthDD > option[value="+currentDay+"]").attr("selected", "true");  
+
+	// 년도로 만 26세 확인
+    $('#memberBirthYY').on('change', function() {
+        var birthYY = $(this).val();
+        var currentYear = new Date().getFullYear();
+        if (currentYear - birthYY < 26) {
+            $('#memberBirthMsg').text('만 26세 이상만 가입 가능합니다.').css('color', 'red').show();
+        } else {
+            $('#memberBirthMsg').hide();
+        }
+    });
+
+    // 월로 만 26세 확인
+    $('#memberBirthMM').on('change', function() {
+        var birthYY = $('#memberBirthYY').val();
+        var birthMM = $(this).val();
+        var birthDD = $('#memberBirthDD').val();
+        var birth = new Date(birthYY + '/' + birthMM + '/' + birthDD);
+        var now = new Date();
+        var age = now.getFullYear() - birth.getFullYear();
+        birth.setFullYear(now.getFullYear());
+        if (now < birth) {
+            age--;
+        }
+        if (age < 26) {
+            $('#memberBirthMsg').text('만 26세 이상만 가입 가능합니다.').css('color', 'red').show();
+        } else {
+            $('#memberBirthMsg').hide();
+        }
+    });
+
+    // 일자로 만 26세 확인
+    $('#memberBirthDD').on('change', function() {
+        var birthYY = $('#memberBirthYY').val();
+        var birthMM = $('#memberBirthMM').val();
+        var birthDD = $(this).val();
+        var birth = new Date(birthYY + '/' + birthMM + '/' + birthDD);
+        var now = new Date();
+        var age = now.getFullYear() - birth.getFullYear();
+        birth.setFullYear(now.getFullYear());
+        if (now < birth) {
+            age--;
+        }
+        if (age < 26) {
+        
+		$('#memberBirthMsg').text('만 26세 이상만 가입 가능합니다.').css('color', 'red').show();
+		} else {
+		
+		$('#memberBirthMsg').hide();
+		}
+	});
+
+
 });
 
 
-
-
-
-
 // ======================================== 가입하기 버튼 시작 ========================================
-    // 가입하기 버튼 클릭 이벤트 핸들러
+
+
+			
+	// 가입하기 버튼 클릭 이벤트 핸들러
 	$("#signup_btn").on("click", function(e) {
-	    e.preventDefault();
-	    $("#signupForm").submit();
+		e.preventDefault();
+	
+
+			
+		var id = $("#memberId").val();
+		var password = $("#memberPwd2").val();
+		var passwordConfirm = $("#memberPwd1").val();
+		var name = $("#memberName").val();
+		var email = $("#memberEmail").val();
+		var phone = $("#memberPhone").val();
+		var birthYY = $("#memberBirthYY").val() || "Unknown";
+		var birthMM = $("#memberBirthMM").val() || "Unknown";
+		var birthDD = $("#memberBirthDD").val() || "Unknown";
+		var birth = birthYY.slice(2) + "/" + birthMM + "/" + birthDD;
+		// FormData 객체를 생성해서 폼 데이터를 담는다
+		var formData = new FormData();
+			formData.append("id", $("#memberId").val());
+			formData.append("password", $("#memberPwd2").val());
+			formData.append("name", $("#memberName").val());
+			formData.append("birth", birth);
+			formData.append("email", $("#memberEmail").val());
+			formData.append("phone", $("#memberPhone").val());
+			formData.append("gender", $('#genderSelectBox option:selected').text());
+			formData.append("address", $("#sample6_address").val());
+			formData.append("detailAdd", $("#sample6_detailAddress").val());
+			formData.append("cnum", $("#memberCnum").val());
+			formData.append("verified", 'Y');
+
+	   // 필수 체크항목 체크 확인
+	    var chk1Checked = $("input:checkbox[name='chk1']").is(":checked");
+	    var chk2Checked = $("input:checkbox[name='chk2']").is(":checked");
+
 	    
-	            console.log(address);
-        console.log(detailAdd);
-	}),
+		// 아이디, 비밀번호, 비밀번호 확인, 이름, 이메일, 휴대폰번호, 생년월일을 각각 변수에 담음!
+		if (!id || !password || !passwordConfirm || !name || !email || !phone || !birthYY || !birthMM || !birthDD) {
+		    alert("필수 입력 항목이 누락되었습니다. 다시 확인해주세요.");
+		    
+		    return false;
+		} else {
+		    var missingFields = "";
+		    if (!id) {
+		        missingFields += "아이디 ";
+		    }
+		    if (!password) {
+		        missingFields += "비밀번호 재확인 ";
+		    }
+		    if (!passwordConfirm) {
+		        missingFields += "비밀번호 ";
+		    }
+		    if (!name) {
+		        missingFields += "이름 ";
+		    }
+		    if (!email) {
+		        missingFields += "이메일 ";
+		    }
+		    if (!phone) {
+		        missingFields += "휴대폰번호 ";
+		    }
+		    if (!birthYY || !birthMM || !birthDD) {
+		        missingFields += "생년월일 ";
+		    }
+		    if (missingFields) {
+		        alert(missingFields + "입력이 누락되었습니다. 다시 확인해주세요.");
+		        
+		        return false;
+		    }
+			
+		    if (!chk1Checked || !chk2Checked) {
+		        alert("필수 체크항목을 체크해주세요.");
+		        
+		        return false;
+		    }
+		}
 
 
 
-	$(document).ready(function() {
-
-	    var id = $("#memberId").val();
-	    var rawPassword = $("#memberPwd2").val() || "";
-	    var email = $("#memberEmail").val();
-	    var birthYY = $("#memberBirthYY").val() || "Unknown";
-	    var birthMM = $("#memberBirthMM").val() || "Unknown";
-	    var birthDD = $("#memberBirthDD").val() || "Unknown";
-	    var birth = birthYY.slice(2) + "/" + birthMM + "/" + birthDD;
-		var gender = $('#genderSelectBox option:selected').text();
-		var $address = $("#sample6_address").val();
-		var $detailAdd = $("#sample6_detailAddress").val();
-	    
-	    var member = {
-	        id: id,
-	        password: rawPassword,
-	        name: $("#memberName").val(),
-	        birth: birth,
-	        email: email,
-	        phone: $("#memberPhone").val(),
-	        gender: gender,
-	        address: $address,
-	        detailAdd: $detailAdd,
-	        cnum: $("#memberCnum").val(),
-	        verified: 'Y'
-	    };
-
-
-    });
 
 
 
 
 
 
+        // AJAX를 이용해서 폼 데이터를 서버로 전송한다.
+        $.ajax({
+            type: "POST",
+            url: "/member/enroll",
+            data: formData,
+			beforeSend: function(xhr) {
+            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+       		},
+            processData: false,
+            contentType: false,
+            success: function(result) {
+                console.log(result);
+                
+                alert("회원가입이 완료되었습니다.");
+    			window.location.href = "/member/login"; // 로그인 페이지로 이동
+            },
+            error: function(xhr, status, error) {
+				if(xhr.status === 400) {
+					alert("잘못된 요청입니다.");
+				} else if(xhr.status === 401) {
+					alert("인증이 실패하였습니다.");
+				} else if(xhr.status === 404) {
+					alert("페이지를 찾을 수 없습니다.");
+				} else if(xhr.status === 500) {
+					alert("서버 오류가 발생하였습니다.");
+				} else {
+					alert("오류가 발생하였습니다. 다시 시도해주세요.");
+					
+					window.location.href = "/"; // 홈으로 이동
+				}
+					console.log(xhr);
+					console.log(status);
+					console.log(error);
+				}
+			});
+		});

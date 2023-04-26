@@ -21,7 +21,6 @@
 <link rel="shortcut icon" href="#">
 
 <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
-<script src="${ path }/resources/js/member/MyPasswordEncoder.js"></script>
 <script src="${ path }/resources/js/member/enroll.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -176,18 +175,16 @@
 							    <h3>이메일</h3>
 					            <label class="memberEmail">
 					                <input name="email" id="memberEmail" type="text" style="ime-mode:disabled" autocomplete="on" placeholder="이메일 입력" title="이메일을 입력하세요." required autofocus />
-					                <span class="cnum_btn_wrap">
 					                    <button onclick="return false;" id="cnum_btn">인증번호 받기</button>
 					                    <security:csrfInput />
-					                </span>
+
 					            </label>
 				                <p class="successEmailChk" id="successEmailChk" style="display:none; color:gray;"></p>
 					            
 					            <label for="memberCnum" class="memberCnum">
 			                        <input name="cnum" id="memberCnum" type="text" placeholder="인증번호를 입력하세요." title="인증번호를 입력하세요." required />
-			                        <span class="cnum_btn_wrap2">
+
 			                            <button onclick="return false;" id="cnum_btn2">인증번호 확인</button>
-		                        	</span>
 		                    	</label>
 
                                 <!-- 받아온 인증코드를 컨트롤러로 넘겨서 일치하는지 확인! -->
@@ -272,11 +269,8 @@
 		            </section>
 		        </div>
                 <!--가입하기-->
-                <a style="cursor: pointer;">
-                    <div class="signup_btn_wrap">
-                        <button id="signup_btn" style="cursor: pointer;">가입하기</button>
-                    </div>
-                </a>
+				<button id="signup_btn" type="button">가입하기</button>
+
 
 			</fieldset> <!-- 전체 필드셋 종료 -->
 			<security:csrfInput/>
@@ -293,7 +287,6 @@
 	
 	
 <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
-<script src="${ path }/resources/js/member/MyPasswordEncoder.js"></script>
 <script src="${ path }/resources/js/member/enroll.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
