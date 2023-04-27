@@ -16,15 +16,17 @@
 -->
 <html>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	
+<%-- 	<%@ include file="/WEB-INF/views/member/popUp.jsp" %> --%>
 	<body class="homepage is-preload">
-	
+
+
 	
       <!-- 이 달의 특가 -->
       <section id="intro" class="wrapper style1" >
         <div class="title"><strong  style="color:#202431; font-size: large;">이 달의 특가</strong></div>
         <div class="container">
           	<ul>
+
           		<c:forEach var="car" items="${ list }">
 		            <li>
 		            	<c:choose>
@@ -230,6 +232,30 @@
 	          </div>
 	        </div>
     	</section>
+    	
+		<!-- 0427 주리 플로팅박스 시작 -->
+		<div class="sideBanner">
+			<span class="txt-label">
+	            <span id="popFloating-banner">
+	                <security:csrfInput/>
+	                <a id="popTltle">비회원 렌트 문의</a>
+	                <input type="hidden" id="popNo">
+	                <label for="popName" class="popLabel">이름</label>
+	                <input type="text" id="popName" name="popName" autocomplete="off" required>
+	                <label for="popEmail" class="popLabel">이메일</label>
+	                <input type="email" id="popEmail" name="popEmail" autocomplete="off" required>
+	                <label for="popPhone" class="popLabel">연락처</label>
+	                <input type="tel" id="popPhone" name="popPhone" autocomplete="off" required>
+	                <label for="popContent" class="popLabel">문의 내용</label>
+	                <textarea id="popContent" name="popContent" onkeypress="onTestChange(event)" required></textarea>
+	                <input type="hidden" id="popDate">
+	                <input type="hidden" id="popStatus">
+	                <button id="popSubmit">문의하기</button>
+	            </span>
+			</span>
+		</div>
+		<!-- 0427 주리 플로팅박스 종료 -->
+		
 	</body>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </html>

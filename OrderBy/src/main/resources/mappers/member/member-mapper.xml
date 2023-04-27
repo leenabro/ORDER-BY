@@ -28,31 +28,33 @@
              M_PCOUNT,
              M_VERIFIED
       FROM MEMBER
-   </sql>
+</sql>
 
-   <resultMap id="memberResultMap" type="Member">
-      <!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
-      <id property="no" column="M_NO"/>
-      <!-- 조회 결과의 일반 컬럼을 매핑한다. -->
-      <result property="id" column="M_ID"/>
-      <result property="password" column="M_PASSWORD"/>
-      <result property="name" column="M_NAME"/>
-      <result property="birth" column="M_BIRTH"/>
-      <result property="email" column="M_EMAIL"/>
-      <result property="phone" column="M_PHONE"/>
-      <result property="gender" column="M_GENDER"/>
-      <result property="address" column="M_ADDRESS"/>
-      <result property="detailAdd" column="M_DETAIL_ADD"/>
-      <result property="point" column="M_POINT"/>
-      <result property="role" column="M_ROLE"/>
-      <result property="enrollDate" column="M_ENROLL_DATE"/>
-      <result property="modifyDate" column="M_MODIFY_DATE"/>
-      <result property="status" column="M_STATUS"/>
-      <result property="cnum" column="M_CNUM"/>
-      <result property="pcount" column="M_PCOUNT"/>
-      <result property="verified" column="M_VERIFIED"/>
-   </resultMap>
+	<!-- 멤버 테이블 매핑 -->
+	<resultMap id="memberResultMap" type="Member">
+		<!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
+		<id property="no" column="M_NO"/>
+		<!-- 조회 결과의 일반 컬럼을 매핑한다. -->
+		<result property="id" column="M_ID"/>
+		<result property="password" column="M_PASSWORD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birth" column="M_BIRTH"/>
+		<result property="email" column="M_EMAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="address" column="M_ADDRESS"/>
+		<result property="detailAdd" column="M_DETAIL_ADD"/>
+		<result property="point" column="M_POINT"/>
+		<result property="role" column="M_ROLE"/>
+		<result property="enrollDate" column="M_ENROLL_DATE"/>
+		<result property="modifyDate" column="M_MODIFY_DATE"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="cnum" column="M_CNUM"/>
+		<result property="pcount" column="M_PCOUNT"/>
+		<result property="verified" column="M_VERIFIED"/>
+	</resultMap>
 	
+	<!-- 토큰 테이블 매핑 -->
 	<resultMap id="tokenResultMap" type="Member">
 		<!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
 		<id property="tkNo" column="TK_NO"/>
@@ -60,6 +62,19 @@
 		<result property="tkEmail" column="TK_EMAIL"/>
 		<result property="tkToken" column="TK_TOKEN"/>
 		<result property="tkExtime" column="TK_EXTIME"/>
+	</resultMap>
+	
+	<!-- 팝업문의 테이블 매핑 -->
+	<resultMap id="popQNAResultMap" type="PopQNA">
+		<!-- 조회 결과의 기본 키 컬럼을 매핑한다. -->
+		<id property="popNo" column="POP_NO"/>
+		<!-- 조회 결과의 일반 컬럼을 매핑한다. -->
+		<result property="popName" column="POP_NAME"/>
+		<result property="popEmail" column="POP_EMAIL"/>
+		<result property="popPhone" column="POP_PHONE"/>
+		<result property="popContent" column="POP_CONTENT"/>
+		<result property="popDate" column="POP_DATE"/>
+		<result property="popStatus" column="POP_STATUS"/>
 	</resultMap>
 	
 	<select id="selectCount" resultType="_int">
@@ -184,7 +199,7 @@
         WHERE M_EMAIL = #{email}
     </select>
     
-        <select id="getEmail" resultType="Member">
+    <select id="getEmail" resultType="Member">
         SELECT M_EMAIL
         FROM MEMBER
         WHERE M_EMAIL = #{email}
@@ -216,6 +231,38 @@
 	    INNER JOIN TOKEN ON MEMBER.M_NO = TOKEN.M_NO
 	    WHERE MEMBER.M_ID=#{id} AND TOKEN.TK_AUTH=1
     </select>
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+<!--     팝업문의 sql문 -->
+    <insert id="insertPopup" parameterType="PopQNA" useGeneratedKeys="true" keyColumn="POP_NO" keyProperty="popNo">
+<!--     <association property="member" resultMap="com.example.mapper.MemberMapper.MemberMapper.memberResultMap" /> -->
+		INSERT INTO POPQNA (
+			POP_NO,
+			POP_NAME,
+			POP_EMAIL,
+			POP_PHONE,
+			POP_CONTENT,
+			POP_DATE,
+			POP_STATUS
+		) VALUES (
+			SEQ_POPQNA_POP_NO.NEXTVAL,
+			#{popName},
+			#{popEmail},
+			#{popPhone},
+			#{popContent},
+			DEFAULT,
+			DEFAULT
+		)
+    </insert>
     	
     
     

@@ -57,21 +57,39 @@
 					  </li>
 					        <li><a href="no-sidebar.html">회사소개</a></li>
 					</ul>
+					
 
+					
+					<!-- 비회원 권한 -->
 					<security:authorize access="isAnonymous()">
-					      	<a href="${ path }/member/login" class="button style4 small">Login</a>
+				      	<a href="${ path }/member/login" class="button style4 small" id="jrLoginBtn">Login</a>
 					</security:authorize>
-					<security:authorize access="hasRole('ROLE_ADMIN')">
-					<button class="sub5-btn"><a href="${path }/admin/view"><i class="fa-solid fa-user-secret fa-lg">관리자</i></a></button>
+				
+					<!-- 관리자빼고 유저만 보이는 권한 -->
+					<!-- 권한이 M이 아닌 사용자 -->
+					<security:authorize access="isAuthenticated()">
+						<p style="position: fixed; top: 15px; right: 10px;">
+       					<security:authentication property="principal.username"/>님 안녕하세요.
+						<a href="${ path }/mypage/main" class="button style4 small" id="jrMypageBtn">Mypage</a>
+						<form action="${ path }/member/logout" method="POST">
+							<button class="button style4 small" id="jrLogoutBtn">Logout</button>
+							<security:csrfInput/>
+						</form>
 					</security:authorize>
 
-					<security:authorize access="isAuthenticated()">
+						<!-- 관리자 권한 -->
+					
+					<security:authorize access="hasAnyRole('ROLE_ADMIN', 'M')">
+						<p style="position: fixed; top: 15px; right: 10px;">
+       					<security:authentication property="principal.username"/>님 안녕하세요.
+						<a href="${ path }/admin/view" class="button style4 small" id="jrAdminBtn">Admin</a>
 						<form action="${ path }/member/logout" method="POST">
+							<button class="button style4 small" id="jrLogoutBtn">Logout</button>
 							<security:csrfInput/>
-							<button class="button style4 small">Logout</button>
 						</form>
-						<p style="text-align: right;"><security:authentication property="principal.username"/>님 ㅎㅇㅎㅇ</p>
 					</security:authorize>
+				
+
 					
 		        </nav>
 			</header>

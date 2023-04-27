@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 //import org.apache.ibatis.session.SqlSession;
 
 import com.ta.orderby.member.model.vo.Member;
+import com.ta.orderby.member.model.vo.PopQNA;
 
 @Mapper
 public interface MemberMapper {
@@ -44,6 +45,14 @@ public interface MemberMapper {
 	
 	// (04-19) 이메일 인증 테스트
 	void insertToken(Member token);
+
+	
+	
+	
+	
+	
+	// 팝업 문의전송 누르면 들어간다
+	void insertPopup(PopQNA popQNA);
 
 	
 	

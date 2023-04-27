@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ta.orderby.member.model.mapper.MemberMapper;
 import com.ta.orderby.member.model.vo.Member;
+import com.ta.orderby.member.model.vo.PopQNA;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -207,6 +208,13 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 
 
 
+	
+	// 팝업문의시 정보 넣는다리
+    @Override
+    public void insertPopQNA(PopQNA popQNA) {
+    	
+        mapper.insertPopup(popQNA);
+    }
 
 
 	

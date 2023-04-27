@@ -47,6 +47,7 @@
 	<security:http pattern="/css/**" security="none"></security:http>
 	<security:http pattern="/images/**" security="none"></security:http>
 	<security:http pattern="/member/request" security="none"></security:http>
+	<security:http pattern="/popqna" security="none"></security:http>
 	<!--
 		security:http
 		  - HTTP에 대한 요청을 안전하게 보호하는 방법을 설정하는 요소이다.
@@ -135,21 +136,18 @@
 		  - 유저들에 대한 인증과 관련된 설정을 하는 요소이다.
 		  - In Memory, DB, LDAP 등 다양한 방법으로 유저 조회 및 인증을 구현하여 설정해 줄 수 있다.
 		In Memory 방식 설정 (테스트 용도로 사용)
-		
+	-->
+<!-- 		name(id)값이 admin이면 관리자임 -->
 		<security:authentication-manager>
 			<security:authentication-provider>
 				<security:password-encoder ref="bcryptPasswordEncoder"/>
 				<security:user-service>
-					<security:user name="user"
-							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
-								   authorities="ROLE_ADMIN, ROLE_USER"/>
 					<security:user name="admin"
-							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
+							   	   password="{noop}1234" 
 								   authorities="ROLE_ADMIN,ROLE_USER"/>
 				</security:user-service>
 			</security:authentication-provider>
 		</security:authentication-manager>
-	-->
 
 	<!--
 		TA 계정의 Member 테이블에서 유저 조회 및 인증을 구현하도록 설정
@@ -166,11 +164,9 @@
 	<security:authentication-manager>
 		<security:authentication-provider ref="daoAuthenticationProvider"/>
 	</security:authentication-manager>
-		-->
+	-->
 	
-	
-	
-	
+
 	
 	
 	

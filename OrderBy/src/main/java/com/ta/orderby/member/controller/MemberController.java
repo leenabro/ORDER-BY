@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.ta.orderby.member.model.service.MemberService;
 import com.ta.orderby.member.model.vo.Member;
+import com.ta.orderby.member.model.vo.PopQNA;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -209,31 +211,6 @@ public class MemberController {
 //		return "common/accessError";
 //	}
 	
-	
-	
-	
-
-//	@PostMapping("/login")
-//	public String loginPost(@RequestParam("id") String id,
-//	                        @RequestParam("password") String password,
-//	                        RedirectAttributes redirectAttributes,
-//	                        HttpSession session) {
-//
-//	    // 아이디와 비밀번호를 이용해 로그인 시도
-//	    Member member = service.login(id, password);
-//
-//	    if (member != null) {
-//	        // 로그인 성공 시 필요한 정보만 세션에 저장
-//	        session.setAttribute("loginMemberNo", member.getNo());
-//	        session.setAttribute("loginMemberName", member.getName());
-//	        return "redirect:/";
-//	    } else {
-//	        // 로그인 실패 시 에러 메시지를 리다이렉트 속성에 추가하여 로그인 페이지로 리다이렉트
-//	        redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
-//	        return "redirect:/member/login";
-//	    }
-//	}
-	
 
 
     
@@ -307,20 +284,7 @@ public class MemberController {
 	public ModelAndView enroll(ModelAndView modelAndView, @ModelAttribute Member member) {
 	    // 전달해야할 정보, 보여줘야할 뷰 둘다 한꺼번에 보내고싶을때 ModelAndView
 	    log.info(member.toString());
-	    
-		System.out.println(member.getNo());
-		System.out.println(member.getId());
-		System.out.println(member.getPassword());
-		System.out.println(member.getName());
-		System.out.println(member.getBirth());
-		System.out.println(member.getEmail());
-		System.out.println(member.getPhone());
-		System.out.println(member.getGender());
-		System.out.println(member.getAddress());
-		System.out.println(member.getDetailAdd());
 
-	    
-	    
 	    int result = service.save(member); // 서비스 세이브 가져옴
 	    System.out.println("컨트롤러 멤버 값" + member);	    
 	    if(result > 0) {
@@ -334,51 +298,13 @@ public class MemberController {
 	    modelAndView.setViewName("common/msg");
 	    
 	    log.info("컨트롤러 모델엔뷰 값 : {}", modelAndView);
+	    
 	    System.out.println("컨트롤러 모델엔뷰 값" + modelAndView);
 	    
 	    System.out.println("컨트롤러 멤버 값" + member);	
-		System.out.println(member.getNo());
-		System.out.println(member.getId());
-		System.out.println(member.getPassword());
-		System.out.println(member.getName());
-		System.out.println(member.getBirth());
-		System.out.println(member.getEmail());
-		System.out.println(member.getPhone());
-		
-		System.out.println(member.getGender());
-		System.out.println(member.getAddress());
-		System.out.println(member.getDetailAdd());
 	    
 	    return modelAndView;
 	}
-	
-	// 회원가입 완료버튼 눌렀을때 post 요청
-//	@RequestMapping(value="/enroll", method=RequestMethod.POST)
-//	public String joinPOST(Member member) throws Exception{
-//		
-//		log.info("join 진입");
-//		
-//		// 회원가입 서비스 실행
-//		service.join(member);
-//		
-//		log.info("join Service 성공하고 로그인화면으로 간다!");
-//		
-//		return "member/login";
-//		
-//	}
-	
-	
-
-	    
-
-	
-	
-	
-	
-	
-	
-	
-	
 
 	
 	// 04-19 메일 테스트(완료)
@@ -424,5 +350,23 @@ public class MemberController {
 	}
 	
 
+	
+	
+	
+	
+	
+	
+	
+
+	// 팝업문의 보ㄴH본ㄷr...
+	@PostMapping("/popUp")
+	public String handlePopUpFormSubmit(@RequestBody PopQNA popQNA) {
+	    // popQNA 데이터 처리 로직 구현
+	    service.insertPopQNA(popQNA);
+	    
+	    return "redirect:/"; // 전송 성공 시 리다이렉트할 페이지 URL
+	}
+	
+	
 
 }

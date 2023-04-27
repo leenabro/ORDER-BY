@@ -69,8 +69,23 @@ public class Member implements UserDetails {
 	
 	private int tkAuth; // default 0, 1은 인증되었다는 뜻
 
+	// 여기서부터는 POPQNA 테이블
 	
+	private int popNo; // 문의번호(popNo)
 	
+	private String popName; // 문의자이름(popName)
+	
+	private String popEmail; // 문의자이메일(popEmail)
+	
+	private String popPhone; // 문의자연락처(popPhone)
+	
+	private String popContent; // 문의내용(popContent)
+	
+	private Date popDate; // 문의작성일자(popDate)
+	
+	private String popStatus; // 문의확인여부(popStatus)
+
+
 	
 	
 	public Member(String id, String password) {
