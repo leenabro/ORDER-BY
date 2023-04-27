@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ta.orderby.car.model.service.CarService;
 import com.ta.orderby.car.model.vo.Car;
+import com.ta.orderby.common.util.PageInfo;
 import com.ta.orderby.member.model.service.MemberService;
 import com.ta.orderby.member.model.vo.Member;
 import com.ta.orderby.motocycle.model.service.MotocycleService;
@@ -30,7 +31,10 @@ import com.ta.orderby.payment.model.vo.Reservation;
 import com.ta.orderby.store.model.service.StoreService;
 import com.ta.orderby.store.model.vo.Store;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class PaymentController {
 	
 	@Autowired
@@ -287,6 +291,24 @@ public class PaymentController {
 		return modelAndView;
 	}
 	
+	//오현
+	@GetMapping("/mypage/payment")
+	public ModelAndView paymant(ModelAndView modelAndView,@RequestParam (defaultValue = "1")  int page) {
+		int listCount = service.getpaymentCount();
+		
+		log.info("page: { }",page);
+		log.info("listCount: { }",listCount);
+		PageInfo pageInfo = new PageInfo(page, 5, listCount, 5);
+		List<Payment> list = service.getPaymentList(pageInfo);
+		
+		System.out.println(list);
+		
+		modelAndView.addObject("pageInfo",pageInfo);
+		modelAndView.addObject("list",list);
+		modelAndView.setViewName("mypage/payment");
+		
+		return modelAndView;
 	
 	
+	}
 }

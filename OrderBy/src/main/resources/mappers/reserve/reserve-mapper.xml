@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ta.orderby.reserve.model.mapper.ReserveMapper">
+  <sql id="reserveListSql">
+     SELECT R_NO,
+			RENT_DATE,
+			RETURN_DATE,
+			S_NO,
+			C_NO,
+			MC_NO,
+			R_STATUS,
+			P_UID,
+			M_NO
+	FROM RESERVATION
+  </sql>
+ 	<resultMap type="Reservation" id="reservationResultMap">
+		<id property="no" column="R_NO" />
+		<result property="rentdate" column="RENT_DATE" />	
+		<result property="returndate" column="RETURN_DATE" />	
+		<result property="sno" column="S_NO" />	
+		<result property="cno" column="C_NO" />	
+		<result property="mcno" column="MC_NO" />	
+		<result property="status" column="R_STATUS" />	
+		<result property="puid" column="P_UID" />	
+		<result property="mno" column="M_NO" />	
+	</resultMap>
+  
+  
+  	<update id="updateStatus" parameterType="map">
+      		UPDATE RESERVATION SET R_STATUS = #{status} WHERE R_NO = #{no}
+      </update>
+  
+  
+   <select id="selecReserveCount" resultType="_int">
+      SELECT COUNT(*) FROM RESERVATION
+   </select>
+  
+  
+    <select id="selectAll" resultMap="reservationResultMap">
+      <include refid="reserveListSql"/>
+    		WHERE R_STATUS = 'Y' ORDER BY R_NO DESC
+   </select>
+  
+  
+  <select  id="selectReserveByNo" parameterType="_int" resultMap="reservationResultMap">
+		SELECT * FROM RESERVATION WHERE R_NO = #{no}
+     </select>
+  
+  
+  
+  </mapper>

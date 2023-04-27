@@ -3,6 +3,7 @@ package com.ta.orderby.payment.model.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.ta.orderby.payment.model.vo.Coupon;
 import com.ta.orderby.payment.model.vo.Payment;
@@ -20,5 +21,10 @@ public interface PaymentMapper {
 	int insertReservation(Reservation reservation);
 
 	Reservation findReservationByUid(String uid);
+	
+	int selecPaymentCount();
+
+	List<Payment> selectAll(RowBounds bounds);
+
 	
 }
