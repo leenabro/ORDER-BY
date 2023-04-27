@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,6 +51,17 @@ public class CarController {
 		
 		
 		return cars;
+	}
+	
+	@ResponseBody
+	@GetMapping("/rent/car/{storeLcocation}")
+	public  List<Store> getStore(@RequestParam("storeLocation") String location){
+		List<Store> stores = storeService.finStoredByLocation(location);
+		
+		
+		System.out.println(stores);
+		
+		return stores;
 	}
 	
 }

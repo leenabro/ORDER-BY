@@ -15,7 +15,7 @@
 		WHERE S_STATUS = 'Y'
 	</sql>
 
-	<resultMap id="storeListResultMap" type="Store">
+	<resultMap id="storeResultMap" type="Store">
 		<id property="no" column="S_NO"/>
 		<result property="name" column="S_NAME"/>
 		<result property="count" column="S_COUNT"/>
@@ -26,11 +26,11 @@
 		<result property="status" column="S_STATUS"/>
 	</resultMap>
 	
-	<select id="selectStoreAll" resultMap="storeListResultMap">
+	<select id="selectStoreAll" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 	</select>
 	
-	<select id="selectStoreByLocation" parameterType="string" resultMap="storeListResultMap">
+	<select id="selectStoreByLocation" parameterType="string" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 		AND S_LOCATION = #{location}
 	</select>
