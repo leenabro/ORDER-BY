@@ -390,7 +390,6 @@
                 <div id="period-default"><span><b>대여기간을 선택하세요.</b></span></div>
             </div>
 			
-
             <div id="content-map" >
                 <h3 id="chooseStore">지점 선택</h3>
                 <div id="map" style="width:100%;height: 450px;"></div>
@@ -547,7 +546,7 @@
                 <input id="rentPeriodText" class="tab-input" placeholder="기간을 선택하세요." readonly>
                 <button class="tab-next" id="tab-next1">다음</button>
             </div>
-
+	
             <div class="content-tab" id="tab-2">
                 <div class="tab-title">
                     <span><i class="bi bi-geo-alt-fill"></i> 차량 대여 장소</span>
@@ -564,7 +563,7 @@
 <!--                 <button class="tab-next" id="tab-next3">다음</button> -->
             </div>
             
-            <form action="${ path }/payment/reservation" method="GET">
+            <form name="reservation" action="${ path }/payment/reservation" method="GET">
             	<input type="hidden" id="rentDate" name="rentDate" value="">
                 <input type="hidden" id="returnDate" name="returnDate" value="">
                 <input type="hidden" id="sNo" name="sNo" value="">
@@ -1088,12 +1087,19 @@
         $('#content-map').hide();
         $('#tab-2').hide();
         $('#tab-3').hide();
-
+		
         $('#tab-next1').click(function(){
-            $('#content-date').hide();
-            $('#content-map').show();
-            $('#content-vehicle').hide();
-            $('#tab-2').show();
+        	if('${ store }' === '' || '${ store }' === null) {
+	            $('#content-date').hide();
+	            $('#content-map').show();
+	            $('#content-vehicle').hide();
+	            $('#tab-2').show();
+        	} else {
+				$('#sNo').attr("value", '${ store.no }');
+				$('#pNo').attr("value", '${ car.no }');
+				
+				document.reservation.submit();
+        	}
 
         });
 

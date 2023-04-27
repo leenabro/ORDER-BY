@@ -2,11 +2,11 @@ package com.ta.orderby.car.model.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ta.orderby.admin.model.vo.AdminProductMotocycle;
 import com.ta.orderby.car.model.mapper.CarMapper;
 import com.ta.orderby.car.model.vo.Car;
 
@@ -53,5 +53,13 @@ public class CarServiceImpl implements CarService {
 		
 		return mapper.selectAllByDateStore(rentDate, returnDate, sNo);
 	}
+
+	@Override
+	public Car findCarByNameAndStoreNo(Map<String, Object> map) {
+		
+		return mapper.findCarByNameAndStoreNo(map);
+	}
+
+
 
 }

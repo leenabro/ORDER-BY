@@ -35,5 +35,18 @@ public class StoreServiceImpl implements StoreService{
 		return storemapper.findStoreByName(storeName);
 	}
 
+	@Override
+	public List<Store> findStoreListByNo(int storeNo) {
+
+		return storemapper.findStoreListByNo(storeNo);
+	}
+
+	@Override
+	public List<Store> findStoreListByName(String storeLocation) {
+
+		return storemapper.findStoreListByName(storeLocation);
+	}
+
+
 	
 }
