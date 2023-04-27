@@ -138,7 +138,7 @@
 			$('#rentalDate').html(rentalDate + ' 일');
 			
 			$('#myPageButton').on('click', function() {
-				alert('마이페이지를 불러오는 중입니다.');
+				location.href = "${ path }/mypage/main";
 			});
 			
 			$('#homeButton').on('click', function() {
