@@ -18,7 +18,11 @@
     <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
 
 </head>
+
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+
+<section class="wrapper style3" style="overflow: hidden;">
+
 <body>
     
     <div class="container">
@@ -194,27 +198,29 @@
 	
 	                <div id="modal" class="modal-overlay" style="display: none;">
                     <div class="modal-window">
-                        <div class="title">
-                            <h3>${car.brand } ${car.name }</h3>
-                        </div>
-                        <div class="close-area" onclick="modalOff();">X</div>
-                        <label  for="modal-cCode" class="vehicle-element" >
-                            <input id="modal-cCode" type="radio" name="cCode" value="${ car.no }">
-                            <div id="modal-content">
-                                <div id="modal-image">
-                                    <img src="#" style="width: 380px; height: 300px;">
-                                </div>
-                                <div id="modal-info">
-                                    <div>연비 <span id="modal-info-1" style="padding-left:70px">${ car.mile }</span></div>
-                                    <div>배기 <span id="modal-info-2" style="padding-left:70px">${ car.cc }</span>cc</div>
-                                    <div>연식 <span id="modal-info-3" style="padding-left:70px">${ car.year }</span>년</div>
-                                    <div>연료 <span id="modal-info-4" style="padding-left:70px">${ car.fuel }</span></div>
-                                    <div>엔진형식 <span id="modal-info-5" style="padding-left:50px">${ car.engine }</span></div>
-                                    <div>1일 비용 <span id="modal-info-6" style="padding-left:40px">${ car.price }</span>원 </div>
-                                	<button type="button" id="modal-button"  onclick="modalOff(); selectCar();">선택</button>
-                                </div>
-                            </div>
-                        </label>
+	                	<section class="wrapper style3" style="padding: 0; padding-bottom: 65px; border-radius: 10px;">
+	                        <div class="title">
+	                            <h3>${car.brand } ${car.name }</h3>
+	                        </div>
+	                        <div class="close-area" onclick="modalOff();">X</div>
+	                        <label  for="modal-cCode" class="vehicle-element" >
+	                            <input id="modal-cCode" type="radio" name="cCode" value="${ car.no }">
+	                            <div id="modal-content">
+	                                <div id="modal-image">
+	                                    <img src="#" style="width: 380px; height: 300px;">
+	                                </div>
+	                                <div id="modal-info">
+	                                    <div>연비 <span id="modal-info-1" style="padding-left:70px">${ car.mile }</span></div>
+	                                    <div>배기 <span id="modal-info-2" style="padding-left:70px">${ car.cc }</span>cc</div>
+	                                    <div>연식 <span id="modal-info-3" style="padding-left:70px">${ car.year }</span>년</div>
+	                                    <div>연료 <span id="modal-info-4" style="padding-left:70px">${ car.fuel }</span></div>
+	                                    <div>엔진형식 <span id="modal-info-5" style="padding-left:50px">${ car.engine }</span></div>
+	                                    <div>1일 비용 <span id="modal-info-6" style="padding-left:40px">${ car.price }</span>원 </div>
+	                                	<button type="button" id="modal-button"  onclick="modalOff(); selectCar();">선택</button>
+	                                </div>
+	                            </div>
+	                        </label>
+                 		</section>
                     </div>
                 </div>
 					
@@ -263,7 +269,7 @@
 	            	<input type="hidden" id="rentDate" name="rentDate" value="">
 	                <input type="hidden" id="returnDate" name="returnDate" value="">
 	                <input type="hidden" id="sNo" name="sNo" value="">
-	                <input type="hidden" id="cNo" name="cNo" value="">
+	                <input type="hidden" id="pNo" name="pNo" value="">
 	                
 	                <button type="submit" class="tab-next" id="tab-next3">다음</button>
 	            </form>
@@ -271,6 +277,9 @@
             </div>
         </div>
     </div>
+    </section>
+    <section style="clear: both">
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
@@ -787,7 +796,7 @@
         	let storeLocation = $('#storeLocation>option:selected').val();
         	$.ajax({
         		type: 'GET',
-        		url: '${path}/rent/car/'+storeLocation,
+        		url: '${path}/rent/store/'+storeLocation,
         		dataType: 'json',
         		data: {
         			storeLocation

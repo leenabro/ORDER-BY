@@ -38,7 +38,7 @@
 		        <!-- Nav -->
 		        <nav id="nav">
 					<ul>
-					  <li class="current"><a href="${ path }">Order By</a></li>
+					  <li class="current"><a href="/">Order By</a></li>
 					  <li>
 					    <a href="#">대여</a>
 					    <ul>

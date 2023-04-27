@@ -35,22 +35,22 @@
 		AND S_LOCATION = #{location}
 	</select>
 	
-	<select id="findStoreByNo" parameterType="_int" resultMap="storeListResultMap">
+	<select id="findStoreByNo" parameterType="_int" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 		AND S_NO = #{storeNo}
 	</select>
 	
-	<select id="findStoreByName" parameterType="string" resultMap="storeListResultMap">
+	<select id="findStoreByName" parameterType="string" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 		AND S_NAME = #{storeName}
 	</select>
 	
-	<select id="findStoreListByNo" parameterType="_int" resultMap="storeListResultMap">
+	<select id="findStoreListByNo" parameterType="_int" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 		AND S_NO = #{storeNo}
 	</select>
 	
-	<select id="findStoreListByName" parameterType="string" resultMap="storeListResultMap">
+	<select id="findStoreListByName" parameterType="string" resultMap="storeResultMap">
 		<include refid="storeListSql"/>
 		AND S_NAME = #{storeName}
 	</select>

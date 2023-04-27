@@ -16,12 +16,12 @@
     <title>Motocycle</title>
     <link rel="stylesheet" href="${ path }/resources/css/rent/rent.css">
     <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
-	<style>
-	
-	</style>
 </head>
+
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<body>
+
+<body class="homepage is-preload">
+    <section class="wrapper style3" style="overflow: hidden;">
     
     <div class="container">
         <div class="content">
@@ -190,30 +190,31 @@
                     </ul>
                     
                     <div id="modal" class="modal-overlay" style="display: none;">
-                    <div class="modal-window">
-                        <div class="title">
-                            <h3>${ motocycle.brand } ${ motocycle.name }</h3>
-                        </div>
-                        <div class="close-area" onclick="modalOff();">X</div>
-                        <label  for="modal-mcCode" class="vehicle-element" >
-                            <input id="modal-mcCode" type="radio" name="mcCode" value="${ motocycle.no }">
-                            <div id="modal-content">
-                                <div id="modal-image">
-                                    <img src="#" style="width: 380px; height: 300px;">
-                                </div>
-                                <div id="modal-info">
-                                    
-                                    <div>배기 <span id="modal-info-1" style="padding-left:90px">${ motocycle.cc }</span>cc</div>
-                                    <div>출력 <span id="modal-info-2" style="padding-left:80px">${ motocycle.output }</span>rpm</div>
-                                    <div>토크 <span id="modal-info-3" style="padding-left:80px">${ motocycle.torque }</span>rpm</div>
-                                    <div>연료탱크 <span id="modal-info-4" style="padding-left:70px">${ motocycle.fuel }</span>L</div>
-                                    <div>연식 <span id="modal-info-5" style="padding-left:90px">${ motocycle.year }</span>년</div>
-                                    <div>엔진형식 <span id="modal-info-6">${ motocycle.engine }</span></div>
-                                    <div>1일 비용 <span id="modal-info-7" style="padding-left:60px">${ motocycle.price }</span>원 </div>
-                                    <button type="button" id="modal-button" onclick="modalOff(); selectCar();">선택</button>
-                                </div>
-                             </div>
-                           </label>
+	                    <div class="modal-window">
+	                    	<section class="wrapper style3" style="padding: 0; padding-bottom: 65px; border-radius: 10px;">
+								<div class="title">
+	                            	<h3>${ motocycle.brand } ${ motocycle.name }</h3>
+	                        	</div>
+	                        	<div class="close-area" onclick="modalOff();">X</div>
+	                        	<label  for="modal-mcCode" class="vehicle-element" >
+	                            	<input id="modal-mcCode" type="radio" name="mcCode" value="${ motocycle.no }">
+	                            	<div id="modal-content">
+	                                	<div id="modal-image">
+	                                    	<img src="#" style="width: 380px; height: 300px;">
+	                                	</div>
+	                                	<div id="modal-info">
+		                                    <div>배기 <span id="modal-info-1" style="padding-left:90px">${ motocycle.cc }</span>cc</div>
+		                                    <div>출력 <span id="modal-info-2" style="padding-left:80px">${ motocycle.output }</span>rpm</div>
+		                                    <div>토크 <span id="modal-info-3" style="padding-left:80px">${ motocycle.torque }</span>rpm</div>
+		                                    <div>연료탱크 <span id="modal-info-4" style="padding-left:70px">${ motocycle.fuel }</span>L</div>
+		                                    <div>연식 <span id="modal-info-5" style="padding-left:90px">${ motocycle.year }</span>년</div>
+		                                    <div>엔진형식 <span id="modal-info-6">${ motocycle.engine }</span></div>
+		                                    <div>1일 비용 <span id="modal-info-7" style="padding-left:60px">${ motocycle.price }</span>원 </div>
+		                                    <button type="button" id="modal-button" onclick="modalOff(); selectCar();">선택</button>
+	                                	</div>
+	                             	</div>
+	                           </label>
+	                        </section>
                         </div>
                    </div>
                     
@@ -257,19 +258,22 @@
                 <div>
                 <input id="rentCarText" class="tab-input" placeholder="차량을 선택하세요." readonly>
 <!--                 <button class="tab-next" id="tab-next3">다음</button> -->
-	            <form action="${ path }/payment" method="GET">
+	            <form name="reservation" action="${ path }/payment/reservation" method="GET">
 	            	<input type="hidden" id="rentDate" name="rentDate" value="">
 	                <input type="hidden" id="returnDate" name="returnDate" value="">
 	                <input type="hidden" id="sNo" name="sNo" value="">
-	                <input type="hidden" id="mcNo" name="mcNo" value="">
+	                <input type="hidden" id="pNo" name="pNo" value="">
 	                
-					<button type="submit" class="tab-next" id="tab-next3">다음</button>
+	                <button type="submit" class="tab-next" id="tab-next3">다음</button>
 	            </form>
                 </div>
             </div>
             
         </div>
     </div>
+    </section>
+    <section style="clear: both;">
+    </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -730,7 +734,7 @@
     function selectCar() {
     	let rentCarText = $('#modal h3').text();
     	document.getElementById('rentCarText').value = rentCarText;
-    	document.getElementById('mcNo').value = document.getElementById('modal-mcCode').value;
+    	document.getElementById('pNo').value = document.getElementById('modal-mcCode').value;
     	document.getElementById('tab-next3').style.display="flex";
     }
 
@@ -871,5 +875,5 @@
 
 </script>
 </body>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-</html>
