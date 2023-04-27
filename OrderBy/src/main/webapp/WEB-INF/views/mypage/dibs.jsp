@@ -20,9 +20,9 @@
 
         /* 전체를 감싸는 div */
         .wrap {
-            width: 1000px;
+          /*   width: 1000px; */
             height: 800px;
-            margin: auto;
+           /*  margin: auto; */
         }
 
         #header {
@@ -30,11 +30,11 @@
         }
 
         #content {
-            height: 50%;
+            height: 70%;
         }
 
         #footer {
-            height: 20%;
+          /*   height: 20%; */
         }
 
         #content>div {
@@ -45,6 +45,7 @@
 
         #content1 {
             width: 15%;
+            
         
             
         }
@@ -55,6 +56,7 @@
             padding-left: 5%;
             padding-right: 10%;
             padding-top: 3%;
+            
         
         
             
@@ -99,15 +101,16 @@ a:hover{
 .thead td {
     background: #eee;
     font-size: 11px;
+     text-align: center;
 }
  
 td{
-    height: 40px;
+    height: 50px;
     border-bottom:1px solid #ccc;
 }
  
 tr td:nth-child(2){
-    width: 400px;
+    width: 600px;
 }
  
 /* ********페이징******** */
@@ -151,13 +154,20 @@ tr td:nth-child(2){
 .img1{
     width: 15%;
 }
+.bt1{
+border: none;
+ background-color: white;
+  color: black;
+  width: 10%;
+  
+}
 
     </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <div class="wrap">
-        <div id="header"></div>
-        <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
+        
         <div id="content">
             <div id="content1">
                 <h1 class="l_title">My 페이지</h1>
@@ -207,38 +217,13 @@ tr td:nth-child(2){
                                         </c:if>
                                         <td>${ dibs.l_pr }</td>
                                         <td>
-                                        <button type="button" onclick="location.href='${ path }/notice/notice'">예약</button>
-                                        <button  type="button"  id="btnDelete">취소</button></td>
+                                        <button class="bt1" type="button" onclick="location.href='${ path }/notice/notice'">예약</button>
+                                        <button  class="bt1"  type="button"  id="btnDelete">취소</button></td>
                                     </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                             <div class="page-nation">
-                             
-            <button onclick="location.href='${ path }/mypage/payment?page=1'">&lt;&lt;</button>
-   
-            <!-- 이전 페이지로 -->
-            <button onclick="location.href='${ path }/mypage/payment?page=${ pageInfo.prevPage }'">&lt;</button>
-   
-            <!--  10개 페이지 목록 -->
-            <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-               <c:choose>
-                  <c:when test="${ status.current == pageInfo.currentPage}">
-                     <button disabled>${ status.current }</button>
-                  </c:when>
-                  <c:otherwise>                  
-                     <button onclick="location.href='${ path }/mypage/payment?page=${ status.current }'">${ status.current }</button>
-                  </c:otherwise>
-               </c:choose>
-            </c:forEach>
-   
-   
-            <!-- 다음 페이지로 -->
-            <button onclick="location.href='${ path }/mypage/payment?page=${ pageInfo.nextPage }'">&gt;</button>
-   
-            <!-- 맨 끝으로 -->
-            <button onclick="location.href='${ path }/mypage/payment?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-         </div>
+                            
                         </div>
                 </section>
                 
@@ -261,4 +246,5 @@ tr td:nth-child(2){
 	
 	</script>
 </body>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

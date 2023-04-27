@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${ path }/js/jquery-3.6.3.js"></script>
+<script src="${ path }/resources/js/jquery-3.6.3.js"></script>
     <style>
         div {
             /* border: 1px solid  wheat; */
@@ -20,10 +20,10 @@
 
 
         /* 전체를 감싸는 div */
-        .wrap {
-            width: 1000px;
+        .wrap123 {
+             /*  width: 1000px; */
             height: 800px;
-            margin: auto;
+          /*   margin: auto; */
         }
 
         #header {
@@ -154,11 +154,16 @@ a:hover{
     color: gray;
 }    
 
+.l_title{
+margin-top:20px;
+font-size: 25px;
+}
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <div id="header"></div>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+    <div class="wrap123">
+        
         <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
         <div id="content">
             <div id="content1">
@@ -254,5 +259,6 @@ a:hover{
 		});
 	});
 </script>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

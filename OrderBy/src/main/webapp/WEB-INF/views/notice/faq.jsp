@@ -18,31 +18,32 @@
 
         /* 전체를 감싸는 div */
         .wrap {
-            width: 1000px;
+           /*  width: 1000px; */
             height: 800px;
-            margin: auto;
+         /*    margin: auto; */
         }
 
         #header {
-            height: 20%;
+            height: 120%;
         }
 
         #content {
-            height: 50%;
+            height: 110%;
         }
-
+/* 
         #footer {
             height: 20%;
-        }
+        } */
 
         #content>div {
             height: 100%;
             float: left;
             display: inline-block;
+            height: 100%;
         }
 
         #content1 {
-            width: 15%;
+            width: 300%;
             
         
             
@@ -50,11 +51,11 @@
 
         #content2 {
             width: 85%;
-            margin-left: -4px;
+           /*  margin-left: -4px; */
             padding-left: 20%;
             padding-right: 10%;
             padding-top: 3%;
-        
+        height: 100%;
         
             
             
@@ -69,8 +70,10 @@
 
 
 .main1{
-    padding-left: 40%;
-    margin-bottom: 10%;
+   
+   font-size: 30px;
+    margin-top:20px;
+    margin-bottom:30px;
 }
 
 /* *{
@@ -78,19 +81,19 @@
     padding: 0;
 } */
 
-body{
+/* body{
     display:  flex;
     height: 100%;
     justify-content: center;
     align-items: center;
-}
-.container{
+} */
+/* .container{
     width: 120%;
     box-shadow: 0 0 20px #e5e5e5;
     padding: 0 40px;
     /* margin-top: 10%; */
     text-align: center;
-}
+} */
 input[id*="answer"]{
     display: none;
 }
@@ -138,9 +141,9 @@ input[id*="answer"]:checked + label i{
     </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <div class="wrap">
-        <div id="header"></div>
-        <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
+      
         <div id="content">
             
             <div id="content2">
@@ -228,4 +231,5 @@ input[id*="answer"]:checked + label i{
         }
     </script>
 </body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

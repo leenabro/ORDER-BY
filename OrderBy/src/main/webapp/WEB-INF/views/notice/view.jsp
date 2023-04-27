@@ -12,7 +12,7 @@
 <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
 <style>
         .outer {
-            width: 800px;
+            width: 900px;
             margin: auto;
         }
         
@@ -30,7 +30,7 @@
         }
         
         .notice_content .subject {
-            height: 55px;
+         
             line-height: 55px;
             display: flex;
             justify-content: space-between;
@@ -59,7 +59,7 @@
         
         .textarea {
             resize: none;
-            border: solid 1px white;
+          /*   border: solid 1px white; */
             width: 700px;
         }
         
@@ -76,22 +76,26 @@
             height: 35px;
             border: 0px;
             color: white;
-            background: #282A35;
+            background:white;
             margin: 5px;
         }
         
-        .btn_area {
+        .btn_area1 {
             text-align: center;
             border-top: 1px solid #282A35;
             padding: 30px;
         }
 
-        .main1{
-    padding-left: 45%;
+.main1{
+   
+   font-size: 30px;
+    margin-top:20px;
+    margin-bottom:30px;
 }
         </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <div class="outer">
 		<div class="wrap">
 			<div class="notice_area">
@@ -117,7 +121,7 @@
 								required>${ notice.n_content }</textarea>
 								
 						</div>
-						<div class="btn_area">
+						<div class="btn_area1">
 						
 						<c:if test="${ empty loginMember && loginMember.id == board.writerId }">
 							<button type="button" onclick="location.href='${ path }/notice/write?n_no=${ notice.n_no }'">수정</button>
@@ -145,4 +149,5 @@
 	
 	</script>
 </body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

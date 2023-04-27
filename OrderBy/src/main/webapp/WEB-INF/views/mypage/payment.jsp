@@ -4,13 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
+<script src="${ path }/resources/js/jquery-3.6.3.js"></script>
+ <style>
         div {
             /* border: 1px solid  wheat; */
             box-sizing: border-box;
@@ -18,10 +18,10 @@
 
 
         /* 전체를 감싸는 div */
-        .wrap {
-            width: 1000px;
+        .wrap123 {
+           /*  width: 1000px; */
             height: 800px;
-            margin: auto;
+          /*   margin: auto; */
         }
 
         #header {
@@ -29,11 +29,11 @@
         }
 
         #content {
-            height: 50%;
+            height: 70%;
         }
 
         #footer {
-            height: 20%;
+            /* height: 20%; */
         }
 
         #content>div {
@@ -69,108 +69,120 @@
         a{
     text-decoration: none;
     color: black;
-	}
-	a:hover{
-	    color: gray;
-	}    
-	
-	.d-none{
-	    display: none;
-	}
-	 
-	.board{
-	    width: 1200px;
-	    height: 100%;
-	    margin: auto;
-	}
-	 
-	.table{
-	    font-size :13px;
-	    border-collapse: collapse;
-	    width: 800px;
-	    /* margin-top:200px; */
-	    border: 1px solid #ccc;    
-	    text-align: center;
-	    border-left: none;
-	    border-right: none;
-	    
-	}
-	.thead td {
-	    background: #eee;
-	    font-size: 11px;
-	}
-	 
-	td{
-	    height: 40px;
-	    border-bottom:1px solid #ccc;
-	}
-	 
-	tr td:nth-child(2){
-	    width: 100px;
-	}
-	 
-	/* ********페이징******** */
-	.page-nation li{ 
-	    list-style: none;
-	} 
-	 
-	.page-wrap {
-	    text-align:center;
-	    font-size:0px;
-	 }
-	.page-nation  {
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    margin-top:20px;
-	    margin-right:400px;
-	}
-	 
-	.page-nation a {
-	    display:block;
-	    margin:0 3px;
-	    float:left;
-	    border:1px solid #e6e6e6;
-	    width:28px;
-	    height:28px;
-	    line-height:28px;
-	    text-align:center;
-	    background-color: whitesmoke;
-	    font-size:11px;
-	    color: black;
-	    text-decoration:none;
-	    font-weight:bold;
-	    border: none;
-	}
-	.page-nation a:hover{
-	    background-color:gray;
-	    color:white;
-	}
+}
+a:hover{
+    color: gray;
+}    
 
+.d-none{
+    display: none;
+}
+ 
+.board{
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+}
+ 
+.table{
+    font-size :13px;
+    border-collapse: collapse;
+    width: 800px;
+    /* margin-top:200px; */
+    border: 1px solid #ccc;    
+    text-align: center;
+    border-left: none;
+    border-right: none;
+    
+}
+.thead td {
+    background: #eee;
+    font-size: 11px;
+     text-align: center;
+}
+ 
+td{
+    height: 50px;
+    border-bottom:1px solid #ccc;
+}
+ 
+tr td:nth-child(2){
+    width: 100px;
+}
+ 
+/* ********페이징******** */
+.page-nation li{ 
+    list-style: none;
+} 
+ 
+.page-wrap {
+    text-align:center;
+    font-size:0px;
+ }
+.page-nation  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:20px;
+    margin-right:400px;
+}
+ 
+.page-nation a {
+    display:block;
+    margin:0 3px;
+    float:left;
+    border:1px solid #e6e6e6;
+    width:28px;
+    height:28px;
+    line-height:28px;
+    text-align:center;
+    background-color: whitesmoke;
+    font-size:11px;
+    color: black;
+    text-decoration:none;
+    font-weight:bold;
+    border: none;
+}
+.page-nation a:hover{
+    background-color:gray;
+    color:white;
+}
+
+.img2{
+    width:15%;
+    height: 100%;
+    /* float: left; */
+    vertical-align: middle;
+}
+
+
+.l_title{
+margin-top:20px;
+font-size: 25px;
+}
 
 
     </style>
 </head>
 <body>
-<div class="wrap">
-        <div id="header"></div>
-        <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<div class="wrap123">
         <div id="content">
             <div id="content1">
                 <h1 class="l_title">My 페이지</h1>
                 <br><br><br><br>
 
-                <ul class="mypagelogo">
+                 <ul class="mypagelogo">
                     <li><a href="${ path }/mypage/main" class="on"  >개인정보</a></li>
                     <li><a href="${ path }/mypage/payment" class="on">결제내역</a></li>
                     <li><a href="${ path }/mypage/reserve" class="on" >예약확인</a></li>
                     <li><a href="${ path }/mypage/dibs" class="on" >찜목록</a></li>
                 </ul>
             </div>
-            <div id="content2">
+    <div id="content2">
                 <br><br><h1 class="main1">결제내역</h1>
                 <section class="main">
-                    <h1 class="d-none">게시판</h1>
+                    
                         <div class="board">
                             <table class="table">
                                 <thead class="thead">
@@ -187,29 +199,22 @@
                                 <tbody class="tbody">
                                         <c:if test="${ empty list }">
 					                    <tr>
-					                  <td colspan="4">
+					                  <td colspan="6">
 					                     조회된 게시글이 없습니다.
 					                  	</td>
 					               		</tr>   
 		                                </c:if>
-		                                 
-		                                <%--  <c:if test="${ not empty list }"> --%>
                               		  <c:forEach var="payment" items="${ list }">
 		                                <tr>
                                         <td><a href="">${ payment.no }</a></td>
                                         <td>${ payment.date }</td>
-                                        
-                                        <c:if test="${ empty payment.mc_name }">
-                                        <td>${ payment.c_name }</td>
-                                        </c:if>
-                                        <c:if test="${ not empty payment.mc_name }">
-                                        <td>${ payment.mc_name }</td>
-                                        </c:if>
+                                        <td>${ payment.name }</td>
                                         <td>${ payment.method }</td>
                                         <td>${ payment.totPrice }</td>
                                         <td>${ payment.finPrice }</td>
                                         
                                          </tr>
+                                         
                                         </c:forEach>
                                         <%-- </c:if>   --%>
                                 </tbody>
@@ -245,8 +250,10 @@
                        
                 </section>
                 </div>
-        </div>
-        <div id="footer"></div>
+     
     </div>
+  
+
 </body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>
