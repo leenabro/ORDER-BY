@@ -38,20 +38,12 @@ public class MotocycleServiceImpl implements MotocycleService {
 		return mapper.selectMotocycleAll();
 	}
 
-	@Override
-	public List<Motocycle> findAllByBrand(String brand) {
-		return mapper.selectAllByBrand(brand);
-	}
 
 	@Override
 	public List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo) {
 		return mapper.selectAllByDateStore(rentDate, returnDate, sNo);
 	}
 
-	@Override
-	public List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand) {
-		return mapper.selectAllByDateStoreBrand(rentDate, returnDate, sNo, brand);
-	}
 
 	@Override
 	public List<Motocycle> findMotoBySale() {

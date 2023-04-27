@@ -233,7 +233,7 @@ public class PaymentController {
 				modelAndView.addObject("motocycle", motocycle);
 			}
 			Reservation resCheck = service.findReservationByUid(uid);
-			if(resCheck != null) {
+			if(resCheck == null) {
 				result = service.insertReservation(reservation);
 				if(result > 0) {
 					System.out.println(result);
@@ -245,12 +245,12 @@ public class PaymentController {
 					modelAndView.addObject("payment", payment);
 					modelAndView.setViewName("/payment/success");
 				} else {
-					modelAndView.addObject("msg", "이미 처리된 페이지입니다.");
+					modelAndView.addObject("msg", "예약에 실패하셨습니다.");
 					modelAndView.addObject("location", "/");
 					modelAndView.setViewName("/common/msg");
 				}
 			} else {
-				modelAndView.addObject("msg", "예약에 실패하였습니다.");
+				modelAndView.addObject("msg", "이미 처리된 페이지입니다.");
 				modelAndView.addObject("location", "/");
 				modelAndView.setViewName("/common/msg");
 			}

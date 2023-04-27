@@ -14,13 +14,10 @@ public interface MotocycleService {
 	Motocycle findMotocycleByNo(int motocycleNo);
 	
 	// 소현
-	List<Motocycle> findAllByBrand(String brand);
-
 	List<Motocycle> getMotocycleList();
 
 	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo);
 
-	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand);
 
 	List<Motocycle> findMotoBySale();
 

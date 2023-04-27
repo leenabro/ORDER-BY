@@ -2,6 +2,7 @@ package com.ta.orderby.car.model.mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,8 @@ public interface CarMapper {
 	List<Car> selectCarAll();
 
 	List<Car> selectAllByDateStore(@Param("rentDate") Date rentDate, @Param("returnDate")Date returnDate, @Param("sNo") String sNo);
+
+	Car findCarByNameAndStoreNo(Map<String, Object> map);
 
 
 }

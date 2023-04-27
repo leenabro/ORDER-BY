@@ -32,54 +32,47 @@
         <div class="container">
           	<ul>
           		<c:forEach var="car" items="${ list }">
+          			<c:forEach var="store" items="${ storeList }">
 		            <li>
-		            	<c:choose>
-		            		<c:when test="${ car.sale == 'C' }">
-		            			<a href="payment/reservation?name=${ car.name }&price=${ car.price }">
-		            		</c:when>
-		            		<c:when test="${ car.sale == 'S' }">
-		            			<a href="payment/reservation?name=${ car.name }&price=<fmt:parseNumber var="price" value="${ car.price * 0.7 }" integerOnly="true" />${ price }">
-		            		</c:when>
-		            	</c:choose>
-		                  <div class="month-sale-images">
-		                      <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
-		                      <img class="sale-image" src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
-		                  </div>
+						<a href="rent/car/${ car.name }&${ store.name }">
+			                <div class="month-sale-images">
+			                	<div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
+			                	<img class="sale-image" src="${ path }/resources/images/car/${ car.brand }/${ car.name }.png">
+			                </div>
 		                </a>
-		                  <div class="add-information"><br>
-<%-- 						<img class="brand-image" src="${ path }/resources/images/brand/${ car.brand }.png"> --%>
-		                  <% pageContext.setAttribute("emptyChar", " "); %>
-		                  <div >
-		                  	<div style="display: flex; ">
-		                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ car.brand }.png">
-		                  		<div >
-			                  		<h4 style="color:black; font-size: x-large;"> ${ car.brand }</h4>
-			                  		<h4 style="color:black; font-size: x-large;"> ${ car.name }</h4>
-		                  		</div>
-		                  	</div>
-		                  </div>
-		              
-
-		                    
-		                    <br>
-		                    <p class="postionstyle" style="font-size:small;"> ${car.position } </p>
-		                    <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
-		                    <span class="material-symbols-outlined" style="color:red">
-		                      south
-		                      </span>
-		                    <p>할인 비용(일) : <fmt:formatNumber value="${ car.price * 0.7 }" pattern="#,###" /> 원</p>
-		                  </div>
+						<div class="add-information">
+						<br>
+			                <% pageContext.setAttribute("emptyChar", " "); %>
+			                <div>
+			                  	<div style="display: flex; ">
+			                  		<img class="brand-image" style="margin-left:10%;" src="${ path }/resources/images/brand/${ car.brand }.png">
+			                  		<div >
+				                  		<h4 style="color:black; font-size: x-large;"> ${ car.brand }</h4>
+				                  		<h4 style="color:black; font-size: x-large;"> ${ car.name }</h4>
+			                  		</div>
+			                  	</div>
+			                </div>
+			                    
+			                <br>
+			                <p class="postionstyle" style="font-size:small;"> ${car.position } </p>
+			                <p style="font-size: medium;">대여 비용(일) : <del style="color: red;"><fmt:formatNumber value="${ car.price }" pattern="#,###"/></del></p>
+			                <span class="material-symbols-outlined" style="color:red">
+			                	south
+							</span>
+			                <p>할인 비용(일) : <fmt:formatNumber value="${ car.price * 0.7 }" pattern="#,###" /> 원</p>
+		                </div>
 		            </li>
+		            </c:forEach>
           		</c:forEach>
-	              <c:forEach var="moto" items="${ moto}">
+				<c:forEach var="moto" items="${ moto }">
 	          	<li>
-	              	<c:if test="${ moto.sale == 'S' }">
-	              <a href="payment/reservation?name=${ moto.name }&price=<fmt:parseNumber var="price" value="${ moto.price * 0.7 }" integerOnly="true" />${ price }" class="hover-test">
-	              <div class="month-sale-images">
-	                <div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
-	                <img class="sale-image" src="${ path }/resources/images/motocycle/${ moto.brand }/${moto.name }.png">
-	              </div>
-	            </a>
+					<c:if test="${ moto.sale == 'S' }">
+	              		<a href="payment/reservation?name=${ moto.name }&price=<fmt:parseNumber var="price" value="${ moto.price * 0.7 }" integerOnly="true" />${ price }" class="hover-test">
+	              		<div class="month-sale-images">
+		                	<div class="hover-test"><strong style="color:black;">바로 예약하기</strong></div>
+		                	<img class="sale-image" src="${ path }/resources/images/motocycle/${ moto.brand }/${moto.name }.png">
+	              		</div>
+	            		</a>
 	            <div class="add-information"><br>
 		                  <% pageContext.setAttribute("emptyChar", " "); %>
 		                  <div >

@@ -1,12 +1,16 @@
 package com.ta.orderby.car.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,7 +41,26 @@ public class CarController {
 		modelAndView.setViewName("rent/car");
 		
 		return modelAndView;
+	}
+	
+	@GetMapping("/rent/car/{carName}&{storeLocation}")
+	public ModelAndView directRentCar (ModelAndView modelAndView, @PathVariable String carName, @PathVariable String storeLocation) {
 		
+		Store store = storeService.findStoreByName(storeLocation);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("carName", carName);
+		map.put("storeNo", store.getNo());
+		
+		
+		Car car = carService.findCarByNameAndStoreNo(map);
+		
+		modelAndView.addObject("car", car);
+		modelAndView.addObject("store", store);
+		modelAndView.setViewName("rent/car");
+		
+		return modelAndView;
 	}
 	
 	@ResponseBody
@@ -48,8 +71,17 @@ public class CarController {
 		log.info("날짜 지점 선택후 차 리스트");
 		List<Car> cars = carService.getCarList(rentDate, returnDate, sNo);
 		
-		
 		return cars;
+	}
+	
+	@ResponseBody
+	@GetMapping("/rent/store/{storeLcocation}")
+	public  List<Store> getStore(@RequestParam("storeLocation") String location){
+		List<Store> stores = storeService.finStoredByLocation(location);
+      
+		System.out.println(stores);
+      
+		return stores;
 	}
 	
 }

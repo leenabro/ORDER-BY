@@ -14,307 +14,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <title>Motocycle</title>
+    <link rel="stylesheet" href="${ path }/resources/css/rent/rent.css">
     <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
 </head>
-<style>
-    h3 {
-        font-weight: 700;
-        margin: 0;
-        padding: 10px;
-    }
-    div *{
-        /* border: 1px solid gray; */
-        box-sizing: border-box;
-    }
-    .container {
-        width: 1200px;
-        height: 700px;
-        padding: 0px;
-    }
-    .container > div {
-        height: 100%;
-        float: left;
-    }
-    .content {
-        width: 75%;
-    }
-    .content-tabs {
-        width: 25%;
-        background-color: whitesmoke;
-    }
 
-    #content-date {
-        height: 100%;
-    }
-    #calendar {
-        width: 50%;
-        height: 100%;
-        float: left;
-    }
-    #calendar2 {
-        width: 50%;
-        height: 100%;
-        float: left;
-    }
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-    #rentdateText {
-        width: 50%;
-        height: 100%;
-        float: left;
-        font-size: large;
-    }
-    #returndateText {
-        width: 50%;
-        height: 100%;
-        float: left;
-        font-size: large;
-    }
-    #calendar-wrap{
-        
-        height: 66%;
-    }
-    #date-wrap, #period{
-        
-        height: 12%;
-    }
-    #period {
-        text-align: center;
-        font-size: large;
-        
-        font-size: large;
-    }
-    #period-default {
-        text-align: center;
-        font-size: large;
-    }
-
-    @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
-
-    
-    #calendar, #calendar2 {
-        background-color : white;
-        width: 445px;
-        height: 450px;
-        margin: 0px;
-        padding: 20px;
-        margin: 0 auto;
-        border-radius:0px;
-        /* box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3); */
-        align-items: center;
-    }
-
-    #calendar-wrap td {
-        width: 50px;
-        height: 50px;
-    }
-
-    .Calendar, .Calendar2 {
-        text-align: center;
-    }
-
-    .Calendar>thead>tr:first-child>td, .Calendar2>thead>tr:first-child>td {
-        font-family: 'Questrial', sans-serif;
-        font-size: 1.1em;
-        font-weight: bold;
-    }
-
-    .Calendar>thead>tr:last-child>td, .Calendar2>thead>tr:last-child>td {
-        font-family: 'Questrial', sans-serif;
-        font-weight: 600;     
-    }
-
-    .Calendar>tbody>tr>td>p, .Calendar2>tbody>tr>td>p {
-        font-family: 'Montserrat', sans-serif;
-        height: 45px;
-        width: 45px;
-        border-radius: 45px;
-        transition-duration: .2s;
-        line-height: 45px;
-        margin: 2.5px;
-        display: block;
-        text-align: center;
-    }        
-
-    .pastDay {
-        color: lightgray;
-    }
-
-    .today {
-        background-color: #F5D042;            
-        color: #fff;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .futureDay {
-        background-color: #FFFFFF;
-        cursor: pointer;
-    }
-    .futureDay:hover{
-        background:#eee;
-    }
-
-
-    p.futureDay.choiceDay, p.futureDat.on{
-        background: #0A174E;
-        color: #fff;
-        font-weight: 600;
-        cursor: pointer;
-    }
-    
-    #storehover:hover {
-    	
-    	background:#eee;
-    	cursor: pointer;
-    }
-    #storehover * {
-    	cursor: pointer;
-    }
-    
-
-    .car {
-        width: 300px;
-        padding-bottom: 10px;
-    }
-    .textBox p {
-        margin: 0px;
-    }
-    #car-list li, #car-list div, #car-list img,
-    #mc-list li, #mc-list div, #mc-list img{
-        float:left;
-        list-style:none;
-        width: 288px;
-        cursor: pointer;
-    }
-    #car-list img, #mc-list img{
-    	height: 216px;
-    }
-    #car-list, #mc-list{
-        padding-left: 10px;
-        margin: 0px;
-    }
-    #car-list [type=radio], #mc-list [type=radio] { 
-	    position: absolute;
-	    opacity: 0;
-	    width: 0;
-	    height: 0;
-    }
-    
-    #mc-list li:hover, #car-list li:hover {
-    	background:#eee;
-    	
-    }
-    #car-no-data {
-           padding-left: 350px;
-    }
-	#modal-mcCode, #modal-cCode {
-		opacity:0;	
-	}
-	
-    #modal.modal-overlay {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        background: rgba(29, 29, 29, 0.5);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(1.5px);
-        -webkit-backdrop-filter: blur(1.5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    #modal .modal-window {
-        background: white;
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur( 13.5px );
-        -webkit-backdrop-filter: blur( 13.5px );
-        border-radius: 10px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 680px;
-        height: 400px;
-        position: relative;
-        float: left;
-        /* padding: 10px; */
-    }
-
-    #modal .title {
-        padding-left: 10px;
-        display: inline;
-        /* text-shadow: 1px 1px 1px gray; */
-        color: black;
-        margin-top: 10px;
-	}
-
-    #modal .title h3 {
-        display: inline;
-    }
-
-    #modal .close-area {
-        display: inline;
-        float: right;
-        padding-right: 10px;
-        cursor: pointer;
-        /* text-shadow: 1px 1px 2px gray; */
-        color: black;
-        font-size: larger
-    }
-        
-    #modal-content {
-        display: flex;
-        margin-top: 20px;
-        padding: 0px 10px;
-        height: 310px;
-        width: auto;
-        /* text-shadow: 1px 1px 2px gray; */
-        color: black;
-        flex-direction: row;
-	}
-    #modal-image {
-        width: 400px;
-        height: 100%;
-/*             flex:auto; */
-    }
-    #modal-info{
-/*             width: 40%;  */
-            
-            /* width: 200px; */
-            /* height: 100%; */
-        flex: 110px;
-        font-size: medium;
-    }
-    #modal-info div{
-        padding-top: 10px;
-    }
-    #modal-button{
-        margin-top: 15px;
-        margin-right: 120px;
-    }
-    .modal-window label {
-        display: inline;
-    }
-    
-    .content-tab {
-       	padding-left:15px; padding-top:15px; padding-bottom:15px;
-    }
-    .tab-title {
-       	padding-bottom:10px;
-    }
-    .tab-input {
-       	width:220px;
-    }
-    .tab-next {
-       	display: none; float:right; margin-right:10px;	
-    }
-    
-</style>
-<body>
+<body class="homepage is-preload">
+    <section class="wrapper style3" style="overflow: hidden;">
     
     <div class="container">
         <div class="content">
@@ -376,12 +83,12 @@
                 </div>
                 <div id="date-wrap">
                     <div id="rentdateText">
-                        <span>대여일시</span>
+                        <span>대여일시 &gt;&gt;</span>
                         <span id="rent-date-text"></span>
                         
                     </div>
                     <div id="returndateText">
-                        <span>반납일시</span>
+                        <span>반납일시 &gt;&gt;</span>
                         <span id="return-date-text"></span>
                         
                     </div>
@@ -391,13 +98,11 @@
             </div>
 
             
-
-            
             <div id="content-map" >
                 <h3 id="chooseStore">지점 선택</h3>
                 <div id="map" style="width:100%;height: 450px;"></div>
-				<select name="storeLocation" id="storeLocation">
-	                <option value="">-----</option>
+				<select name="storeLocation" id="storeLocation" style="width:50px">
+	                <option value="">선택</option>
 	                <option value="서울">서울</option>
 	                <option value="대전">대전</option>
 	                <option value="대구">대구</option>
@@ -411,26 +116,24 @@
 	                <option value="제주">제주</option>
 	            </select>
 	
-				<c:if test="${ not empty storeList }">
+
 	            <table id="storeTable" style="text-align: center; border-bottom: 1px solid;">
 	                <tr>
 	                    <th style="width:250px">지점</th>
 	                    <th style="width:650px">주소</th>
 	                </tr>
-					<c:forEach var="store" items="${ storeList }">
-	                <tr>
 
-	                    	<td id="storehover" style="height:40px">
-		                    	<label for="${store.no }">${ store.name }</label>
-		                    	<input type="radio" id="${store.no }" name="storeName" value=${ store.no } onclick="selectStore(this)" style="opacity:0">
-	                    	
+<!-- 	                <tr id="storeList"> -->
 
-	                    	</td>
-	                    	<td>${ store.address }</td>
-	                </tr>
-					</c:forEach>
+<!-- 	                    	<td id="storehover"style="height:40px" > -->
+<%-- 		                    	<label for="${store.no }">${ store.name }</label> --%>
+<%-- 		                    	<input type="radio" id="${store.no }" name="storeName" value=${ store.no } onclick="selectStore(this)" style="opacity:0"> --%>
+<!-- 	                    	</td> -->
+<%-- 	                    	<td>${ store.address }</td> --%>
+<!-- 	                </tr> -->
+
 	            </table>
-				</c:if>
+
             </div>
             
             
@@ -448,15 +151,9 @@
                         <option value="Suzuki">Suzuki</option>
                         <option value="Yamaha">Yamaha</option>
                     </select>
-                    <label for="mccc">배기량</label>
-                    <select name="mccc" id="mccc">
-                        <option value="">------</option>
-                        <option value="down1000">1000cc 이하</option>
-                        <option value="up1000down1300cc">1000 ~ 1300cc</option>
-                        <option value="up1300down1600cc">1300 ~ 1600cc</option>
-                    </select>
 
-                    
+
+                    <div style="overflow: auto; height:650px">
                     <ul id="mc-list" class="vehicle-list">
                     <c:if test="${ not empty motocycleList }">
                     <c:forEach var="motocycle" items="${ motocycleList }">
@@ -465,7 +162,7 @@
 	                        <input id="mcCode" type="radio" name="mcCode" value="${ motocycle.no }">
 	                        
 	                        <div class="vehicle-div">
-	                            <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png"
+	                            <img id="vehicleImg" src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name }.png"
 									onclick="modalOn(${ motocycle.no },'${ motocycle.brand }', '${ motocycle.name }',${ motocycle.cc }, ${ motocycle.output },
 									${ motocycle.torque },${ motocycle.fuel },${ motocycle.year },'${ motocycle.engine }', ${ motocycle.price });">
 							</div>
@@ -493,30 +190,31 @@
                     </ul>
                     
                     <div id="modal" class="modal-overlay" style="display: none;">
-                    <div class="modal-window">
-                        <div class="title">
-                            <h3>${ motocycle.brand } ${ motocycle.name }</h3>
-                        </div>
-                        <div class="close-area" onclick="modalOff();">X</div>
-                        <label  for="modal-mcCode" class="vehicle-element" >
-                            <input id="modal-mcCode" type="radio" name="mcCode" value="${ motocycle.no }">
-                            <div id="modal-content">
-                                <div id="modal-image">
-                                    <img src="${ path }/resources/images/motocycle/${ motocycle.brand }/${ motocycle.name}.png" style="width: 380px; height: 300px;">
-                                </div>F
-                                <div id="modal-info">
-                                    
-                                    <div style="padding-top: 20px;">배기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-1">${ motocycle.cc }</span>cc</div>
-                                    <div>출력 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-2">${ motocycle.output }</span>rpm</div>
-                                    <div>토크 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-3">${ motocycle.torque }</span>rpm</div>
-                                    <div>연료탱크 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-4">${ motocycle.fuel }</span>L</div>
-                                    <div>연식 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-5">${ motocycle.year }</span>년</div>
-                                    <div>엔진형식 &nbsp;&nbsp;<span id="modal-info-6">${ motocycle.engine }</span></div>
-                                    <div>1일 비용 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="modal-info-7">${ motocycle.price }</span>원 </div>
-                                    <button type="button" id="modal-button" style="float: right;" onclick="modalOff(); selectCar();">선택</button>
-                                </div>
-                             </div>
-                           </label>
+	                    <div class="modal-window">
+	                    	<section class="wrapper style3" style="padding: 0; padding-bottom: 65px; border-radius: 10px;">
+								<div class="title">
+	                            	<h3>${ motocycle.brand } ${ motocycle.name }</h3>
+	                        	</div>
+	                        	<div class="close-area" onclick="modalOff();">X</div>
+	                        	<label  for="modal-mcCode" class="vehicle-element" >
+	                            	<input id="modal-mcCode" type="radio" name="mcCode" value="${ motocycle.no }">
+	                            	<div id="modal-content">
+	                                	<div id="modal-image">
+	                                    	<img src="#" style="width: 380px; height: 300px;">
+	                                	</div>
+	                                	<div id="modal-info">
+		                                    <div>배기 <span id="modal-info-1" style="padding-left:90px">${ motocycle.cc }</span>cc</div>
+		                                    <div>출력 <span id="modal-info-2" style="padding-left:80px">${ motocycle.output }</span>rpm</div>
+		                                    <div>토크 <span id="modal-info-3" style="padding-left:80px">${ motocycle.torque }</span>rpm</div>
+		                                    <div>연료탱크 <span id="modal-info-4" style="padding-left:70px">${ motocycle.fuel }</span>L</div>
+		                                    <div>연식 <span id="modal-info-5" style="padding-left:90px">${ motocycle.year }</span>년</div>
+		                                    <div>엔진형식 <span id="modal-info-6">${ motocycle.engine }</span></div>
+		                                    <div>1일 비용 <span id="modal-info-7" style="padding-left:60px">${ motocycle.price }</span>원 </div>
+		                                    <button type="button" id="modal-button" onclick="modalOff(); selectCar();">선택</button>
+	                                	</div>
+	                             	</div>
+	                           </label>
+	                        </section>
                         </div>
                    </div>
                     
@@ -527,12 +225,9 @@
 <!-- 	                </div> -->
 <%-- 				</c:if> --%>
                 </div>
+                </div>
 
-               
-            </div>
-			
-            
-
+		</div>
             
         </div>
         <div class="content-tabs" style="display: inline-block;">
@@ -540,39 +235,46 @@
                 <div class="tab-title">
                     <span> <i class="bi bi-calendar2-week-fill"></i> 대여 기간</span>
                 </div>
-                <input id="rentPeriodText" class="tab-input" placeholder="기간을 선택하세요." readonly>
-                <button class="tab-next" id="tab-next1">다음</button>
+                <div>
+	                <input id="rentPeriodText" class="tab-input" placeholder="기간을 선택하세요." readonly>
+	                <button class="tab-next" id="tab-next1">다음</button>
+                </div>
             </div>
 
             <div class="content-tab" id="tab-2">
                 <div class="tab-title">
                     <span><i class="bi bi-geo-alt-fill"></i> 차량 대여 장소</span>
                 </div>
-                <input id="rentStoreText" class="tab-input" placeholder="대여할 장소를 선택하세요." value="" readonly>
-                <button class="tab-next" id="tab-next2">다음</button>
+                <div>
+	                <input id="rentStoreText" class="tab-input" placeholder="대여할 장소를 선택하세요." value="" readonly>
+	                <button class="tab-next" id="tab-next2">다음</button>
+                </div>
             </div>
             
-            <div class="content-tab active" id="tab-3">
+            <div class="content-tab" id="tab-3">
                 <div class="tab-title">
                     <span> <img src="${ path }/resources/images/car-front-fill.svg" width="18px"> 차량 선택</span>
                 </div>
+                <div>
                 <input id="rentCarText" class="tab-input" placeholder="차량을 선택하세요." readonly>
 <!--                 <button class="tab-next" id="tab-next3">다음</button> -->
+	            <form name="reservation" action="${ path }/payment/reservation" method="GET">
+	            	<input type="hidden" id="rentDate" name="rentDate" value="">
+	                <input type="hidden" id="returnDate" name="returnDate" value="">
+	                <input type="hidden" id="sNo" name="sNo" value="">
+	                <input type="hidden" id="pNo" name="pNo" value="">
+	                
+	                <button type="submit" class="tab-next" id="tab-next3">다음</button>
+	            </form>
+                </div>
             </div>
             
-            <form action="${ path }/payment" method="GET">
-            	<input type="hidden" id="rentDate" name="rentDate" value="">
-                <input type="hidden" id="returnDate" name="returnDate" value="">
-                <input type="hidden" id="sNo" name="sNo" value="">
-                <input type="hidden" id="mcNo" name="mcNo" value="">
-                
-                <input type="submit" class="tab-next" id="tab-next3" value="다음" >
-            </form>
         </div>
     </div>
+    </section>
+    <section style="clear: both;">
+    </section>
 
-    
-    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
@@ -852,7 +554,7 @@
     
     var positions = [	// 마커의 위치
         {
-            title: '서울 강남지점', 
+            title: '서울 강남 지점', 
             latlng: new kakao.maps.LatLng(37.4989761690588, 127.03290014843104)
         },
         {
@@ -949,44 +651,44 @@
 			document.getElementById('rentStoreText').value = selectedMarker.getTitle();
 			document.getElementById('tab-next2').style.display="flex";
 			let sNo;
-			if(document.getElementById('rentStoreText').value=="서울 강남지점"){
-				sNo = 1;
+			if(document.getElementById('rentStoreText').value=="서울 강남 지점"){
+				sNo = 22;
 			} else if(document.getElementById('rentStoreText').value=="서울 영등포지점"){
-				sNo = 2;
+				sNo = 119;
 			} else if(document.getElementById('rentStoreText').value=="대전 서구점"){
-				sNo = 3;
+				sNo = 120;
 			} else if(document.getElementById('rentStoreText').value=="대구 중구점"){
-				sNo = 4;
+				sNo = 121;
 			} else if(document.getElementById('rentStoreText').value=="대구 달서점"){
-				sNo = 5;
+				sNo = 122;
 			} else if(document.getElementById('rentStoreText').value=="부산 수영점"){
-				sNo = 6;
+				sNo = 123;
 			} else if(document.getElementById('rentStoreText').value=="부산 사상점"){
-				sNo = 7;
+				sNo = 124;
 			} else if(document.getElementById('rentStoreText').value=="울산 남구점"){
-				sNo = 8;
+				sNo = 125;
 			} else if(document.getElementById('rentStoreText').value=="울산 북구점"){
-				sNo = 9;
+				sNo = 126;
 			} else if(document.getElementById('rentStoreText').value=="인천 연수점"){
-				sNo = 10;
+				sNo = 127;
 			} else if(document.getElementById('rentStoreText').value=="인천 중구점"){
-				sNo = 11;
+				sNo = 128;
 			} else if(document.getElementById('rentStoreText').value=="경기 수원점"){
-				sNo = 12;
+				sNo = 129;
 			} else if(document.getElementById('rentStoreText').value=="경기 평택점"){
-				sNo = 13;
+				sNo = 130;
 			} else if(document.getElementById('rentStoreText').value=="경기 가평점"){
-				sNo = 14;
+				sNo = 131;
 			} else if(document.getElementById('rentStoreText').value=="광주 서구점"){
-				sNo = 15;
+				sNo = 132;
 			} else if(document.getElementById('rentStoreText').value=="전주 전주점"){
-				sNo = 16;
+				sNo = 133;
 			} else if(document.getElementById('rentStoreText').value=="강원 양양점"){
-				sNo = 17;
+				sNo = 134;
 			} else if(document.getElementById('rentStoreText').value=="강원 강릉점"){
-				sNo = 18;
+				sNo = 135;
 			} else if(document.getElementById('rentStoreText').value=="제주 공항점"){
-				sNo = 19;
+				sNo = 136;
 			} 
 			document.getElementById('sNo').value = sNo;
 			
@@ -1019,10 +721,7 @@
         $('#modal-info-7').text(price);
         $('#modal-image>img').attr("src", "${path}/resources/images/motocycle/"+brand+"/"+name+".png");
     }
-    
-//     function modalOn(e){
-//     	modal.style.display = "flex"
-//     }
+
     
     function isModalOn() {
         return modal.style.display === "flex"
@@ -1035,34 +734,15 @@
     function selectCar() {
     	let rentCarText = $('#modal h3').text();
     	document.getElementById('rentCarText').value = rentCarText;
-    	document.getElementById('mcNo').value = document.getElementById('modal-mcCode').value;
+    	document.getElementById('pNo').value = document.getElementById('modal-mcCode').value;
     	document.getElementById('tab-next3').style.display="flex";
     }
-    
-//     function transferVehicle(rid){
 
-//     	$('#rerid').val(rid)
-
-//     }
     
     
     let modalButton = document.getElementById("modal-button");
     
-//     modalButton.addEventListener("click", function() {
-        
-//         modalOff();
-//         let carCodeText = document.getElementById("car-code").value;
-//         document.getElementById('rentCarText').value=carCodeText;
-// //         $('#rentCarText').value = $('car-code').value;
-// //         document.getElementById("rentCarText").value = 'z';
-//     })
-    
 
-    
-    // let closeBtn = modal.querySelector(".close-area")
-    // closeBtn.addEventListener("click", e => {
-    //     modalOff()
-    // })
     
     modal.addEventListener("click", e => {
         let evTarget = e.target
@@ -1100,121 +780,49 @@
             $('#tab-3').show();
         });
 
-//         $("input[name='kind']").change(function(){
-//             if($("input[name='kind']:checked").val() == 'car'){
-//                 $('#chooseCar').show();
-//                 $('#chooseMotocycle').hide();
 
-//                 $('#selectKind_car').show();
-//                 $('#selectKind_motocycle').hide();
-//             }
-//             if($("input[name='kind']:checked").val() == 'motocycle'){
-//                 $('#chooseCar').hide();
-//                 $('#chooseMotocycle').show();
-                
-//                 $('#selectKind_motocycle').show();
-//                 $('#selectKind_car').hide();
-//             }
-//         });
-//         $("#storeLocation").on('change', () => {
-//         	let storeLocation = $('#storeLocation').val();
-//         	$.ajax({
-//         		type: 'GET',
-//         		url: '${path}/rent/motocycle/',
-//         		dataType: 'json',
-//         		data: {
-//         			storeLocation
-//         		},
-//         		success: (stores) => {
-//         			console.log(stores);
-//         		},
-//         		error: (error) =>{
-//         			console.log('에러;;;;;');
-//         		}
+        $("#storeLocation").on('change', () => {
+        	let storeLocation = $('#storeLocation>option:selected').val();
+        	$.ajax({
+        		type: 'GET',
+        		url: '${path}/rent/motocycle/'+storeLocation,
+        		dataType: 'json',
+        		data: {
+        			storeLocation
+        		},
+        		success: (stores) => {
+        			
+        			$('#storeTable').empty();
+        			$('#storeTable').append('<tr style="border-bottom:1px solid"><th style="200px;">지점</th><th style="600px">주소</th></tr>');
+        			
+        			for(let i = 0; i < stores.length;i++) {
+        				$('#storeTable').append('<tr><td id="storehover" style="height:40px"><label for="'+stores[i].no+'">'
+        						+stores[i].name+'</label><input type="radio" id="'+stores[i].no+'" name="storeName" value='
+        						+stores[i].no+' onclick="selectStore(this)" style="opacity:0"></td><td>'+stores[i].address+'</td></tr>'
+
+        				);
+        			}
+        			
+        		},
+        		error: (error) =>{
+        			console.log('에러;;;;;');
+        		}
         	
-//         	})
-//         })
-        
-//         날짜지점 적용x 브랜드가져오기 
-//         $("#selectKind_motocycle #brand").on('change', () => {
-//             let brand = $("#brand>option:selected").val();
-//             $('#mc-list').empty();
-//             $.ajax({
-//                type: 'GET',
-//                url: '${ path }/rent/motocycle/'+brand,
+        	})
+        })
 
-//                dataType: 'json',
-//                data: {
-//                   brand
-//                },
-//                success: (motocycles) => {
-                  
-//                   console.log(motocycles);
-
-                  
-//                   for(let i = 0; i < motocycles.length; i++) {
-//                       $('#mc-list').append('<li><label  for="mcCode" class="vehicle-element" ><input id="mcCode" type="radio" name="mcCode" value='+motocycles[i].no+'>'
-//                         +'<div class="vehicle-div"><img src="${ path }/resources/images/motocycle/'+motocycles[i].brand+'/'+motocycles[i].name+'.png" onclick=modalOn('+motocycles[i].no + ",'"+motocycles[i].brand+"','"
-//                         +motocycles[i].name+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+motocycles[i].engine+"',"+motocycles[i].price
-//                         +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price+'원</p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>'
-
-//                       );
-//                   }
-                  
-//                },
-//                error: (error) => {
-//                 console.log(error);
-//              	}
-//                })
-               
-//          });
-
-        	
-//         //날짜지점 적용해서 브랜드뽑기
-//         $("#selectKind_motocycle #brand").on('change', () => {
-//         	let rentDate = $('#rentDate').val();
-//         	let returnDate = $('#returnDate').val();
-//         	let sNo = $('#sNo').val();
-//             let brand = $("#brand>option:selected").val();
-//             console.log(brand);
-//             $('#mc-list').empty();
-//             $.ajax({
-//                type: 'GET',
-//                url: '${ path }/rent/motocycles/'+rentDate+'&'+returnDate+'&'+sNo+'&'+brand,
-               
-//                dataType: 'json',
-//                data: {
-//             	   rentDate,
-// 	       			returnDate,
-// 	       			sNo,
-// 	                brand
-//                },
-//                success: (motocycles) => {
-                  
-//                   console.log(motocycles);
-//                   console.log('dddd');
-                  
-//                },
-//                error: (error) => {
-//                 console.log(error);
-//              }
-               
-//             });
-//          });
-        
-		// 날짜 지점 선택후 전체 리스트
+		// 날짜 지점 선택후 전체 오토바이 리스트
 			$('#tab-next2').on('click', () => {
 				
         	let rentDate = $('#rentDate').val();
         	let returnDate = $('#returnDate').val();
         	let sNo = $('#sNo').val();
         	
-        	
+
         	$.ajax({
         		type: 'GET',
         		url: '${ path }/rent/motocycles/'+rentDate+'&'+returnDate+'&'+sNo,
         		dataType: 'json',
-        		async: false, 
         		data: {
         			rentDate,
         			returnDate,
@@ -1223,17 +831,23 @@
         		success: (motocycles) => {
                     
                     console.log(motocycles);
-
+                    $('#mc-list').empty();
                     
                     if(motocycles==""){
                     	$('#mc-list').append('<p style="padding-left:300px; padding-top: 30px;"><i class="bi bi-chat-right-dots-fill"></i><b> 검색된 차량이 없습니다. </b></p>');
                     }
                     for(let i = 0; i < motocycles.length; i++) {
+                    	
+                    	let trimMotocyclesName = motocycles[i].name.replace(/\s+/g, '&nbsp;');
+                        let trimMotocyclesEngine = motocycles[i].engine.replace(/\s+/g, '&nbsp;'); 
+                             
+                        console.log(trimMotocyclesName);	
+                        
                     	if(motocycles[i].sale=='C'){
                     		
                         $('#mc-list').append('<li><label  for="mcCode" class="vehicle-element" ><input id="mcCode" type="radio" name="mcCode" value='+motocycles[i].no+'>'
                           +'<div class="vehicle-div"><img src="${ path }/resources/images/motocycle/'+motocycles[i].brand+'/'+motocycles[i].name+'.png" onclick=modalOn('+motocycles[i].no + ",'"+motocycles[i].brand+"','"
-                          +motocycles[i].name+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+motocycles[i].engine+"',"+motocycles[i].price
+                          +trimMotocyclesName+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+trimMotocyclesEngine+"',"+motocycles[i].price
                           +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price+'원</p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>'
 
                         );
@@ -1241,10 +855,13 @@
                     	} else if(motocycles[i].sale=='S'){
                     		 $('#mc-list').append('<li><label  for="mcCode" class="vehicle-element" ><input id="mcCode" type="radio" name="mcCode" value='+motocycles[i].no+'>'
                               +'<div class="vehicle-div"><img src="${ path }/resources/images/motocycle/'+motocycles[i].brand+'/'+motocycles[i].name+'.png" onclick=modalOn('+motocycles[i].no + ",'"+motocycles[i].brand+"','"
-                              +motocycles[i].name+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+motocycles[i].engine+"',"+motocycles[i].price
-                              +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price*0.7+'원<s>'+motocycles[i].price+'원</s> <span>(30% 할인)</span></p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>');
+                              +trimMotocyclesName+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+trimMotocyclesEngine+"',"+motocycles[i].price
+                              +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price*0.7+'원<s>'+motocycles[i].price+'원</s> <span>(30% 할인)</span></p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>'
+                             );
                     	}
                     }
+                    
+                    
                     
                     
                  },
@@ -1253,10 +870,10 @@
         			console.log(error);
         		}
         	})
-        })
-
+        });
     });
 
 </script>
 </body>
-</html>
+
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

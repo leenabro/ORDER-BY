@@ -21,4 +21,11 @@ public interface StoreMapper {
 
 	Store findStoreByName(String storeName);
 
+
+	List<Store> findStoreListByNo(int storeNo);
+
+
+	List<Store> findStoreListByName(String storeLocation);
+
+
 }
