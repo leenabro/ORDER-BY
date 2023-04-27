@@ -259,7 +259,7 @@
                 <input id="rentCarText" class="tab-input" placeholder="차량을 선택하세요." readonly>
 <!--                 <button class="tab-next" id="tab-next3">다음</button> -->
             
-	            <form action="${ path }/payment" method="GET">
+				<form name="reservation" action="${ path }/payment/reservation" method="GET">
 	            	<input type="hidden" id="rentDate" name="rentDate" value="">
 	                <input type="hidden" id="returnDate" name="returnDate" value="">
 	                <input type="hidden" id="sNo" name="sNo" value="">
@@ -762,11 +762,17 @@
         $('#tab-3').hide();
 
         $('#tab-next1').click(function(){
-            $('#content-date').hide();
-            $('#content-map').show();
-            $('#content-vehicle').hide();
-            $('#tab-2').show();
-
+            if('${ store }' === '' || '${ store }' === null) {
+                $('#content-date').hide();
+                $('#content-map').show();
+                $('#content-vehicle').hide();
+                $('#tab-2').show();
+            } else {
+                $('#sNo').attr("value", '${ store.no }');
+                $('#pNo').attr("value", '${ car.no }');
+                
+                document.reservation.submit();
+            }
         });
 
         $('#tab-next2').click(function(){
