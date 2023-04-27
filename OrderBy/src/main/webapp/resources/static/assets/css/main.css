@@ -9,6 +9,97 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+/* 0427 주리 플로팅박스 시작 */
+.sideBanner {
+	position: fixed;
+	z-index: 9999; /* 상위로 띄울 레이어의 z-index 값 */
+	top: 20px;
+	right: 50px;
+	position: absolute;
+	width: 300px;
+	height: 250px;
+	top: 300px;
+/* 	background-color: #ffffff; */
+	background-color:transparent;
+	color: #304050;
+	
+}
+
+#kakao24 {
+	position: relative;
+	top: 150px;
+	left: 80px;
+	width: 150px;
+	height: 150px;
+}
+/* =================================================================================================== */
+#popFloating-banner {
+		right: 0;
+		width: 100%;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		box-shadow: 0px 0px 5px #8c9bab;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 10px;
+		/* opacity:0.7;  20% 불투명도 */
+		background-color:rgba(255, 255, 255, 0.7);
+		/* z-index: 9999; */
+	}
+#popTltle {
+	font-size: 20px;
+	text-decoration: none;
+	font-weight: 800;
+	color: #304050;
+}
+/* ========== */
+	#popup-form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.popLabel {
+		display: block;
+		font-size: 13px;
+/* 		margin-bottom: 5px; */
+	}
+
+	#popNo,
+	#popName,
+	#popEmail,
+	#popPhone,
+	#popContent,
+	#popDate,
+	#popStatus {
+		width: 287px;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		font-size: 13px;
+	}
+	
+	#popContent {
+		resize: none;
+	}
+	
+	#popSubmit {
+		width: 100%;
+		height: 40px;
+		padding: 5px;
+		border: none;
+		border-radius: 5px;
+		background-color: #203050;
+		color: white;
+		font-size: 16px;
+		vertical-align: middle;
+		cursor: pointer;
+		line-height: 30px;
+	}
+
+/* 주리 플로팅박스 종료 */
+
 html,
 body,
 div,
@@ -2971,7 +3062,7 @@ ul.actions.special {
   border: none;
 }
 
-/* login */
+/*  =========================================== login  =========================================== */
 /* jully login button start */
 input[type="button"].small,
 input[type="submit"].small,
@@ -3009,10 +3100,36 @@ button.style4:active,
 }
 /* jully login button end */
 /* jully login button start */
-#nav > a {
-  position: absolute;
-  top: -20%;
-  right: 3%;
+#memberHello, #adminHello {
+	position: fixed;
+	top: 20px;
+	right: 120px;
+}
+
+
+/* 관리자 버튼(왼쪽) */
+#jrAdminBtn {
+	position: fixed;
+	top: 40px;
+	right: 120px;
+}
+/* 로그인 버튼(맨오른쪽) */
+#jrLoginBtn {
+	position: fixed;
+	top: 40px;
+	right: 10px;
+}
+/* 마이페이지 버튼(왼쪽) */
+#jrMypageBtn {
+	position: fixed;
+	top: 40px;
+	right: 120px;
+}
+/* 로그아웃 버튼(맨오른쪽) */
+#jrLogoutBtn {
+	position: fixed;
+	top: 40px;
+	right: 10px;
 }
 
 /* jully login button end */

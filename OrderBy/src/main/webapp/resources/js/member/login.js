@@ -44,4 +44,10 @@ function ipCheck(){
         ipcheck.textContent = 'OFF'
         ipcheck.style.color = 'rgb(160,160,160)';
     }
+    
+
+
+    
 }
+
+

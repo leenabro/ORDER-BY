@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
@@ -18,10 +21,14 @@
 
 <link rel="stylesheet" href="${path}/resources/css/member/login.css"/>
 <link rel="stylesheet" href="${path}/resources/js/member/login.js"/>
+
 <link rel="shortcut icon" href="#">
 
 <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
 <script src="${ path }/resources/js/member/login.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 <title>로그인</title>
 </head>
 <body>
@@ -85,11 +92,24 @@
 
 			<div id="easy-login-wrap-ko">
 				<div class="easy-login-box-ko">
-					<div class="qr-login-ko">
-						<img src="#">
-						<a href="#" target="_blank" title="QR코드 로그인">Sign
-							in with QR code</a>
+					<div class="qr-login-ko" style="background-color: transparent; border: 0;">
+						<!-- 소셜로그인 영역 -->
+					    <!-- 네이버 로그인 버튼 노출 영역 -->
+						<div align="center" style="margin: 0; background-color: #03c75a;">
+							<a id="naverLoginBtn" href="${naverAuthUrl}" style="margin: 0px; background-color: green; cursor: pointer;">
+								<img margin="0" width="200" height="50" src="${ path }/resources/images/member/btnG_완성형.png" style="margin: 0px; background-color: #03c75a; cursor: pointer;">
+							</a>
+						</div>
+					    <!-- 카카오 로그인 버튼 노출 영역 -->
+						<div align="center" style="margin: 0; background-color: #FEE500; margin-top: 10px;">
+							<a id="kakaoLoginBtn" href="${kakaoAuthUrl}" style="margin: 0px; background-color: green; cursor: pointer;">
+								<img margin="0" width="200" height="50" src="${ path }/resources/images/member/kakao_login_large_narrow.png" style="margin: 0px; background-color: #FEE500; cursor: pointer;">
+							</a>
+						</div>
 					</div>
+
+
+
 					<div class="facebook-login">
 						<img src="#">
 						<a href="#" target="_blank" title="일회용번호 로그인">Facebook</a>
@@ -128,13 +148,11 @@
 
 			<div id="find-signup-wrap-ko">
 				<span class="find-id">
-					<a href="#" target="_blank" title="QR코드 로그인">아이디
-						찾기</a>
+					<a href="#" title="비밀번호 찾기" onclick="window.open('${ path }/member/findId', '아이디찾기', 'width=500, height=400');">아이디 찾기</a>
 				</span>
 
 				<span class="find-pw">
-					<a href="#" target="_blank"
-						title="일회용번호 로그인">비밀번호 찾기</a>
+					<a href="#" title="비밀번호 찾기" onclick="window.open('${ path }/member/findPwd', '비밀번호찾기', 'width=500, height=400');">비밀번호 찾기</a>
 				</span>
 
 				<span class="sign-up">
@@ -147,13 +165,13 @@
 				
 				<span class="find-id-en">
 					<span>Forgot your</span> 
-					<a href="#" target="_blank" title="QR코드 로그인">Username</a>
+					<a href="#" title="Id?" onclick="window.open('${ path }/member/findId', '아이디찾기', 'width=500, height=400');">Id?</a>
+					
 				</span>
 
 				<span class="find-pw">
-					<span>or</span> 
-					<a href="#" target="_blank"
-						title="일회용번호 로그인">Password?</a>
+					<span>or</span>
+					<a href="#" title="Password?" onclick="window.open('${ path }/member/findPwd', '비밀번호찾기', 'width=500, height=400');">Password?</a>
 				</span>
 
 				<span class="sign-up">

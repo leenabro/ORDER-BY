@@ -11,10 +11,7 @@
 	<bean id="bcryptPasswordEncoder"
 		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
 	/>
-	
-	
-	
-	
+
 	<!-- 멤버 디테일 서비스 == 멤버 서비스 임플리먼트 빈 생성 -->
 	<bean id="memberServiceImpl"
 		  class="com.ta.orderby.member.model.service.MemberServiceImpl"
@@ -37,6 +34,11 @@
 		  class="com.ta.orderby.common.handler.LoginFailureHandler"
 	/>
 	
+	<bean id="logoutSuccessHandler"
+		  class="com.ta.orderby.common.handler.CustomLogoutSuccessHandler"
+	/>
+	
+	
 	<!--
 		resources 폴더 안에 있는 파일들은 security 대상이 아니라는 것을 나타낸다.
 	-->
@@ -45,8 +47,7 @@
 	<security:http pattern="/css/**" security="none"></security:http>
 	<security:http pattern="/images/**" security="none"></security:http>
 	<security:http pattern="/member/request" security="none"></security:http>
-	<security:http pattern="/admin/insertcarproduct" security="none"></security:http>
-	<security:http pattern="/admin/insertmotocycleproduct" security="none"></security:http>
+	<security:http pattern="/popqna" security="none"></security:http>
 	<!--
 		security:http
 		  - HTTP에 대한 요청을 안전하게 보호하는 방법을 설정하는 요소이다.
@@ -105,11 +106,15 @@
 		/>
 		
 		<!-- 로그아웃 페이지 커스텀 -->
+		<!--
 		<security:logout
 			logout-url="/member/logout"
 			logout-success-url="/"
 		/>
-
+		-->
+		<security:logout logout-url="/member/logout"
+			success-handler-ref="logoutSuccessHandler"
+			invalidate-session="false"/>
 		<!--
 			로그인유지 기억하기 기능 활성화
 			key="khweb" << 토큰 생성용 키값
@@ -131,21 +136,18 @@
 		  - 유저들에 대한 인증과 관련된 설정을 하는 요소이다.
 		  - In Memory, DB, LDAP 등 다양한 방법으로 유저 조회 및 인증을 구현하여 설정해 줄 수 있다.
 		In Memory 방식 설정 (테스트 용도로 사용)
-		
+	-->
+<!-- 		name(id)값이 admin이면 관리자임 -->
 		<security:authentication-manager>
 			<security:authentication-provider>
 				<security:password-encoder ref="bcryptPasswordEncoder"/>
 				<security:user-service>
-					<security:user name="user"
-							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
-								   authorities="ROLE_ADMIN, ROLE_USER"/>
 					<security:user name="admin"
-							   	   password="$2a$10$tQ7jxV2b63HE7rnV7ePm3OcqS6v.jklc0.gY16HstiP20InwobqAK" 
+							   	   password="{noop}1234" 
 								   authorities="ROLE_ADMIN,ROLE_USER"/>
 				</security:user-service>
 			</security:authentication-provider>
 		</security:authentication-manager>
-	-->
 
 	<!--
 		TA 계정의 Member 테이블에서 유저 조회 및 인증을 구현하도록 설정
@@ -162,11 +164,9 @@
 	<security:authentication-manager>
 		<security:authentication-provider ref="daoAuthenticationProvider"/>
 	</security:authentication-manager>
-		-->
+	-->
 	
-	
-	
-	
+
 	
 	
 	

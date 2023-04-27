@@ -62,7 +62,8 @@
 	
 	<task:annotation-driven />
  
-
+	<beans:bean id="naverLoginBO" class="com.ta.orderby.member.controller.NaverLoginBO" />
+	<beans:bean id="kakaoLoginBO" class="com.ta.orderby.member.controller.KakaoLoginBO" />
 
 
 	
