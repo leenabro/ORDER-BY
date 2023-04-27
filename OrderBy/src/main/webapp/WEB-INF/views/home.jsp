@@ -233,7 +233,7 @@
 	        </div>
     	</section>
     	
-		<!-- 0427 주리 플로팅박스 시작 -->
+<!-- 		0427 주리 플로팅박스 시작 -->
 		<div class="sideBanner">
 			<span class="txt-label">
 	            <span id="popFloating-banner">
@@ -253,8 +253,13 @@
 	                <button id="popSubmit">문의하기</button>
 	            </span>
 			</span>
+			<span>
+				<a id="kakao24" href="https://open.kakao.com/o/sBznYrhf">
+					<img id="kakao24" src="${ path }/resources/static/assets/css/images/kakao24.jpeg" style="">
+				</a>
+			</span>
 		</div>
-		<!-- 0427 주리 플로팅박스 종료 -->
+<!-- 		0427 주리 플로팅박스 종료 -->
 		
 	</body>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>

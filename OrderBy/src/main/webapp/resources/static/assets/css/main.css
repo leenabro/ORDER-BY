@@ -25,6 +25,13 @@
 	
 }
 
+#kakao24 {
+	position: relative;
+	top: 150px;
+	left: 80px;
+	width: 150px;
+	height: 150px;
+}
 /* =================================================================================================== */
 #popFloating-banner {
 		right: 0;
