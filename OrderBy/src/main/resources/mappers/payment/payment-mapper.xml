@@ -29,6 +29,7 @@
 		<result property="memberNo" column="M_NO" />
 		<result property="carNo" column="C_NO" />
 		<result property="motocycleNo" column="MC_NO" />
+		<result property="name" column="P_NAME" />
 	</resultMap>
 
 	<resultMap type="Reservation" id="reservationResultMap">
@@ -177,22 +178,21 @@
 	
 <!-- 	오현   -->
 		<sql id="paymentListSql">
+ 	
  	SELECT 
 		    P_NO,
+		    P_UID,
+		    P_NAME,
 		    P_METHOD,
 		    P_DATE,
 		    P_TOT_PRICE,
 		    P_FIN_PRICE,
 		    P_STATUS,
-		    P.M_NO,
-		    P.C_NO,
-		    P.MC_NO,
-		    M.MC_NAME,
-		    C.C_NAME
- 
+		    M_NO,
+		    C_NO,
+		    MC_NO
+         
  	 FROM PAYMENT P
-	 FULL OUTER JOIN CAR C ON (P.C_NO = C.C_NO)
-	 FULL OUTER JOIN MOTOCYCLE M ON(P.MC_NO = M.MC_NO)
 	 WHERE P_STATUS = 'N'
  	</sql>
 

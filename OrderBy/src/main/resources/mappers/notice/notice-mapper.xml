@@ -4,8 +4,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
- <mapper namespace="com.ta.orderby.Notice.model.mapper.NoticeMapper">
+ <mapper namespace="com.ta.orderby.notice.model.mapper.NoticeMapper">
  	<sql id="boardListSql">
+      	
       		SELECT N_NO,
 		       N_TITLE,
 		       N_DATE,
@@ -14,7 +15,7 @@
 		       N_VIEW,
 		       N_STATUS,
                 M_NO,
-               INFOFILE_ID
+               IF_NO
 		FROM NOTICE
  	</sql>
 		<resultMap id="boardListResultMap" type="Notice">
@@ -26,7 +27,7 @@
 		<result property="n_view" column="N_VIEW"/>
 		<result property="n_status" column="N_STATUS"/>
 		<result property="m_no" column="M_NO"/>
-		<result property="infofile_id" column="INFOFILE_ID"/>
+		<result property="infofile_id" column="IF_NO"/>
 	</resultMap> 
  
  
@@ -83,7 +84,7 @@
          N_TITLE,
          N_CONTENT,
      	 N_VIEW,
-         INFOFILE_ID
+         IF_NO
         
       )
       VALUES (

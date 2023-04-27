@@ -50,8 +50,8 @@
 					  <li>
 					    <a href="#">고객센터</a>
 					    <ul>
-					      <li><a href="#">자주 묻는 질문</a></li>
-					      <li><a href="#">공지사항</a></li>
+					      <li><a href="${path }/notice/faq">자주 묻는 질문</a></li>
+					      <li><a href="${path }/notice/notice">공지사항</a></li>
 					    </ul>
 					  </li>
 					        <li><a href="no-sidebar.html">회사소개</a></li>

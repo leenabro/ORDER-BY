@@ -145,17 +145,18 @@ tr td:nth-child(2){
     background-color:gray;
     color:white;
 }
-
 .main1{
-    padding-left: 50%;
-}
 
+
+   font-size: 30px;
+    margin-top:20px;
+    margin-bottom:30px;
+    }
     </style>
 </head>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
 <div class="wrap">
-        <div id="header"></div>
-        <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
         <div id="content">
 
             <div id="content2">
@@ -224,17 +225,19 @@ tr td:nth-child(2){
    
             <!-- 맨 끝으로 -->
             <button onclick="location.href='${ path }/notice/notice?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
+            <button type="button" onclick="location.href='${ path }/notice/update?no=${ notice.n_no }'">글작성</button>
          </div>
                             
-                           <c:if test="${  empty loginMember && loginMember.id == notice.n_no }">
+                          <%--  <c:if test="${  not empty member && member.id == notice.n_no }"> --%>
 							<button type="button" onclick="location.href='${ path }/notice/update?no=${ notice.n_no }'">글작성</button>
-						</c:if>
+						<%-- </c:if> --%>
 						</div>
                         </div>
                 </section>
                 </div>
         </div>
-        <div id="footer"></div>
     </div>
+    
 </body>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

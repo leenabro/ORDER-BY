@@ -18,10 +18,10 @@
 
 
         /* 전체를 감싸는 div */
-        .wrap {
-            width: 1000px;
+        .wrap123 {
+           /*  width: 1000px; */
             height: 800px;
-            margin: auto;
+          /*   margin: auto; */
         }
 
         #header {
@@ -29,11 +29,11 @@
         }
 
         #content {
-            height: 50%;
+            height: 70%;
         }
 
         #footer {
-            height: 20%;
+            /* height: 20%; */
         }
 
         #content>div {
@@ -98,10 +98,11 @@ a:hover{
 .thead td {
     background: #eee;
     font-size: 11px;
+     text-align: center;
 }
  
 td{
-    height: 40px;
+    height: 50px;
     border-bottom:1px solid #ccc;
 }
  
@@ -154,12 +155,23 @@ tr td:nth-child(2){
     vertical-align: middle;
 }
 
+.l_title{
+margin-top:20px;
+font-size: 25px;
+}
+
+.bt1{
+border: none;
+ background-color: white;
+  color: black;
+  width: 10%;
+  
+}
     </style>
 </head>
 <body>
-<div class="wrap">
-        <div id="header"></div>
-        <!-- <div id="content"><div id="content1"></div><div id="content2"></div></div> -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<div class="wrap123">
         <div id="content">
             <div id="content1">
                 <h1 class="l_title">My 페이지</h1>
@@ -175,7 +187,7 @@ tr td:nth-child(2){
             <div id="content2">
                 <br><br><h1 class="main1">예약확인</h1>
                 <section class="main">
-                    <h1 class="d-none">게시판</h1>
+                   
                         <div class="board">
                             <table class="table">
                                 <thead class="thead">
@@ -202,7 +214,7 @@ tr td:nth-child(2){
                                         <td>${ reserve.rentdate}</td>
                                         <td>${ reserve.returndate }</td>
                                         <td>${ reserve.puid }</td>
-                                        <td> <button  type="button"  id="btnDelete">취소하기</button></td>
+                                        <td> <button class="btn1"  type="button"  id="btnDelete">취소하기</button></td>
                                     </tr>
                                     <!-- <button  type="button"  id="btnDelete">삭제</button> -->
                                      </c:forEach>
@@ -240,7 +252,7 @@ tr td:nth-child(2){
                 </section>
                 
         </div>
-        <div id="footer"></div>
+     
     </div>
   	<script>
 	$(document).ready(() => {
@@ -264,5 +276,7 @@ tr td:nth-child(2){
 	}); */
 	
 	</script>
+
 </body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

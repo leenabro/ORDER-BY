@@ -45,7 +45,7 @@ public class Reservecontroller {
 	}
 	
 	@GetMapping("/reserve/delete")
-	public ModelAndView delete(ModelAndView modelAndView,@RequestParam int no) {
+	public ModelAndView delete(ModelAndView modelAndView,@RequestParam (defaultValue = "1") int no) {
 		
 		
 		int result = 0;

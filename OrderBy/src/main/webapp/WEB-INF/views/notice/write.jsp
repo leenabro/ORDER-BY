@@ -92,6 +92,7 @@
         </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <div class="outer">
 		<div class="wrap">
 			<div class="notice_area">
@@ -131,4 +132,5 @@
 	</div>
 	
 </body>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

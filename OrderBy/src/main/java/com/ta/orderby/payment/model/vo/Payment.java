@@ -20,6 +20,8 @@ public class Payment {
 	
 	private Date date;
 	
+	private String name;
+	
 	private int totPrice;
 	
 	private int finPrice;
