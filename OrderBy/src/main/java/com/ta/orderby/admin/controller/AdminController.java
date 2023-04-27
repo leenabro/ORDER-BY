@@ -981,6 +981,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
+	// 쿠폰 주입
 	@GetMapping("/admin/injectCoupon")
 	public ModelAndView injectCoupon(ModelAndView modelAndView) {
 
@@ -1015,6 +1016,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
+	// 쿠폰 자동 비활성화
 	@Scheduled(cron = "59 59 23 * * *")
 	public void couponCheck() {
 		
