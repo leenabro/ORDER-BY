@@ -27,6 +27,14 @@
     <link href="${ path }/resources/static/assets/css/admin2.css" rel="stylesheet">
 	<script src="${path }/resources/js/jquery-3.6.3.js"></script>
     <style>
+    	.dataTables_filter {
+	        margin-left: 65%;
+	      }
+	
+	      .col-sm-12 .dataTables_info {
+	        display: none;
+	      }
+    
     	.btnArea {
             text-align:center;
             padding-top: 50px;
@@ -42,6 +50,8 @@
             background:#282A35;
             margin : 5px;
         }
+        
+        
     </style>    
 </head>
 <body>

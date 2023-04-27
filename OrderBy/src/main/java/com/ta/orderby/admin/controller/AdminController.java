@@ -3,6 +3,7 @@ package com.ta.orderby.admin.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -983,27 +984,28 @@ public class AdminController {
 	public ModelAndView injectCoupon(ModelAndView modelAndView) {
 
 		List<Coupon> couponList = service.findAllCoupon();
-		Date today = new Date(0);
+		LocalDate today = LocalDate.now();
 		
-		System.out.println(today);
+		System.out.println("오늘 날짜: " + today);
 		
 		Calendar cal = Calendar.getInstance();
 	
 		
 		for (Coupon coupon : couponList) {
 			System.out.println(coupon);
-			System.out.println(coupon.getPeriod());
+			System.out.println("각 쿠폰 기간의 쿠폰기간: " + coupon.getPeriod());
+			System.out.println("각 쿠폰의 생성 날짜" + coupon.getCreateDate());
 			List<Coupon> couponIssueList = service.findCouponIssueByCoNo(coupon.getCoNumber());
 			
 			for (Coupon coupon2 : couponIssueList) {
-				System.out.println(coupon2.getRegiDate());
+				System.out.println("쿠폰의 등록한 멤버 : " + coupon2.getMemberNo());
+				System.out.println("각 멤버가 쿠폰 등록기간: " + coupon2.getRegiDate());
 				cal.setTime(coupon2.getRegiDate());
 				cal.add(Calendar.DATE, coupon.getPeriod());
 				
-				System.out.println(cal.getTime());
-				System.out.println();
-				System.out.println(coupon.getCreateDate());
-				System.out.println(coupon2.getRegiDate().equals(coupon.getCreateDate()));
+				System.out.println("각 쿠폰 만료 기간: " + cal.getTime());
+				
+				System.out.println("쿠폰의 등록 기간과 생성기간이 동일한가? " + coupon2.getRegiDate().equals(coupon.getCreateDate()));
 			}
 		}
 		
