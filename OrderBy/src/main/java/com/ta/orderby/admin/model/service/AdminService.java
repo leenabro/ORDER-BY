@@ -102,6 +102,8 @@ public interface AdminService {
 
 	List<Coupon> findCouponIssueByCoNo(int coNumber);
 
+	int allfinprice();
+
 
 
 

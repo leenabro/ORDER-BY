@@ -112,6 +112,8 @@ public interface AdminMapper {
 
 	List<Coupon> findCouponIssueByCoNo(int coNumber);
 
+	int findallfinprice();
+
 
 
 
