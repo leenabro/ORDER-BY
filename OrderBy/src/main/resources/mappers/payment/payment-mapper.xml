@@ -30,7 +30,7 @@
 		<result property="carNo" column="C_NO" />
 		<result property="motocycleNo" column="MC_NO" />
 	</resultMap>
-	
+
 	<resultMap type="Reservation" id="reservationResultMap">
 		<id property="no" column="R_NO" />
 		<result property="rentdate" column="RENT_DATE" />	
@@ -175,7 +175,36 @@
 	
 	</select>
 	
+<!-- 	오현   -->
+		<sql id="paymentListSql">
+ 	SELECT 
+		    P_NO,
+		    P_METHOD,
+		    P_DATE,
+		    P_TOT_PRICE,
+		    P_FIN_PRICE,
+		    P_STATUS,
+		    P.M_NO,
+		    P.C_NO,
+		    P.MC_NO,
+		    M.MC_NAME,
+		    C.C_NAME
+ 
+ 	 FROM PAYMENT P
+	 FULL OUTER JOIN CAR C ON (P.C_NO = C.C_NO)
+	 FULL OUTER JOIN MOTOCYCLE M ON(P.MC_NO = M.MC_NO)
+	 WHERE P_STATUS = 'N'
+ 	</sql>
+
 	
+	 <select id="selecPaymentCount" resultType="_int">
+      SELECT COUNT(*) FROM PAYMENT
+   </select>
+	
+	   <select id="selectAll" resultMap="paymentResultMap">
+      <include refid="paymentListSql"/>
+      ORDER BY P_NO DESC
+   </select>
 	
 
 </mapper>

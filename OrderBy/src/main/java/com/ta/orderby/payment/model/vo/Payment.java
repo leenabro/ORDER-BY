@@ -31,4 +31,8 @@ public class Payment {
 	private int carNo;
 	
 	private int motocycleNo;
+	
+	private String c_name;
+	
+	private String mc_name;
 }
