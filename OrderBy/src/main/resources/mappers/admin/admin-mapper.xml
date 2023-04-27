@@ -502,6 +502,10 @@
 		FROM PAYMENT
 	</sql>
 	
+	<select id="findallfinprice" resultType="_int">
+		SELECT SUM (P_FIN_PRICE) FROM PAYMENT
+	</select>
+	
 	<select id="selectreservationCount" resultType="_int">
 		SELECT COUNT(*) FROM PAYMENT 
 	</select>

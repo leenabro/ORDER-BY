@@ -48,8 +48,12 @@ public class AdminController {
 		
 		int allstorecount = service.getStoreCount();
 		
+		int finprice =  service.allfinprice();
+		System.out.println(finprice);
+		
 		System.out.println(allproductcount);
 
+		modelAndView.addObject("finprice", finprice);
 		modelAndView.addObject("count", allproductcount);
 		modelAndView.addObject("storecount",allstorecount);
 		return modelAndView;

@@ -355,6 +355,12 @@ public class AdminServiceImpl  implements AdminService{
 		return mapper.findCouponIssueByCoNo(coNumber);
 	}
 
+	@Override
+	public int allfinprice() {
+		
+		return mapper.findallfinprice();
+	}
+
 
 
 
