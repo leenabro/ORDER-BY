@@ -44,7 +44,6 @@
 					    <ul>
 					      <li><a href="${ path }/rent/car">자동차</a></li>
 					      <li><a href="${ path }/rent/motocycle">바이크</a></li>
-					      <li><a href="${path }/mypage/main">테스</a></li>
 					    </ul>
 					  </li>
 					  <li><a href="${path }/admin/priceproduct">차종 및 요금</a></li>

@@ -15,7 +15,6 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-<<<<<<< HEAD
 <style>
 	.brand-image {
 		width:100px;
@@ -27,13 +26,6 @@
 
 <body class="homepage is-preload">
 	
-=======
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%-- 	<%@ include file="/WEB-INF/views/member/popUp.jsp" %> --%>
-	<body class="homepage is-preload">
-
-
->>>>>>> jully0420
 	
     <!-- 이 달의 특가 -->
 	<section id="intro" class="wrapper style1" >
@@ -110,7 +102,6 @@
       	</div>
 	</section>
 
-<<<<<<< HEAD
     <!-- Highlights -->
 	<section id="highlights" class="wrapper style3">
 		<div class="title">인기 차종</div>
@@ -199,195 +190,34 @@
             		<div class="swiper-pagination"></div>
           		</div>
         	</div>
+	<!-- 		0427 주리 플로팅박스 시작 -->
+			<div class="sideBanner">
+				<span class="txt-label">
+		            <span id="popFloating-banner">
+		                <security:csrfInput/>
+		                <a id="popTltle">비회원 렌트 문의</a>
+		                <input type="hidden" id="popNo">
+		                <label for="popName" class="popLabel">이름</label>
+		                <input type="text" id="popName" name="popName" autocomplete="off" required>
+		                <label for="popEmail" class="popLabel">이메일</label>
+		                <input type="email" id="popEmail" name="popEmail" autocomplete="off" required>
+		                <label for="popPhone" class="popLabel">연락처</label>
+		                <input type="tel" id="popPhone" name="popPhone" autocomplete="off" required>
+		                <label for="popContent" class="popLabel">문의 내용</label>
+		                <textarea id="popContent" name="popContent" onkeypress="onTestChange(event)" required></textarea>
+		                <input type="hidden" id="popDate">
+		                <input type="hidden" id="popStatus">
+		                <button id="popSubmit">문의하기</button>
+		            </span>
+				</span>
+				<span>
+					<a id="kakao24" href="https://open.kakao.com/o/sBznYrhf">
+						<img id="kakao24" src="${ path }/resources/static/assets/css/images/kakao24.jpeg" style="">
+					</a>
+				</span>
+			</div>
+	<!-- 		0427 주리 플로팅박스 종료 -->
    		</section>
-=======
-      <!-- Highlights -->
-		<section id="highlights" class="wrapper style3">
-	        <div class="title">인기 차종</div>
-	        <div class="container">
-	          <div class="swiper-container" >
-	            <div class="swiper-wrapper">
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="payment/reservation">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" style="width:350px;height:250px;" src="${ path }/resources/static/assets/css/mainImages/롤스로이스 보트테일.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">롤스로이스<br>보트 테일</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/람보르기니 세스토 엘레멘토.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">람보르기니<br>세스토 엘레멘토</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/마세라티 MC20.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">마세라티<br>MC20</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/아우디R8 V12.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">아우디<br>R8 V12</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/페라리 F8 스파이더.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">페라리<br>F8 스파이더</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/부가티 볼리드.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">부가티<br>볼리드</h4>
-	                    </div>
-	                </div>
-	              </div>
-	            </div>
-	            <div class="swiper-button-next"><span class="material-symbols-outlined">
-	              arrow_forward_ios
-	              </span></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	            <div class="swiper-button-prev"><span class="material-symbols-outlined">
-	              arrow_back_ios_new
-	              </span></div><!-- 이전 버튼 -->
-	
-	            <!-- 페이징 -->
-	            <div class="swiper-pagination"></div>
-	          </div>
-	        </div>
-	        <div class="container">
-	          <div class="swiper-container" >
-	            <div class="swiper-wrapper">
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/BMW_S1000RR.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">BMW<br>S1000RR</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Ducati_Panigale_V4_R.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">두가티<br>파니갈레 V4 R</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Honda_CBR1000RR-R.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">혼다<br>CBR1000RR-R</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Kawaski ZR1000K.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">가와사키<br>ZR1000K</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Yamaha_FJR-1300AS.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">야마하<br>FJR-1300AS</h4>
-	                    </div>
-	                </div>
-	              </div>
-	              <div class="swiper-slide">
-	                <div class="month-sale-images">
-	                <a href="">
-	                  <strong style="color:black;" class="hover-test2">바로 예약하기</strong>
-	                  <img class="sale-image" src="${ path }/resources/static/assets/css/mainImages/Suzuki HAYABUSA.png"></a>
-	                  <div class="add-information"><br>
-	                    <h4 style="color:black; font-size: x-large;">스즈키<br>하야부사</h4>
-	                    </div>
-	                </div>
-	              </div>
-	            </div>
-	            <br>
-	            <br>
-	            
-	            <div class="swiper-button-next"><span class="material-symbols-outlined">
-	              arrow_forward_ios
-	              </span></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	              <div class="swiper-button-prev"><span class="material-symbols-outlined">
-	                arrow_back_ios_new
-	                </span></div><!-- 이전 버튼 -->
-	            
-	            <!-- 페이징 -->
-	            <div class="swiper-pagination"></div>
-	          </div>
-	        </div>
-    	</section>
-    	
-<!-- 		0427 주리 플로팅박스 시작 -->
-		<div class="sideBanner">
-			<span class="txt-label">
-	            <span id="popFloating-banner">
-	                <security:csrfInput/>
-	                <a id="popTltle">비회원 렌트 문의</a>
-	                <input type="hidden" id="popNo">
-	                <label for="popName" class="popLabel">이름</label>
-	                <input type="text" id="popName" name="popName" autocomplete="off" required>
-	                <label for="popEmail" class="popLabel">이메일</label>
-	                <input type="email" id="popEmail" name="popEmail" autocomplete="off" required>
-	                <label for="popPhone" class="popLabel">연락처</label>
-	                <input type="tel" id="popPhone" name="popPhone" autocomplete="off" required>
-	                <label for="popContent" class="popLabel">문의 내용</label>
-	                <textarea id="popContent" name="popContent" onkeypress="onTestChange(event)" required></textarea>
-	                <input type="hidden" id="popDate">
-	                <input type="hidden" id="popStatus">
-	                <button id="popSubmit">문의하기</button>
-	            </span>
-			</span>
-			<span>
-				<a id="kakao24" href="https://open.kakao.com/o/sBznYrhf">
-					<img id="kakao24" src="${ path }/resources/static/assets/css/images/kakao24.jpeg" style="">
-				</a>
-			</span>
-		</div>
-<!-- 		0427 주리 플로팅박스 종료 -->
-		
->>>>>>> jully0420
 	</body>
 	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
