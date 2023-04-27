@@ -1,0 +1,318 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
+    h3 {
+        font-weight: 700;
+        margin: 0;
+        padding: 10px;
+    }
+    div *{
+        border: 1px solid gray;
+        box-sizing: border-box;
+        
+    }
+    
+    #content-date *, #content-map *, #content-vehicle *, .content-tabs *{
+    	color:black;
+    }
+    .container {
+        width: 1200px;
+        height: 700px;
+        padding: 0px;
+    }
+    .container > div {
+        height: 100%;
+        float: left;
+    }
+    .content {
+        width: 75%;
+    }
+    .content-tabs {
+        width: 25%;
+        background-color: whitesmoke;
+    }
+
+    #content-date {
+        height: 100%;
+    }
+    #calendar, #calendar2 {
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+	#rent-date-text, #return-date-text {
+		padding-left:65px;
+		font-size:1.3em
+	}
+
+    #rentdateText, #returndateText {
+        width: 50%;
+        height: 100%;
+        float: left;
+        font-size: large;
+    }
+
+    #calendar-wrap{
+        
+        height: 66%;
+    }
+    #date-wrap, #period{
+        
+        height: 12%;
+    }
+/*     #period { */
+/*         text-align: center; */
+/*         font-size: large; */
+        
+/*         font-size: large; */
+/*     } */
+    #period-default {
+        text-align: center;
+        font-size: 1.2em;
+        
+    }
+
+    #calendar, #calendar2 {
+        background-color : white;
+        width: 445px;
+        height: 450px;
+        margin: 0px;
+        padding: 20px;
+        margin: 0 auto;
+        border-radius:0px;
+        /* box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3); */
+        align-items: center;
+    }
+
+    #calendar-wrap td {
+        width: 50px;
+        height: 50px;
+    }
+
+    .Calendar, .Calendar2 {
+        text-align: center;
+    }
+
+    .Calendar>thead>tr:first-child>td, .Calendar2>thead>tr:first-child>td {
+        font-family: 'Questrial', sans-serif;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    .Calendar>thead>tr:last-child>td, .Calendar2>thead>tr:last-child>td {
+        font-family: 'Questrial', sans-serif;
+        font-weight: 600;     
+    }
+
+    .Calendar>tbody>tr>td>p, .Calendar2>tbody>tr>td>p {
+        font-family: 'Montserrat', sans-serif;
+        height: 45px;
+        width: 45px;
+        border-radius: 45px;
+        transition-duration: .2s;
+        line-height: 45px;
+        margin: 2.5px;
+        display: block;
+        text-align: center;
+    }        
+
+    #content-date .pastDay {
+        color: lightgray;
+    }
+
+    .today {
+        background-color: #F5D042;            
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .futureDay {
+        background-color: #FFFFFF;
+        cursor: pointer;
+    }
+    .futureDay:hover{
+        background:#eee;
+    }
+
+
+    #content-date p.futureDay.choiceDay,  #content-date p.futureDat.on{
+        background: #0A174E;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    #storehover:hover {
+    	
+    	background:#eee;
+    	cursor: pointer;
+    }
+    #storehover * {
+    	cursor: pointer;
+    }
+
+    .textBox p {
+        margin: 0px;
+    }
+    #content-vehicle #car-list li, #content-vehicle #car-list div, #content-vehicle #car-list img,
+    #content-vehicle #mc-list li, #content-vehicle #mc-list div, #content-vehicle #mc-list img{
+        float:left;
+        list-style:none;
+        width: 288px;
+        
+    }
+    #content-vehicle #car-list img, #content-vehicle #mc-list img{
+    	height: 216px;
+    	cursor: pointer;
+    }
+    #content-vehicle #car-list, #content-vehicle #mc-list{
+        padding-left: 10px;
+        margin: 0px;
+    }
+    #content-vehicle #car-list [type=radio], #content-vehicle #mc-list [type=radio] { 
+	    position: absolute;
+	    opacity: 0;
+	    width: 0;
+	    height: 0;
+    }
+    
+    #content-vehicle #mc-list li:hover, #content-vehicle #car-list li:hover {
+    	background:#eee;
+    	
+    }
+    #car-no-data {
+           padding-left: 350px;
+    }
+	#modal-mcCode, #modal-cCode {
+		opacity:0;	
+	}
+	
+    #modal.modal-overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(29, 29, 29, 0.5);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    #modal .modal-window {
+        background: white;
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 13.5px );
+        -webkit-backdrop-filter: blur( 13.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        width: 680px;
+        height: 400px;
+        position: relative;
+        float: left;
+        /* padding: 10px; */
+    }
+
+    #modal .title {
+        padding-left: 10px;
+        display: inline;
+        /* text-shadow: 1px 1px 1px gray; */
+        color: black;
+        margin-top: 10px;
+	}
+
+    #modal .title h3 {
+        display: inline;
+        
+    }
+
+    #modal .close-area {
+        display: inline;
+        float: right;
+        padding-right: 10px;
+        cursor: pointer;
+        /* text-shadow: 1px 1px 2px gray; */
+        color: black;
+        font-size: larger
+    }
+        
+    #modal-content {
+        display: flex;
+        margin-top: 20px;
+        padding: 0px 10px;
+        height: 310px;
+        width: auto;
+        /* text-shadow: 1px 1px 2px gray; */
+        color: black;
+        flex-direction: row;
+	}
+    #modal-image {
+        width: 400px;
+        height: 100%;
+/*             flex:auto; */
+    }
+    #modal-info{
+/*             width: 40%;  */
+            
+            /* width: 200px; */
+            /* height: 100%; */
+        flex: 110px;
+        font-size: medium;
+    }
+    #selectKind_car #modal-info div{
+        padding-top: 5px;
+    }
+
+    #modal-button{
+        margin-top: 15px;
+        margin-right: 120px;
+    }
+    .modal-window label {
+        display: inline;
+    }
+    
+    .content-tab {
+       	padding-left:15px; padding-top:15px; padding-bottom:15px;
+    }
+    .tab-title {
+       	padding-bottom:10px;
+    }
+    #rentPeriodText, #rentStoreText {
+       	width:220px;
+    }
+    
+    #rentCarText {
+    	width:290px;	
+    }
+    .tab-next{
+       	display: none; float:right; margin-right:10px;
+		min-width: 0px; padding:0px; width:55px; height:40px;
+		color:white;justify-content: center;align-items:center;
+		font-weight:400;letter-spacing:0px;
+    }
+    #modal-button{
+       	margin:0px; line-height:0;
+		min-width: 0px; padding:0px; width:55px; height:40px;
+		color:white;justify-content: center;align-items:center;
+		font-weight:400;letter-spacing:0px; margin-left:70px; margin-top: 20px;
+    }
+    
+    #tab-next3{
+    	display: none; float:right; margin-right:10px;
+		min-width: 0px; padding:0px; width:55px; height:40px;
+		color:white;justify-content: center;align-items:center;
+		font-weight:400;letter-spacing:0px; 
+    }
+    
+/*     #storeTable td { */
+/*     	height:30px; */
+/*     } */
+    
