@@ -84,4 +84,16 @@ public class CarController {
 		return stores;
 	}
 	
+	@ResponseBody
+	@GetMapping("/rent/cars/brand/{rentDate}&{returnDate}&{sNo}&{brand}")
+	public List<Car> cars(@DateTimeFormat(pattern = "yyyy-MM-dd") Date rentDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate, String sNo, String brand){
+	      
+		log.info("날짜 지점 선택후 브랜드 선택 오토바이 리스트");
+		List<Car> cars = carService.getCarList(rentDate, returnDate, sNo, brand);
+	      
+	      
+	      return cars;
+	}
+	
 }

@@ -1,10 +1,11 @@
 package com.ta.orderby.motocycle.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ta.orderby.car.model.service.CarService;
-import com.ta.orderby.common.util.PageInfo;
 import com.ta.orderby.motocycle.model.service.MotocycleService;
 import com.ta.orderby.motocycle.model.vo.Motocycle;
 import com.ta.orderby.store.model.service.StoreService;
@@ -49,9 +48,32 @@ public class MotocycleController {
 		return modelAndView;
 	}
 	
-
+	@GetMapping("/rent/motocycle/{motocycleName}&{storeLocation}")
+	public ModelAndView directRentCar (ModelAndView modelAndView, @PathVariable String motocycleName, @PathVariable String storeLocation) {
+		
+		Store store = storeService.findStoreByName(storeLocation);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("motocycleName", motocycleName);
+		map.put("storeNo", store.getNo());
+		
+		System.out.println(motocycleName);
+		
+		Motocycle motocycle = motocycleService.findMotoByNameAndStoreNo(map);
+		
+		System.out.println(motocycle);
+		
+		modelAndView.addObject("motocycle", motocycle);
+		modelAndView.addObject("store", store);
+		modelAndView.setViewName("rent/motocycle");
+		
+		return modelAndView;
+	}
+	
+	
 	@ResponseBody
-	@GetMapping("/rent/motocycle/{storeLcocation}")
+	@GetMapping("/rent/motoStore/{storeLcocation}")
 	public  List<Store> getStore(@RequestParam("storeLocation") String location){
 		List<Store> stores = storeService.finStoredByLocation(location);
 		
@@ -72,6 +94,18 @@ public class MotocycleController {
 		
 		
 		return motocycles;
+	}
+	
+	@ResponseBody
+	@GetMapping("/rent/motocycles/brand/{rentDate}&{returnDate}&{sNo}&{brand}")
+	public List<Motocycle> motocycles(@DateTimeFormat(pattern = "yyyy-MM-dd") Date rentDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate, String sNo, String brand){
+	      
+		log.info("날짜 지점 선택후 브랜드 선택 오토바이 리스트");
+	    List<Motocycle> motocycles = motocycleService.getMotocycleList(rentDate, returnDate, sNo, brand);
+	      
+	      
+	    return motocycles;
 	}
 
 	

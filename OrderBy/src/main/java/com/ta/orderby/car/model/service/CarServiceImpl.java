@@ -60,6 +60,12 @@ public class CarServiceImpl implements CarService {
 		return mapper.findCarByNameAndStoreNo(map);
 	}
 
+	@Override
+	public List<Car> getCarList(Date rentDate, Date returnDate, String sNo, String brand) {
+
+		return mapper.selectAllByDateStoreBrand(rentDate, returnDate, sNo, brand);
+	}
+
 
 
 }

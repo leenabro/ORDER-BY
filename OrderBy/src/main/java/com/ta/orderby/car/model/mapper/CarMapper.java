@@ -19,8 +19,6 @@ public interface CarMapper {
 
 	List<Car> bestCarfind();
 
-
-
 	Car findCarByNo(int carNo);
 	
 	List<Car> selectCarAll();
@@ -28,6 +26,8 @@ public interface CarMapper {
 	List<Car> selectAllByDateStore(@Param("rentDate") Date rentDate, @Param("returnDate")Date returnDate, @Param("sNo") String sNo);
 
 	Car findCarByNameAndStoreNo(Map<String, Object> map);
+
+	List<Car> selectAllByDateStoreBrand(@Param("rentDate")Date rentDate, @Param("returnDate") Date returnDate, @Param("sNo")String sNo, @Param("brand")String brand);
 
 
 }

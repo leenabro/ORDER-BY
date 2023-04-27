@@ -284,13 +284,10 @@
     .tab-title {
        	padding-bottom:10px;
     }
-    #rentPeriodText, #rentStoreText {
+    #rentPeriodText, #rentStoreText, #rentCarText {
        	width:220px;
     }
-    
-    #rentCarText {
-    	width:290px;	
-    }
+
     .tab-next{
        	display: none; float:right; margin-right:10px;
 		min-width: 0px; padding:0px; width:55px; height:40px;

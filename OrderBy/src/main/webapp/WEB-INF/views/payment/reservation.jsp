@@ -126,9 +126,18 @@
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>차량 상세 정보</span>
-			        		<div>
-			        			${ car.brand } ${ car.name }
-			        		</div>
+			        		<c:choose>
+		                    	<c:when test="${ not empty car.no }">
+					        		<div>
+					        			${ car.brand } ${ car.name }
+					        		</div>
+		                    	</c:when>
+		                    	<c:when test="${ not empty motocycle.no }">
+		                    		<div>
+					        			${ motocycle.brand } ${ motocycle.name }
+					        		</div>
+		                    	</c:when>
+		                    </c:choose>
 			        	</div>
 			        	<div class="scriptRow">
 			        		<span>총 대여 기간</span>
@@ -144,7 +153,7 @@
 	        			<div class="scriptRow">
 			        		<span>이름</span>
 			        		<div>
-			        			${ member.id }
+			        			${ member.name }
 			        		</div>
 			        	</div>
 			        	<div class="scriptRow">
@@ -217,7 +226,7 @@
 			})
 			
 			$('#nextButton').on('click', () => {
-				location.href = "${ path }/payment/discount?rentDate=${rentDate}&returnDate=${returnDate}&sNo=${store.no}&pNo=${car.no}";
+				location.href = "${ path }/payment/discount?rentDate=${rentDate}&returnDate=${returnDate}&sNo=${store.no}&pNo=" + productNo;
 			})
 			
 			$('#rentDate1').html(rentDateFormat);

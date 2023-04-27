@@ -2,6 +2,7 @@ package com.ta.orderby.motocycle.model.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.ta.orderby.motocycle.model.vo.Motocycle;
 
@@ -22,4 +23,8 @@ public interface MotocycleService {
 	List<Motocycle> findMotoBySale();
 
 	List<Motocycle> bestMotoList();
+
+	Motocycle findMotoByNameAndStoreNo(Map<String, Object> map);
+	
+	List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand);
 }

@@ -2,6 +2,7 @@ package com.ta.orderby.motocycle.model.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,18 @@ public class MotocycleServiceImpl implements MotocycleService {
 	public List<Motocycle> bestMotoList() {
 		
 		return mapper.bestMotofind();
+	}
+
+	@Override
+	public Motocycle findMotoByNameAndStoreNo(Map<String, Object> map) {
+
+		return mapper.findMotoByNameAndStoreNo(map);
+	}
+	
+	@Override
+	public List<Motocycle> getMotocycleList(Date rentDate, Date returnDate, String sNo, String brand) {
+		
+		return mapper.selectAllByDateStoreBrand(rentDate, returnDate, sNo, brand);
 	}
 
 }

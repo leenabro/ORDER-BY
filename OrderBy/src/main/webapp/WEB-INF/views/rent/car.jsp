@@ -28,7 +28,7 @@
     <div class="container">
         <div class="content">
             <div id="content-date">
-                <h3>대여 기간 선택</h3>
+                <h3 style="margin-bottom:15px;margin-top:15px">대여 기간 선택</h3>
                 <div id="calendar-wrap">
                     <div id="calendar">
                         <table class="Calendar">
@@ -101,7 +101,7 @@
 			
 
             <div id="content-map" >
-                <h3 id="chooseStore">지점 선택</h3>
+                <h3 id="chooseStore" style="margin-bottom:15px;margin-top:15px">지점 선택</h3>
                 <div id="map" style="width:100%;height: 450px;"></div>
 				<select name="storeLocation" id="storeLocation" style="width:50px">
 	                <option value="">선택</option>
@@ -136,11 +136,11 @@
             
             
             <div id="content-vehicle">
-                <h3 id="chooseCar">차 선택</h3>
+                <h3 id="chooseCar" style="margin-bottom:15px;margin-top:15px">차 선택</h3>
                 
                 <div id="selectKind_car">
                     <label for="carbrand">브랜드</label>
-                    <select name="carbrand" id="carbrand">
+                    <select name="carbrand" id="carbrand" style="margin-bottom:15px;">
                         <option value="">------</option>
                         <option value="Audi">아우디</option>
                         <option value="Bentley">벤틀리</option>
@@ -490,7 +490,6 @@
                 element[startNum+1].classList.add('choiceDay');
                 startNum++;
             }
-            console.log(howlong);
             if(howlong > 0) {
                 document.getElementById("period-default").innerHTML = '총 <b>' + howlong + '</b>일 사용';
             }
@@ -712,8 +711,12 @@
     let modal = document.getElementById("modal");
 
 	function modalOn(no, brand, name, mile, cc, year, fuel, engine, price) {
-	
+		
         modal.style.display = "flex";
+        
+        let reName = name.replace('&nbsp;', ' ');
+        
+        console.log(reName);
         
         document.getElementById('modal-cCode').value=no;
         $('#modal h3').text(brand + " " + name);
@@ -723,7 +726,7 @@
         $('#modal-info-4').text(fuel);
         $('#modal-info-5').text(engine);
         $('#modal-info-6').text(price);
-        $('#modal-image>img').attr("src", "${path}/resources/images/car/"+brand+"/"+name+".png");
+        $('#modal-image>img').attr("src", "${path}/resources/images/car/"+brand+"/"+reName+".png");
     }
     
 
@@ -738,7 +741,7 @@
     function selectCar() {
     	let rentCarText = $('#modal h3').text();
     	document.getElementById('rentCarText').value = rentCarText;
-    	document.getElementById('cNo').value = document.getElementById('modal-cCode').value;
+    	document.getElementById('pNo').value = document.getElementById('modal-cCode').value;
     	document.getElementById('tab-next3').style.display="flex";
     }
     
@@ -881,9 +884,70 @@
         	})
         });
 
+      //날짜 지점 적용해서 브랜드뽑기
+        $("#selectKind_car #carbrand").on('change', () => {
+           let rentDate = $('#rentDate').val();
+           let returnDate = $('#returnDate').val();
+           let sNo = $('#sNo').val();
+            let brand = $("#carbrand>option:selected").val();
+            console.log(brand);
+            $('#car-list').empty();
+            $.ajax({
+               type: 'GET',
+               url: '${ path }/rent/cars/brand/'+rentDate+'&'+returnDate+'&'+sNo+'&'+brand,
+               
+//                dataType: 'json',
+               data: {
+                  rentDate,
+                   returnDate,
+                   sNo,
+                   brand
+               },
+               success: (cars) => {
+                  
+                  console.log(cars);
+                   
+                   if(cars==""){
+                      $('#car-list').append('<p style="padding-left:300px; padding-top: 30px;"><i class="bi bi-chat-right-dots-fill"></i><b> 검색된 차량이 없습니다. </b></p>');
+                   }
+                   for(let i = 0; i < cars.length; i++) {
+                      
+                      let trimCarsName = cars[i].name.replace(/\s+/g, '&nbsp;');
+                       let trimCarsEngine = cars[i].engine.replace(/\s+/g, '&nbsp;'); 
+                            
+                       console.log(trimCarsName);   
+                  
+                      if(cars[i].sale=='C'){
+                      
+                       $('#car-list').append('<li><label for="cCode" class="vehicle-element" ><input id="cCode" type="radio" name="cCode" value='+cars[i].no+'>'
+                         +'<div class="vehicle-div"><img src="${ path }/resources/images/car/'+cars[i].brand+'/'+cars[i].name+'.png" onclick=modalOn('+cars[i].no + ",'"+cars[i].brand+"','"
+                         +trimCarsName+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+trimCarsEngine+"',"+cars[i].price
+                         +');></div><div class="textBox"><b>'+cars[i].name+'</b><p>'+cars[i].price+'원</p></div><div class="showBrand"><em>'+cars[i].brand+' | '+cars[i].fuel+'<span></span></em></div></label></li>'
+
+                       );
+                       
+                      } else if(cars[i].sale=='S'){
+                         $('#car-list').append('<li><label for="cCode" class="vehicle-element" ><input id="cCode" type="radio" name="cCode" value='+cars[i].no+'>'
+                                   +'<div class="vehicle-div"><img src="${ path }/resources/images/car/'+cars[i].brand+'/'+cars[i].name+'.png" onclick=modalOn('+cars[i].no + ",'"+cars[i].brand+"','"
+                                   +trimCarsName+"','"+cars[i].mile+"',"+cars[i].cc+','+cars[i].year+",'"+cars[i].fuel+"','"+trimCarsEngine+"',"+cars[i].price
+                                   +');></div><div class="textBox"><b>'+cars[i].name+'</b><p>'+cars[i].price*0.7+'원<s>'+cars[i].price+'</s><span>(30% 할인)</span></p></div><div class="showBrand"><em>'+cars[i].brand+' | '+cars[i].fuel+'<span></span></em></div></label></li>'
+
+                                 );
+                      }
+                   }
+               },
+               error: (error) => {
+                console.log(error);
+             }
+               
+            });
+         });
+        
         
        
     });
+    
+    
 
 </script>
 </body>

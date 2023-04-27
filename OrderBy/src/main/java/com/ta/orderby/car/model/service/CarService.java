@@ -23,5 +23,7 @@ public interface CarService {
 	List<Car> getCarList(Date rentDate, Date returnDate, String sNo);
 
 	Car findCarByNameAndStoreNo(Map<String, Object> map);
+	
+	List<Car> getCarList(Date rentDate, Date returnDate, String sNo, String brand);
 
 }

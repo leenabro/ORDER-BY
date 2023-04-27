@@ -22,11 +22,10 @@
 
 <body class="homepage is-preload">
     <section class="wrapper style3" style="overflow: hidden;">
-    
     <div class="container">
         <div class="content">
             <div id="content-date">
-                <h3>대여 기간 선택</h3>
+                <h3 style="margin-bottom:15px;margin-top:15px">대여 기간 선택</h3>
                 <div id="calendar-wrap">
                     <div id="calendar">
                         <table class="Calendar">
@@ -99,7 +98,7 @@
 
             
             <div id="content-map" >
-                <h3 id="chooseStore">지점 선택</h3>
+                <h3 id="chooseStore" style="margin-bottom:15px;margin-top:15px">지점 선택</h3>
                 <div id="map" style="width:100%;height: 450px;"></div>
 				<select name="storeLocation" id="storeLocation" style="width:50px">
 	                <option value="">선택</option>
@@ -138,11 +137,11 @@
             
             
             <div id="content-vehicle">
-                <h3 id="chooseMotocycle">오토바이 선택</h3>
+                <h3 id="chooseMotocycle" style="margin-bottom:15px;margin-top:15px">오토바이 선택</h3>
 
                 <div id="selectKind_motocycle">
-                    <label for="brand">브랜드</label>
-                    <select name="brand" id="brand">
+                    <label for="mcbrand">브랜드</label>
+                    <select name="mcbrand" id="mcbrand" style="margin-bottom:15px;">
                         <option value="">------</option>
                         <option value="BMW">BMW</option>
                         <option value="Ducati">Ducati</option>
@@ -710,6 +709,7 @@
 
         modal.style.display = "flex";
         
+        
         document.getElementById('modal-mcCode').value=no;
         $('#modal h3').text(brand + " " + name);
         $('#modal-info-1').text(cc);
@@ -764,13 +764,21 @@
         $('#content-map').hide();
         $('#tab-2').hide();
         $('#tab-3').hide();
-
+        
         $('#tab-next1').click(function(){
-            $('#content-date').hide();
-            $('#content-map').show();
-            $('#content-vehicle').hide();
-            $('#tab-2').show();
+        	if('${ store }' === '' || '${ store }' === null) {
+                $('#content-date').hide();
+                $('#content-map').show();
+                $('#content-vehicle').hide();
+                $('#tab-2').show();
+            } else {
+                $('#sNo').attr("value", '${ store.no }');
+                $('#pNo').attr("value", '${ motocycle.no }');
 
+                console.log('${motocyle.no}');
+                
+                document.reservation.submit();
+            }
         });
 
         $('#tab-next2').click(function(){
@@ -785,7 +793,7 @@
         	let storeLocation = $('#storeLocation>option:selected').val();
         	$.ajax({
         		type: 'GET',
-        		url: '${path}/rent/motocycle/'+storeLocation,
+        		url: '${path}/rent/motoStore/'+storeLocation,
         		dataType: 'json',
         		data: {
         			storeLocation
@@ -871,6 +879,68 @@
         		}
         	})
         });
+        
+      //날짜 지점 적용해서 브랜드뽑기
+        $("#selectKind_motocycle #mcbrand").on('change', () => {
+           let rentDate = $('#rentDate').val();
+           let returnDate = $('#returnDate').val();
+           let sNo = $('#sNo').val();
+            let brand = $("#mcbrand>option:selected").val();
+            console.log(brand);
+            $('#mc-list').empty();
+            $.ajax({
+               type: 'GET',
+               url: '${ path }/rent/motocycles/brand/'+rentDate+'&'+returnDate+'&'+sNo+'&'+brand,
+               
+//                dataType: 'json',
+               data: {
+                  rentDate,
+                   returnDate,
+                   sNo,
+                   brand
+               },
+               success: (motocycles) => {
+					console.log(brand);
+                  
+                  console.log(motocycles);
+                  $('#mc-list').empty();
+                  
+                  if(motocycles==""){
+                     $('#mc-list').append('<p style="padding-left:300px; padding-top: 30px;"><i class="bi bi-chat-right-dots-fill"></i><b> 검색된 차량이 없습니다. </b></p>');
+                  }
+                  for(let i = 0; i < motocycles.length; i++) {
+                     
+                     let trimMotocyclesName = motocycles[i].name.replace(/\s+/g, '&nbsp;');
+                      let trimMotocyclesEngine = motocycles[i].engine.replace(/\s+/g, '&nbsp;');
+                      
+                     if(motocycles[i].sale=='C'){
+                        
+                      $('#mc-list').append('<li><label  for="mcCode" class="vehicle-element" ><input id="mcCode" type="radio" name="mcCode" value='+motocycles[i].no+'>'
+                        +'<div class="vehicle-div"><img src="${ path }/resources/images/motocycle/'+motocycles[i].brand+'/'+motocycles[i].name+'.png" onclick=modalOn('+motocycles[i].no + ",'"+motocycles[i].brand+"','"
+                        +trimMotocyclesName+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+trimMotocyclesEngine+"',"+motocycles[i].price
+                        +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price+'원</p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>'
+
+                      );
+                      
+                     } else if(motocycles[i].sale=='S'){
+                         $('#mc-list').append('<li><label  for="mcCode" class="vehicle-element" ><input id="mcCode" type="radio" name="mcCode" value='+motocycles[i].no+'>'
+                            +'<div class="vehicle-div"><img src="${ path }/resources/images/motocycle/'+motocycles[i].brand+'/'+motocycles[i].name+'.png" onclick=modalOn('+motocycles[i].no + ",'"+motocycles[i].brand+"','"
+                            +trimMotocyclesName+"',"+motocycles[i].cc+','+motocycles[i].output+','+motocycles[i].torque+','+motocycles[i].fuel+','+motocycles[i].year+",'"+trimMotocyclesEngine+"',"+motocycles[i].price
+                            +');></div><div class="textBox"><b>'+motocycles[i].name+'</b><p>'+motocycles[i].price*0.7+'원<s>'+motocycles[i].price+'원</s> <span>(30% 할인)</span></p></div><div class="showBrand"><em>'+motocycles[i].brand+'<span></span></em></div></label></li>'
+                           );
+                     }
+                  }
+
+                  
+                  
+               },
+               error: (error) => {
+                console.log(error);
+             }
+               
+            });
+         });
+        
     });
 
 </script>

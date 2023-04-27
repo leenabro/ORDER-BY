@@ -2,6 +2,7 @@ package com.ta.orderby.motocycle.model.mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,8 @@ public interface MotocycleMapper {
 	List<Motocycle> findMotoBySale();
 
 	List<Motocycle> bestMotofind();
+
+	Motocycle findMotoByNameAndStoreNo(Map<String, Object> map);
+	
+	List<Motocycle> selectAllByDateStoreBrand(@Param("rentDate") Date rentDate, @Param("returnDate") Date returnDate, @Param("sNo")String sNo, @Param("brand")String brand);
 }

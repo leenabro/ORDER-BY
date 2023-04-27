@@ -56,15 +56,35 @@ public class PaymentController {
 		if(loginMember != null) {
 			Member member = memberService.findMemberById(loginMember.getId()); 
 			Store store = storeService.findStoreByNo(storeNo);
-			Car car = carService.findCarByNo(productNo);
+			System.out.println(productNo);
+			
+			if(productNo > 5000) {
+				Motocycle motocycle = motoService.findMotocycleByNo(productNo);
+				
+				if(motocycle.getSale().equals("S")) {
+					int price = motocycle.getPrice();
+					
+					motocycle.setPrice((int)(price * 0.7));
+				}
+				
+				modelAndView.addObject("motocycle", motocycle);
+			} else {
+				Car car = carService.findCarByNo(productNo);
+				
+				if(car.getSale().equals("S")) {
+					int price = car.getPrice();
+					
+					car.setPrice((int)(price * 0.7));
+				}
+				
+				modelAndView.addObject("car", car);
+			}
 			
 			System.out.println(store);
-			System.out.println(car);
 			
 			modelAndView.addObject("rentDate", rentDate);
 			modelAndView.addObject("returnDate", returnDate);
 			modelAndView.addObject("store", store);
-			modelAndView.addObject("car", car);
 			modelAndView.addObject("member", member);
 			modelAndView.setViewName("payment/reservation");
 		} else {
@@ -84,9 +104,29 @@ public class PaymentController {
 		
 		
 		if(loginMember != null) {
-			Member member = memberService.findMemberById(loginMember.getId()); 
-			// 자동차 정보 불러오기
-			Car car = carService.findCarByNo(productNo);
+			Member member = memberService.findMemberById(loginMember.getId());
+			
+			if(productNo > 5000) {
+				Motocycle motocycle = motoService.findMotocycleByNo(productNo);
+				
+				if(motocycle.getSale().equals("S")) {
+					int price = motocycle.getPrice();
+					
+					motocycle.setPrice((int)(price * 0.7));
+				}
+				
+				modelAndView.addObject("motocycle", motocycle);
+			} else {
+				Car car = carService.findCarByNo(productNo);
+				
+				if(car.getSale().equals("S")) {
+					int price = car.getPrice();
+					
+					car.setPrice((int)(price * 0.7));
+				}
+				
+				modelAndView.addObject("car", car);
+			}
 			
 			// 쿠폰 정보 불러오기
 			List<Coupon> list = service.findCouponByMemberNo(loginMember.getNo());
@@ -95,20 +135,6 @@ public class PaymentController {
 			
 			// 매장 정보 불러오기
 			Store store = storeService.findStoreByNo(storeNo);
-			
-			if(car == null) {
-//				Motocycle motocycle = motoService.findMotocycleByName(productNo);
-				
-				// 특가일 경우 할인된 가격 다시 set
-//				motocycle.setPrice(Integer.parseInt(price));
-				
-//				modelAndView.addObject("motocycle", motocycle);
-			} else {
-				// 특가일 경우 할인된 가격 다시 set
-//				car.setPrice(Integer.parseInt(price));
-				
-				modelAndView.addObject("car", car);
-			}
 			
 			modelAndView.addObject("store", store);
 			modelAndView.addObject("rentDate", rentDate);
