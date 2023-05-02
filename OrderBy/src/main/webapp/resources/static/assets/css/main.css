@@ -17,7 +17,6 @@
 	z-index: 9999; /* 상위로 띄울 레이어의 z-index 값 */
 	width: 300px;
 	height: 250px;
-/* 	background-color: #ffffff; */
 	background-color:transparent;
 	color: #304050;
 	
@@ -26,9 +25,9 @@
 #kakao24 {
 	position: relative;
 	top: 65%;
-	left: 80px;
-	width: 150px;
-	height: 150px;
+	left: 35%;
+	width: 100px;
+	height: 100px;
 }
 /* =================================================================================================== */
 #popFloating-banner {
@@ -46,7 +45,7 @@
 		background-color:rgba(255, 255, 255, 0.7);
 		/* z-index: 9999; */
 	}
-#popTltle {
+#popTitle {
 	font-size: 20px;
 	text-decoration: none;
 	font-weight: 800;
@@ -95,6 +94,53 @@
 		cursor: pointer;
 		line-height: 30px;
 	}
+	
+	.arrow-prev, .arrow-next {
+	    position: relative;
+	    width:30px;
+	    height:30px;
+	    margin-right:5px;
+	}
+	
+	.arrow-next::after {
+    	position: absolute;
+	    left: 130px; 
+	    top: 5px; 
+	    content: '';
+	    width: 10px; /* 사이즈 */
+	    height: 10px; /* 사이즈 */
+	    border-top: 1px solid #000; /* 선 두께 */
+	    border-right: 1px solid #000; /* 선 두께 */
+	    transform: rotate(45deg); /* 각도 */
+	}	
+	
+	.arrow-prev::after {
+	    position: absolute;
+	    left: 200px; 
+	    top: -45px;
+	    content: '';
+	    width: 10px; /* 사이즈 */
+	    height: 10px; /* 사이즈 */
+	    border-top: 1px solid #000; /* 선 두께 */
+	    border-right: 1px solid #000; /* 선 두께 */
+	    transform: rotate(225deg); /* 각도 */
+	}
+	
+	#fold {
+		position: absolute;
+		left: 250px;
+	}
+	
+	#arrowText {
+		position: absolute;
+		left: 210px; 
+   		top: -50px;
+   		padding: 2px;
+		height: 30px;
+		background-color: white;
+		border-radius: 2px;
+	}
+	
 
 html,
 body,

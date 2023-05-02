@@ -190,11 +190,21 @@
             		<div class="swiper-pagination"></div>
           		</div>
         	</div>
-			<div class="sideBanner">
+        	<div id="arrow" class="sideBanner" style="display: none;">
+				<a href="javascript:openCloseAnswer()">
+					<span id="arrowText">문의하기</span>
+					<span class="arrow-prev"></span>
+				</a>
+        	</div>
+			<div id="question" class="sideBanner" style="display: block;">
 				<span class="txt-label">
 		            <span id="popFloating-banner">
 		                <security:csrfInput/>
-		                <a id="popTltle">비회원 렌트 문의</a>
+		                <a id="popTitle">비회원 렌트 문의</a>
+		                <a href="javascript:openCloseAnswer()">
+		                	<span id="fold">접기</span>
+		                	<span class="arrow-next"></span>
+		                </a>
 		                <input type="hidden" id="popNo">
 		                <label for="popName" class="popLabel">이름</label>
 		                <input type="text" id="popName" name="popName" autocomplete="off" required>
@@ -209,6 +219,8 @@
 		                <button id="popSubmit">문의하기</button>
 		            </span>
 				</span>
+			</div>
+			<div class="sideBanner">
 				<span>
 					<a id="kakao24" href="https://open.kakao.com/o/sBznYrhf">
 						<img id="kakao24" src="${ path }/resources/static/assets/css/images/kakao24.jpeg" style="">
@@ -216,6 +228,21 @@
 				</span>
 			</div>
    		</section>
+   		<script>
+   		
+   			function openCloseAnswer() {
+   				
+   				if(document.getElementById('question').style.display === 'block') {
+   					document.getElementById('question').style.display = 'none';
+   					document.getElementById('arrow').style.display = 'block';
+   				} else {
+   					document.getElementById('question').style.display = 'block';
+   					document.getElementById('arrow').style.display = 'none';
+   				}
+   				
+   			}
+   			
+   		</script>
 	</body>
 	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
