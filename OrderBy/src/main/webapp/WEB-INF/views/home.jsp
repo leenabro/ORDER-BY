@@ -190,7 +190,6 @@
             		<div class="swiper-pagination"></div>
           		</div>
         	</div>
-	<!-- 		0427 주리 플로팅박스 시작 -->
 			<div class="sideBanner">
 				<span class="txt-label">
 		            <span id="popFloating-banner">
@@ -216,7 +215,6 @@
 					</a>
 				</span>
 			</div>
-	<!-- 		0427 주리 플로팅박스 종료 -->
    		</section>
 	</body>
 	

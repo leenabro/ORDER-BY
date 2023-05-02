@@ -9,16 +9,14 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-/* 0427 주리 플로팅박스 시작 */
 .sideBanner {
+	position: absolute;
+	top: 300px !important;
+	right: 50px;
 	position: fixed;
 	z-index: 9999; /* 상위로 띄울 레이어의 z-index 값 */
-	top: 20px;
-	right: 50px;
-	position: absolute;
 	width: 300px;
 	height: 250px;
-	top: 300px;
 /* 	background-color: #ffffff; */
 	background-color:transparent;
 	color: #304050;
@@ -27,7 +25,7 @@
 
 #kakao24 {
 	position: relative;
-	top: 150px;
+	top: 65%;
 	left: 80px;
 	width: 150px;
 	height: 150px;
@@ -97,8 +95,6 @@
 		cursor: pointer;
 		line-height: 30px;
 	}
-
-/* 주리 플로팅박스 종료 */
 
 html,
 body,
