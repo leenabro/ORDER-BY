@@ -408,7 +408,7 @@
 					pg: "danal_tpay.9810030929",
 					pay_method: "card",
 					merchant_uid: productId,   // 주문번호
-					name: productFullName + " " + rentalDate,
+					name: rentalDate + " 일 " + productFullName,
 					amount: 100,                         // 숫자 타입
 					buyer_email: "${member.email}",
 					buyer_name: "${member.name}",
