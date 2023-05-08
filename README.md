@@ -9,7 +9,10 @@
   <img src="https://user-images.githubusercontent.com/118333635/236735637-7a40a1c7-f486-4e96-b6d4-45d81d7d5385.png">
 </p>
 
-* 개발 환경
+
+<div align= "center">
+     
+### 개발 환경
 
 |제목|내용|
 |-----|----|
@@ -20,6 +23,8 @@
 |Language|Java 11, JavaScript, jQuery|
 |디자인툴|Html5, CSS3|
 |협업툴|ERD cloud, Jira, Git hub|
+  
+ </div>
 
 * 구현 기능: 쿠폰 생성, 예약 페이지, 포인트 결제, 결제 페이지
 
