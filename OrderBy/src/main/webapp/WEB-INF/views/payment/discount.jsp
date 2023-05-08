@@ -399,7 +399,7 @@
 // 		});
 		
 		// 객체 초기화 하기 
-		IMP.init("imp53176208");
+		IMP.init("i");
 		
 		function requestPay() {
 				
