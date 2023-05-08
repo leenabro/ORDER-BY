@@ -26,5 +26,7 @@
   
  </div>
 
+* 프로젝트 시 활용해본 대표 기술: Spring framework, SqlDeveloper, HTML5, CSS3, JavaScript
+
 * 구현 기능: 쿠폰 생성, 예약 페이지, 포인트 결제, 결제 페이지
 
