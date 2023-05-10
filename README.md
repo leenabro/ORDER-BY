@@ -5,10 +5,9 @@
 
 * 개발목표: 비용 문제로 평소에 쉽게 접할 수 없는 특별한 차량과 오토바이를 경험해보고 싶은 성향의 사용자들을 위해 사이트를 기획했습니다.
 
-![image-left](https://user-images.githubusercontent.com/118333635/236735637-7a40a1c7-f486-4e96-b6d4-45d81d7d5385.png){: .align-left}
-<!-- 
-  <img src="https://user-images.githubusercontent.com/118333635/236735637-7a40a1c7-f486-4e96-b6d4-45d81d7d5385.png" width="50%" height="50%"> 
--->
+<figure style="width=50%; height=50%;" class="align-left">
+  <img src="https://user-images.githubusercontent.com/118333635/236735637-7a40a1c7-f486-4e96-b6d4-45d81d7d5385.png"> 
+</figure> 
   
 ### 개발 환경
 
