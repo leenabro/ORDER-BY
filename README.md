@@ -7,22 +7,26 @@
 
 <div align="left">
   <img src="https://user-images.githubusercontent.com/118333635/236735637-7a40a1c7-f486-4e96-b6d4-45d81d7d5385.png" width="50%" height="50%">
+  <span>
+    ### 개발 환경
+
+    |제목|내용|
+    |-----|----|
+    |운영체제|Window OS, MacOS|
+    |개발도구|Spring framework, SqlDeveloper, Visual Studio Code|
+    |DBMS|Oracle|
+    |Server|Apache Tomcat 9.0|
+    |Language|Java 11, JavaScript, jQuery|
+    |디자인툴|Html5, CSS3|
+    |협업툴|ERD cloud, Jira, Git hub|
+  </span>
 </div>
+
 
 
 <div align= "center">
      
-### 개발 환경
 
-|제목|내용|
-|-----|----|
-|운영체제|Window OS, MacOS|
-|개발도구|Spring framework, SqlDeveloper, Visual Studio Code|
-|DBMS|Oracle|
-|Server|Apache Tomcat 9.0|
-|Language|Java 11, JavaScript, jQuery|
-|디자인툴|Html5, CSS3|
-|협업툴|ERD cloud, Jira, Git hub|
   
  </div>
 
